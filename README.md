@@ -49,7 +49,7 @@ First, contact Bitreserve support (..email with prepopulated subject..) to recei
 Secondly, create a new instance of the `Client` class with token. Take a look at the following examples and explore more on the [examples](https://github.com/bitreserve/bitreserve-sdk-php/example) directory.
 
 ### Get authenticated user
-```
+```php
 require_once 'vendor/autoload.php';
 
 use \Bitreserve\BitreserveClient as Client;
@@ -62,7 +62,7 @@ $user = $client->getToken()->getUser();
 ```
 
 ### Create and commit a new transaction
-```
+```php
 require_once 'vendor/autoload.php';
 
 use \Bitreserve\BitreserveClient as Client;
