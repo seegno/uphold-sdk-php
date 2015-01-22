@@ -1,0 +1,250 @@
+<?php
+
+namespace Bitreserve\Tests\Model;
+
+use Bitreserve\Model\Card;
+
+class CardTest extends TestCase
+{
+    /**
+     * @test
+     */
+    public function shouldReturnInstanceOfCard()
+    {
+        $data = array('id' => '1');
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertInstanceOf('Bitreserve\BitreserveClient', $card->getClient());
+        $this->assertInstanceOf('Bitreserve\Model\Card', $card);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnId()
+    {
+        $data = array('id' => '1');
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['id'], $card->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnAddress()
+    {
+        $data = array('address' => array('bitcoin' => '1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH'));
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['address'], $card->getAddress());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnLabel()
+    {
+        $data = array('label' => 'My Card');
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['label'], $card->getLabel());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnCurrency()
+    {
+        $data = array('currency' => 'BTC');
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['currency'], $card->getCurrency());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnBalance()
+    {
+        $data = array('balance' => '12.34');
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['balance'], $card->getBalance());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnAvailable()
+    {
+        $data = array('available' => '12.34');
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['available'], $card->getAvailable());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnLastTransactionAt()
+    {
+        $data = array('lastTransactionAt' => '2014-09-24T18:11:53.561Z');
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['lastTransactionAt'], $card->getLastTransactionAt());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnPosition()
+    {
+        $data = array('position' => '3');
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['position'], $card->getPosition());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnAddresses()
+    {
+        $data = array('addresses' => array(array('id' => '1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH', 'network' => 'bitcoin')));
+
+        $client = $this->getBitreserveClientMock();
+
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data['addresses'], $card->getAddresses());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnTransactions()
+    {
+        $data = array(array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'status' => 'pending',
+        ), array(
+            'id' => 'b97bb994-6e24-4a89-b653-e0a6d0bcf635',
+            'status' => 'completed',
+        ));
+
+        $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
+
+        $client = $this->getBitreserveClientMock();
+        $client->expects($this->once())
+            ->method('get')
+            ->with(sprintf('/me/cards/%s/transactions', $cardData['id']))
+            ->will($this->returnValue($data));
+
+        $card = new Card($client, $cardData);
+
+        $transactions = $card->getTransactions();
+
+        $this->assertCount(count($data), $transactions);
+
+        foreach ($transactions as $transaction) {
+            $this->assertInstanceOf('Bitreserve\Model\Transaction', $transaction);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnOneTransactionById()
+    {
+        $expectedTransactionId = 'a97bb994-6e24-4a89-b653-e0a6d0bcf634';
+
+        $data = array(array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'status' => 'pending',
+        ), array(
+            'id' => 'b97bb994-6e24-4a89-b653-e0a6d0bcf635',
+            'status' => 'completed',
+        ));
+
+        $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
+
+        $client = $this->getBitreserveClientMock();
+        $client->expects($this->once())
+            ->method('get')
+            ->with(sprintf('/me/cards/%s/transactions', $cardData['id']))
+            ->will($this->returnValue($data));
+
+        $card = new Card($client, $cardData);
+
+        $transaction = $card->getTransactionById($expectedTransactionId);
+
+        $this->assertInstanceOf('Bitreserve\Model\Transaction', $transaction);
+        $this->assertEquals($expectedTransactionId, $transaction->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldCreateNewTransaction()
+    {
+        $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
+
+        $postData = array(
+            'destination' => 'luke.skywalker@rebelalliance.org',
+            'denomination' => array(
+                'amount' => '0.1',
+                'currency' => 'BTC',
+        ));
+
+        $data = array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'status' => 'pending',
+        );
+
+        $client = $this->getBitreserveClientMock();
+        $client->expects($this->once())
+            ->method('post')
+            ->with(sprintf('/me/cards/%s/transactions', $cardData['id']), $postData)
+            ->will($this->returnValue($data));
+
+        $card = new Card($client, $cardData);
+
+        $transaction = $card->createTransaction($postData['destination'], $postData['denomination']['amount'], $postData['denomination']['currency']);
+
+        $this->assertInstanceOf('Bitreserve\Model\Transaction', $transaction);
+        $this->assertEquals($data['id'], $transaction->getId());
+    }
+
+    protected function getModelClass()
+    {
+        return 'Bitreserve\Model\Card';
+    }
+}
