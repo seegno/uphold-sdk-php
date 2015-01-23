@@ -48,7 +48,7 @@ Require the library package as a dependency:
 
 In order to create a Personal Access Token (PAT) and learn more about the Bitreserve API, please check out the [developer website](https://developer.bitreserve.org/api/v0/#authentication).
 
-Then, create a new instance of the `Client` class with token. Take a look at the following examples and explore more on the [examples](https://github.com/bitreserve/bitreserve-sdk-php/example) directory.
+Then, create a new instance of the `Client` class with token. Take a look at the following examples and explore more on the [examples](https://github.com/bitreserve/bitreserve-sdk-php/tree/master/examples) directory.
 
 ### Get authenticated user
 ```php
