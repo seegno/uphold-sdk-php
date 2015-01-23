@@ -4,8 +4,14 @@ require_once 'vendor/autoload.php';
 
 use \Bitreserve\BitreserveClient as Client;
 
+// Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
-$cards = $user->getUser()->getCards();
+
+// Get the current user.
+$user = $client->getUser();
+
+// Get current user cards.
+$cards = $user->getCards();
 
 echo "*** List of user cards ***\n";
 
