@@ -11,3 +11,10 @@ before_script:
   - composer update --prefer-source
 
 script: phpunit
+
+after_script:
+  - vendor/bin/test-reporter
+
+addons:
+  code_climate:
+    repo_token: 765eaa0a4e47d6550b9402537c21022506022c3dfddde51d3d22a6b5d10cdaad
