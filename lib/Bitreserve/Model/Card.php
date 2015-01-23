@@ -189,7 +189,6 @@ class Card extends BaseModel implements CardInterface
         $data = $this->client->post(sprintf('/me/cards/%s/transactions', $this->id), $postData);
 
         $transaction = new Transaction($this->client, $data);
-        $transaction->setCardId($this->id);
 
         return $transaction;
     }

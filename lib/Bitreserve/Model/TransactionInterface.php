@@ -71,13 +71,6 @@ interface TransactionInterface
     public function getStatus();
 
     /**
-     * Sets transaction card.
-     *
-     * @return $this
-     */
-    public function setCardId($cardId);
-
-    /**
      * Cancel current transaction.
      *
      * @return $params
