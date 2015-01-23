@@ -158,7 +158,9 @@ class TransactionTest extends TestCase
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
-            'cardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            'origin' => array(
+                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            ),
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'pending',
         );
@@ -166,12 +168,10 @@ class TransactionTest extends TestCase
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('post')
-            ->with(sprintf('/me/cards/%s/transactions/%s/commit', $data['cardId'], $data['id']))
+            ->with(sprintf('/me/cards/%s/transactions/%s/commit', $data['origin']['CardId'], $data['id']))
             ->will($this->returnValue($data));
 
         $transaction = new Transaction($client, $data);
-        $transaction->setCardId($data['cardId']);
-
         $transaction->commit();
 
         $this->assertEquals($data['id'], $transaction->getId());
@@ -179,13 +179,15 @@ class TransactionTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\LogicException
+     * @expectedException Bitreserve\Exception\LogicException
      */
-    public function shouldCommitThownAnLogicExceptionWhenStatusIsNotPending()
+    public function shouldThrowAnErrorOnCommitWhenStatusIsNotPending()
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
-            'cardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            'origin' => array(
+                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            ),
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'completed',
         );
@@ -193,16 +195,14 @@ class TransactionTest extends TestCase
         $client = $this->getBitreserveClientMock();
 
         $transaction = new Transaction($client, $data);
-        $transaction->setCardId($data['cardId']);
-
         $transaction->commit();
     }
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\LogicException
+     * @expectedException Bitreserve\Exception\LogicException
      */
-    public function shouldCommitThownAnLogicExceptionWhenCardIdIsNotDefined()
+    public function shouldThrowAnErrorOnCommitWhenCardIdIsNotDefined()
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
@@ -221,7 +221,9 @@ class TransactionTest extends TestCase
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
-            'cardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            'origin' => array(
+                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            ),
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'waiting',
         );
@@ -229,12 +231,10 @@ class TransactionTest extends TestCase
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('post')
-            ->with(sprintf('/me/cards/%s/transactions/%s/cancel', $data['cardId'], $data['id']))
+            ->with(sprintf('/me/cards/%s/transactions/%s/cancel', $data['origin']['CardId'], $data['id']))
             ->will($this->returnValue($data));
 
         $transaction = new Transaction($client, $data);
-        $transaction->setCardId($data['cardId']);
-
         $transaction->cancel();
 
         $this->assertEquals($data['id'], $transaction->getId());
@@ -242,13 +242,12 @@ class TransactionTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\LogicException
+     * @expectedException Bitreserve\Exception\LogicException
      */
-    public function shouldCancelThownAnLogicExceptionWhenStatusIsNotPending()
+    public function shouldThrowAnErrorOnCancelWhenStatusIsNotWaiting()
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
-            'cardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'completed',
         );
@@ -256,16 +255,32 @@ class TransactionTest extends TestCase
         $client = $this->getBitreserveClientMock();
 
         $transaction = new Transaction($client, $data);
-        $transaction->setCardId($data['cardId']);
-
         $transaction->cancel();
     }
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\LogicException
+     * @expectedException Bitreserve\Exception\LogicException
      */
-    public function shouldCancelThownAnLogicExceptionWhenCardIdIsNotDefined()
+    public function shouldThrowAnErrorOnCancelWhenStatusIsPending()
+    {
+        $data = array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
+            'status' => 'pending',
+        );
+
+        $client = $this->getBitreserveClientMock();
+
+        $transaction = new Transaction($client, $data);
+        $transaction->cancel();
+    }
+
+    /**
+     * @test
+     * @expectedException Bitreserve\Exception\LogicException
+     */
+    public function shouldThrowAnErrorOnCancelWhenCardIdIsNotDefined()
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
