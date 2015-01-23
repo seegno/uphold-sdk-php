@@ -328,7 +328,7 @@ class BitreserveClient
             'User-Agent' => $this->getOption('user_agent'),
         );
 
-        if (!empty($this->getOption('bearer'))) {
+        if (null !== $this->getOption('bearer') && '' !== $this->getOption('bearer')) {
             $headers['Authorization'] = sprintf('Bearer %s', $this->getOption('bearer'));
         }
 
