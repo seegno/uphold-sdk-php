@@ -32,7 +32,8 @@ class BitreserveClient
         'base_url' => 'https://api.bitreserve.org/',
         'debug' => false,
         'timeout' => 10,
-        'user_agent' => 'bitreserve-sdk-php v1.0.0 (https://github.com/seegno/bitreserve-sdk-php)',
+        'user_agent' => 'bitreserve-sdk-php {version} (https://github.com/seegno/bitreserve-sdk-php)',
+        'version' => '1.0.1',
     );
 
     /**
@@ -335,7 +336,7 @@ class BitreserveClient
         $headers = array(
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-            'User-Agent' => $this->getOption('user_agent'),
+            'User-Agent' => str_replace('{version}', sprintf('v%s', $this->getOption('version')), $this->getOption('user_agent')),
         );
 
         if (null !== $this->getOption('bearer') && '' !== $this->getOption('bearer')) {
