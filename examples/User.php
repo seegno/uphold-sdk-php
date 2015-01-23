@@ -4,8 +4,11 @@ require_once 'vendor/autoload.php';
 
 use \Bitreserve\BitreserveClient as Client;
 
+// Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
-$user = $client->getToken()->getUser();
+
+// Get the current user.
+$user = $client->getUser();
 
 echo "\n*** User Information ***\n";
 echo sprintf("Name: %s\n", $user->getName());
