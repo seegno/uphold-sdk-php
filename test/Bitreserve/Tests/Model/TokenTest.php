@@ -30,7 +30,7 @@ class TokenTest extends TestCase
      */
     public function shouldReturnUser()
     {
-        $data = array('username' => 'han.solo');
+        $data = array('username' => 'foobar');
 
         $client = $this->getBitreserveClientMock();
 

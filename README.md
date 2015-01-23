@@ -60,7 +60,7 @@ use \Bitreserve\BitreserveClient as Client;
 $client = new Client('AUTHORIZATION_TOKEN');
 
 // Get the current user.
-$user = $client->getToken()->getUser();
+$user = $client->getUser();
 ```
 
 ### Create and commit a new transaction
@@ -73,7 +73,7 @@ use \Bitreserve\BitreserveClient as Client;
 $client = new Client('AUTHORIZATION_TOKEN');
 
 // Get the current user.
-$user = $client->getToken()->getUser();
+$user = $client->getUser();
 
 // Get a specific card by id.
 $card = $user->getCardsById('ade869d8-7913-4f67-bb4d-72719f0a2be0');
