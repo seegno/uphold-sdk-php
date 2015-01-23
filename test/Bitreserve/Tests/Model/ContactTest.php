@@ -40,7 +40,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnFirstName()
     {
-        $data = array('firstName' => 'Han');
+        $data = array('firstName' => 'Foobar');
 
         $client = $this->getBitreserveClientMock();
 
@@ -54,7 +54,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnLastName()
     {
-        $data = array('lastName' => 'Solo');
+        $data = array('lastName' => 'Foobar');
 
         $client = $this->getBitreserveClientMock();
 
@@ -68,7 +68,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnName()
     {
-        $data = array('name' => 'Han Solo');
+        $data = array('name' => 'Foobar');
 
         $client = $this->getBitreserveClientMock();
 
@@ -82,7 +82,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnCompany()
     {
-        $data = array('company' => 'Rebel Alliance');
+        $data = array('company' => 'Foobar');
 
         $client = $this->getBitreserveClientMock();
 
@@ -96,7 +96,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnEmails()
     {
-        $data = array('emails' => array('han.solo@rebelalliance.org'));
+        $data = array('emails' => array('foo@bar.com'));
 
         $client = $this->getBitreserveClientMock();
 

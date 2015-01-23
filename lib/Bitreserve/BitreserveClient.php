@@ -204,6 +204,16 @@ class BitreserveClient
     }
 
     /**
+     * Gets current user.
+     *
+     * @return User The current user object.
+     */
+    public function getUser()
+    {
+        return $this->getToken()->getUser();
+    }
+
+    /**
      * Send a GET request with query parameters.
      *
      * @param string $path              Request path.

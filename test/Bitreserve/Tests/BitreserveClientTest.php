@@ -222,6 +222,30 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     */
+    public function shouldReturnUser()
+    {
+        $data = array('username' => 'foobar');
+
+        $client = $this->getBitreserveClientMock();
+
+        $client->expects($this->once())
+            ->method('getOption')
+            ->with('bearer')
+            ->will($this->returnValue('token'));
+
+        $client->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($data));
+
+        $user = $client->getUser();
+
+        $this->assertInstanceOf('Bitreserve\Model\User', $user);
+        $this->assertEquals($data['username'], $user->getUsername());
+    }
+
+    /**
+     * @test
      * @dataProvider getDefaultRequestHttpMethods
      */
     public function shouldDoRequestToClient($httpMethod, $encodedBody)
