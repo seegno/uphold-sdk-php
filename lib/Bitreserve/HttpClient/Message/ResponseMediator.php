@@ -8,7 +8,7 @@ use GuzzleHttp\Message\Response;
 class ResponseMediator
 {
     /**
-     * Gets API rate limits from the response headers.
+     * Get API rate limits from the response headers.
      *
      * @param  Response $response The response
      * @return array              The complete rate limits headers.
@@ -23,7 +23,7 @@ class ResponseMediator
     }
 
     /**
-     * Gets the decoded body from the response.
+     * Get the decoded body from the response.
      *
      * @param  Response $response The response
      * @return mixed              Decoded body.
@@ -38,6 +38,62 @@ class ResponseMediator
         }
 
         return $content;
+    }
+
+    /**
+     * Get response error.
+     *
+     * @param  Response $response The response.
+     *
+     * @return string             The error code.
+     */
+    public static function getError(Response $response)
+    {
+        $content = self::getContent($response);
+
+        if (!is_array($content)) {
+            return null;
+        }
+
+        if (!empty($content['error'])) {
+            return $content['error'];
+        }
+
+        if (!empty($content['code'])) {
+            return $content['code'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get error description.
+     *
+     * @param  Response $response The response.
+     *
+     * @return string             The error description.
+     */
+    public static function getErrorDescription(Response $response)
+    {
+        $content = self::getContent($response);
+
+        if (!is_array($content)) {
+            return null;
+        }
+
+        if (!empty($content['errors'])) {
+            return sprintf('Error List: %s', print_r($content['errors'], 1));
+        }
+
+        if (!empty($content['error_description'])) {
+            return $content['error_description'];
+        }
+
+        if (!empty($content['message'])) {
+            return $content['message'];
+        }
+
+        return null;
     }
 
     /**

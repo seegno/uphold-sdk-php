@@ -2,8 +2,6 @@
 
 namespace Bitreserve;
 
-use Bitreserve\Exception\InvalidArgumentException;
-use Bitreserve\Exception\MissingArgumentException;
 use Bitreserve\Exception\RuntimeException;
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\HttpClientInterface;

@@ -179,9 +179,9 @@ class TransactionTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\ErrorException
+     * @expectedException \Bitreserve\Exception\LogicException
      */
-    public function shouldCommitThownAnErrorWhenStatusIsNotPending()
+    public function shouldCommitThownAnLogicExceptionWhenStatusIsNotPending()
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
@@ -200,9 +200,9 @@ class TransactionTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\ErrorException
+     * @expectedException \Bitreserve\Exception\LogicException
      */
-    public function shouldCommitThownAnErrorWhenCardIdIsNotDefined()
+    public function shouldCommitThownAnLogicExceptionWhenCardIdIsNotDefined()
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
@@ -242,9 +242,9 @@ class TransactionTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\ErrorException
+     * @expectedException \Bitreserve\Exception\LogicException
      */
-    public function shouldCancelThownAnErrorWhenStatusIsNotPending()
+    public function shouldCancelThownAnLogicExceptionWhenStatusIsNotPending()
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
@@ -263,9 +263,9 @@ class TransactionTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\ErrorException
+     * @expectedException \Bitreserve\Exception\LogicException
      */
-    public function shouldCancelThownAnErrorWhenCardIdIsNotDefined()
+    public function shouldCancelThownAnLogicExceptionWhenCardIdIsNotDefined()
     {
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',

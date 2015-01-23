@@ -5,6 +5,6 @@ namespace Bitreserve\Exception;
 /**
  * RuntimeException.
  */
-class RuntimeException extends \RuntimeException implements ExceptionInterface
+class RuntimeException extends BitreserveClientException
 {
 }
