@@ -28,4 +28,8 @@
             <directory suffix=".php">./lib/Bitreserve/</directory>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
 </phpunit>
