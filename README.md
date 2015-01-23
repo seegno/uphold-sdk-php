@@ -47,7 +47,7 @@ Require the library package as a dependency:
 }
 ```
 
-## Basic usage:
+## Basic usage
 
 In order to create a Personal Access Token (PAT) and learn more about the Bitreserve API, please check out the [developer website](https://developer.bitreserve.org/api/v0/#authentication).
 
