@@ -154,7 +154,7 @@ class HttpClient implements HttpClientInterface
     /**
      * {@inheritDoc}
      */
-    public function request($path, $body = null, $httpMethod = 'GET', array $headers = array(), array $options = array())
+    public function request($path, $body, $httpMethod = 'GET', array $headers = array(), array $options = array())
     {
         if (!empty($this->options['api_version'])) {
             $path = sprintf('%s%s', $this->options['api_version'], $path);
@@ -164,13 +164,11 @@ class HttpClient implements HttpClientInterface
             $options['debug'] = $this->options['debug'];
         }
 
-        if (null !== $body) {
-            $options['body'] = $body;
-        }
-
         if (count($headers) > 0) {
             $options['headers'] = $headers;
         }
+
+        $options['body'] = $body;
 
         $request = $this->client->createRequest($httpMethod, $path, $options);
 

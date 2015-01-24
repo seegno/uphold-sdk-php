@@ -323,7 +323,13 @@ class BitreserveClient
      */
     protected function createJsonBody(array $parameters)
     {
-        return (count($parameters) === 0) ? null : json_encode($parameters, empty($parameters) ? JSON_FORCE_OBJECT : 0);
+        $options = 0;
+
+        if (empty($parameters)) {
+          $options = JSON_FORCE_OBJECT;
+        }
+
+        return json_encode($parameters, $options);
     }
 
     /**
