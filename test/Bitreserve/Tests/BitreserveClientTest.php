@@ -53,7 +53,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Bitreserve\Exception\AuthenticationRequiredException
      */
-    public function shouldThownAuthenticationRequiredExceptionWhenGettingToken()
+    public function shouldThrowAuthenticationRequiredExceptionWhenGettingToken()
     {
         $client = new BitreserveClient();
         $client->getToken();

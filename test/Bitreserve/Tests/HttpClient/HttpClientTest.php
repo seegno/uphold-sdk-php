@@ -195,7 +195,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Bitreserve\Exception\ErrorException
      */
-    public function shouldThownErrorExceptionWhenClientSendThrownsLogicException()
+    public function shouldThrowErrorExceptionWhenClientSendThrownsLogicException()
     {
         $body = array('a' => 'b');
         $headers = array('c' => 'd');
