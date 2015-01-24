@@ -111,13 +111,9 @@ class User extends BaseModel implements UserInterface
     {
         $data = $this->client->get('/me/cards');
 
-        $cards = array_reduce($data, function($cards, $card) {
-            $cards[] = new Card($this->client, $card);
-
-            return $cards;
-        });
-
-        return $cards;
+        return array_map(function($card) {
+            return new Card($this->client, $card);
+        }, $data);
     }
 
     /**
@@ -147,13 +143,9 @@ class User extends BaseModel implements UserInterface
     {
         $data = $this->client->get('/me/contacts');
 
-        $this->contacts = array_reduce($data, function($contacts, $contact) {
-            $contacts[] = new Contact($this->client, $contact);
-
-            return $contacts;
-        });
-
-        return $this->contacts;
+        return array_map(function($contact) {
+            return new Contact($this->client, $contact);
+        }, $data);
     }
 
     /**
@@ -259,13 +251,9 @@ class User extends BaseModel implements UserInterface
     {
         $data = $this->client->get('/me/transactions');
 
-        $transactions = array_reduce($data, function($transactions, $transaction) {
-            $transactions[] = new Transaction($this->client, $transaction);
-
-            return $transactions;
-        });
-
-        return $transactions;
+        return array_map(function($transaction) {
+            return new Transaction($this->client, $transaction);
+        }, $data);
     }
 
     /**

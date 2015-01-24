@@ -169,13 +169,9 @@ class Card extends BaseModel implements CardInterface
     {
         $data = $this->client->get(sprintf('/me/cards/%s/transactions', $this->id));
 
-        $this->transactions = array_reduce($data, function($transactions, $transaction) {
-            $transactions[] = new Transaction($this->client, $transaction);
-
-            return $transactions;
-        });
-
-        return $this->transactions;
+        return array_map(function($transaction) {
+            return new Transaction($this->client, $transaction);
+        }, $data);
     }
 
     /**
