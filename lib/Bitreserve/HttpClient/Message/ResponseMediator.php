@@ -52,7 +52,7 @@ class ResponseMediator
         $content = self::getContent($response);
 
         if (!is_array($content)) {
-            return null;
+            return 'unknown_error';
         }
 
         if (!empty($content['error'])) {
@@ -63,7 +63,7 @@ class ResponseMediator
             return $content['code'];
         }
 
-        return null;
+        return 'unknown_error';
     }
 
     /**
@@ -78,7 +78,7 @@ class ResponseMediator
         $content = self::getContent($response);
 
         if (!is_array($content)) {
-            return null;
+            return 'An unknown error occurred';
         }
 
         if (!empty($content['errors'])) {
@@ -93,7 +93,7 @@ class ResponseMediator
             return $content['message'];
         }
 
-        return null;
+        return 'An unknown error occurred';
     }
 
     /**
