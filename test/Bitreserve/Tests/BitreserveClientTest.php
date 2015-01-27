@@ -310,11 +310,13 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider getDefaultRequestHttpMethods
      */
-    public function shouldDoRequestToClient($httpMethod, $encodedBody)
+    public function shouldSendRequestToClient($httpMethod, $encodedBody)
     {
+        $apiVersion = 'v0';
         $defaultOptions = array('defaultOption' => 'defaultValue');
         $options = array('option1' => 'optValue1');
         $params = array('param1' => 'paramValue1');
+        $path = '/path';
 
         $expectedArray = array('value');
         $stream = Stream::factory(json_encode($expectedArray));
@@ -336,10 +338,51 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $httpClient = $this->getHttpClientMock();
         $httpClient->expects($this->once())
             ->method($httpMethod)
-            ->with('/path', $body, array_merge($options, $defaultOptions))
+            ->with(sprintf('%s%s', $apiVersion, $path), $body, array_merge($options, $defaultOptions))
             ->will($this->returnValue(new Response(200, array(), $stream)));
 
         $client->setHttpClient($httpClient);
+        $client->setOption('api_version', $apiVersion);
+
+        $this->assertEquals($expectedArray, $client->$httpMethod('/path', $params, $options));
+    }
+
+    /**
+     * @test
+     * @dataProvider getDefaultRequestHttpMethods
+     */
+    public function shouldSendRequestWithoutApiVersionToClient($httpMethod, $encodedBody)
+    {
+        $defaultOptions = array('defaultOption' => 'defaultValue');
+        $options = array('option1' => 'optValue1');
+        $params = array('param1' => 'paramValue1');
+        $path = '/path';
+
+        $expectedArray = array('value');
+        $stream = Stream::factory(json_encode($expectedArray));
+
+        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+            ->setMethods(array('createJsonBody', 'getDefaultHeaders'))
+            ->getMock();
+
+        $client->expects($this->any())
+            ->method('createJsonBody')
+            ->will($this->returnValue(json_encode($params)));
+
+        $client->expects($this->once())
+            ->method('getDefaultHeaders')
+            ->will($this->returnValue($defaultOptions));
+
+        $body = $encodedBody ? json_encode($params) : $params;
+
+        $httpClient = $this->getHttpClientMock();
+        $httpClient->expects($this->once())
+            ->method($httpMethod)
+            ->with($path, $body, array_merge($options, $defaultOptions))
+            ->will($this->returnValue(new Response(200, array(), $stream)));
+
+        $client->setHttpClient($httpClient);
+        $client->setOption('api_version', null);
 
         $this->assertEquals($expectedArray, $client->$httpMethod('/path', $params, $options));
     }
