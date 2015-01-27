@@ -269,7 +269,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
 
         $client->expects($this->once())
             ->method('post')
-            ->with('/oauth2/tokens', array('description' => $description), $headers)
+            ->with('/me/tokens', array('description' => $description), $headers)
             ->will($this->returnValue(array('foo' => 'bar')));
 
         $this->assertEquals(array('foo' => 'bar'), $client->createToken($login, $password, $description));
@@ -300,7 +300,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
 
         $client->expects($this->once())
             ->method('post')
-            ->with('/oauth2/tokens', array('description' => $description), $headers)
+            ->with('/me/tokens', array('description' => $description), $headers)
             ->will($this->returnValue(array('foo' => 'bar')));
 
         $this->assertEquals(array('foo' => 'bar'), $client->createToken($login, $password, $description, $otp));

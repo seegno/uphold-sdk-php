@@ -229,7 +229,7 @@ class BitreserveClient
             'X-Bitreserve-OTP' => $otp,
         ));
 
-        return $this->post('/oauth2/tokens',
+        return $this->post('/me/tokens',
             array('description' => $description),
             $headers
         );
