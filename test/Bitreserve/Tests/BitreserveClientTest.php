@@ -246,6 +246,68 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     */
+    public function shouldCreateToken()
+    {
+        $login = 'foobar';
+        $password = 'foobar';
+        $description = 'foobar';
+        $otp = null;
+
+        $headers = array(
+            'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
+            'X-Bitreserve-OTP' => $otp,
+        );
+
+        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+            ->setMethods(array('getDefaultHeaders', 'post'))
+            ->getMock();
+
+        $client->expects($this->any())
+            ->method('getDefaultHeaders')
+            ->will($this->returnValue(array()));
+
+        $client->expects($this->once())
+            ->method('post')
+            ->with('/oauth2/tokens', array('description' => $description), $headers)
+            ->will($this->returnValue(array('foo' => 'bar')));
+
+        $this->assertEquals(array('foo' => 'bar'), $client->createToken($login, $password, $description));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldCreateTokenWithOTP()
+    {
+        $login = 'foobar';
+        $password = 'foobar';
+        $description = 'foobar';
+        $otp = 'foobar';
+
+        $headers = array(
+            'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
+            'X-Bitreserve-OTP' => $otp,
+        );
+
+        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+            ->setMethods(array('getDefaultHeaders', 'post'))
+            ->getMock();
+
+        $client->expects($this->any())
+            ->method('getDefaultHeaders')
+            ->will($this->returnValue(array()));
+
+        $client->expects($this->once())
+            ->method('post')
+            ->with('/oauth2/tokens', array('description' => $description), $headers)
+            ->will($this->returnValue(array('foo' => 'bar')));
+
+        $this->assertEquals(array('foo' => 'bar'), $client->createToken($login, $password, $description, $otp));
+    }
+
+    /**
+     * @test
      * @dataProvider getDefaultRequestHttpMethods
      */
     public function shouldDoRequestToClient($httpMethod, $encodedBody)

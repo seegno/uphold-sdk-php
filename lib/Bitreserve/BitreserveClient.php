@@ -56,7 +56,7 @@ class BitreserveClient
     }
 
     /**
-     * Gets Http client.
+     * Get Http client.
      *
      * @return HttpClientInterface $httpClient
      */
@@ -66,7 +66,7 @@ class BitreserveClient
     }
 
     /**
-     * Gets client option.
+     * Get client option.
      *
      * @param  string $name Option name.
      *
@@ -82,7 +82,7 @@ class BitreserveClient
     }
 
     /**
-     * Gets all client options.
+     * Get all client options.
      *
      * @return array An array of options.
      */
@@ -161,7 +161,7 @@ class BitreserveClient
     }
 
     /**
-     * Gets the current token or create a new one.
+     * Get the current token or create a new one.
      *
      * @return Token A token object.
      */
@@ -205,13 +205,36 @@ class BitreserveClient
     }
 
     /**
-     * Gets current user.
+     * Get current user.
      *
      * @return User The current user object.
      */
     public function getUser()
     {
         return $this->getToken()->getUser();
+    }
+
+    /**
+     * Create a new Personal Access Token (PAT).
+     *
+     * @param  string $login       Login email or username.
+     * @param  string $password    Password.
+     * @param  string $description PAT description.
+     * @param  string $otp         Verification code
+     *
+     * @return array               New PAT information.
+     */
+    public function createToken($login, $password, $description, $otp = null)
+    {
+        $headers = array_merge($this->getDefaultHeaders(), array(
+            'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
+            'X-Bitreserve-OTP' => $otp,
+        ));
+
+        return $this->post('/oauth2/tokens',
+            array('description' => $description),
+            $headers
+        );
     }
 
     /**
