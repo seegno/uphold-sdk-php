@@ -5,6 +5,6 @@ namespace Bitreserve\Exception;
 /**
  * AuthenticationRequiredException
  */
-class AuthenticationRequiredException extends RuntimeException implements ExceptionInterface
+class AuthenticationRequiredException extends BitreserveClientException
 {
 }

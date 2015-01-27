@@ -3,7 +3,7 @@
 namespace Bitreserve\Model;
 
 use Bitreserve\BitreserveClient;
-use Bitreserve\Exception\ErrorException;
+use Bitreserve\Exception\LogicException;
 
 /**
  * Tokem Model.
@@ -161,11 +161,11 @@ class Transaction extends BaseModel implements TransactionInterface
     public function commit()
     {
         if (empty($this->cardId)) {
-            throw new ErrorException('Card id is missing from this transaction');
+            throw new LogicException('Card id is missing from this transaction');
         }
 
         if ('pending' !== $this->status) {
-            throw new ErrorException(sprintf('This transaction cannot be committed, because the current status is "%s"', $this->status));
+            throw new LogicException(sprintf('This transaction cannot be committed, because the current status is "%s"', $this->status));
         }
 
         $data = $this->client->post(sprintf('/me/cards/%s/transactions/%s/commit', $this->cardId, $this->id));
@@ -179,11 +179,11 @@ class Transaction extends BaseModel implements TransactionInterface
     public function cancel()
     {
         if (empty($this->cardId)) {
-            throw new ErrorException('Card id is missing from this transaction');
+            throw new LogicException('Card id is missing from this transaction');
         }
 
         if ('waiting' !== $this->status) {
-            throw new ErrorException(sprintf('This transaction cannot be canceled, because the current status is %s', $this->status));
+            throw new LogicException(sprintf('This transaction cannot be canceled, because the current status is %s', $this->status));
         }
 
         $data = $this->client->post(sprintf('/me/cards/%s/transactions/%s/cancel', $this->cardId, $this->id));

@@ -2,8 +2,6 @@
 
 namespace Bitreserve\HttpClient;
 
-use Bitreserve\Exception\ErrorException;
-use Bitreserve\Exception\RuntimeException;
 use Bitreserve\HttpClient\Handler\ErrorHandler;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
@@ -18,6 +16,11 @@ class HttpClient implements HttpClientInterface
      * @var $client
      */
     private $client;
+
+    /**
+     * @var $errorHandler
+     */
+    private $errorHandler;
 
     /**
      * @var $headers
@@ -47,7 +50,9 @@ class HttpClient implements HttpClientInterface
     public function __construct(array $options = array())
     {
         $this->options = array_merge($this->options, $options);
+
         $this->client = new GuzzleClient($this->options);
+        $this->errorHandler = new ErrorHandler($this->options);
     }
 
     /**
@@ -174,12 +179,8 @@ class HttpClient implements HttpClientInterface
 
         try {
             $response = $this->client->send($request);
-        } catch(RequestException $e) {
-            ErrorHandler::onRequestException($e);
-        } catch (\LogicException $e) {
-            throw new ErrorException($e->getMessage(), $e->getCode());
-        } catch (\RuntimeException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+        } catch(\Exception $e) {
+            $this->errorHandler->onException($e);
         }
 
         $this->lastRequest = $request;
