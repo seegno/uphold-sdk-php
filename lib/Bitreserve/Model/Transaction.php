@@ -16,11 +16,6 @@ class Transaction extends BaseModel implements TransactionInterface
     protected $id;
 
     /**
-     * @var cardId
-     */
-    protected $cardId;
-
-    /**
      * @var createdAt
      */
     protected $createdAt;
@@ -148,27 +143,17 @@ class Transaction extends BaseModel implements TransactionInterface
     /**
      * {@inheritdoc}
      */
-    public function setCardId($cardId)
-    {
-        $this->cardId = $cardId;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function commit()
     {
-        if (empty($this->cardId)) {
-            throw new LogicException('Card id is missing from this transaction');
+        if (empty($this->origin['CardId'])) {
+            throw new LogicException('Origin CardId is missing from this transaction');
         }
 
         if ('pending' !== $this->status) {
             throw new LogicException(sprintf('This transaction cannot be committed, because the current status is "%s"', $this->status));
         }
 
-        $data = $this->client->post(sprintf('/me/cards/%s/transactions/%s/commit', $this->cardId, $this->id));
+        $data = $this->client->post(sprintf('/me/cards/%s/transactions/%s/commit', $this->origin['CardId'], $this->id));
 
         $this->updateFields($data);
     }
@@ -178,15 +163,19 @@ class Transaction extends BaseModel implements TransactionInterface
      */
     public function cancel()
     {
-        if (empty($this->cardId)) {
-            throw new LogicException('Card id is missing from this transaction');
+        if (empty($this->origin['CardId'])) {
+            throw new LogicException('Origin CardId is missing from this transaction');
+        }
+
+        if ('pending' === $this->status) {
+            throw new LogicException('Unable to cancel uncommited transaction');
         }
 
         if ('waiting' !== $this->status) {
-            throw new LogicException(sprintf('This transaction cannot be canceled, because the current status is %s', $this->status));
+            throw new LogicException(sprintf('This transaction cannot be cancelled, because the current status is %s', $this->status));
         }
 
-        $data = $this->client->post(sprintf('/me/cards/%s/transactions/%s/cancel', $this->cardId, $this->id));
+        $data = $this->client->post(sprintf('/me/cards/%s/transactions/%s/cancel', $this->origin['CardId'], $this->id));
 
         $this->updateFields($data);
     }
