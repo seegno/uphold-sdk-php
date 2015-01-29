@@ -31,7 +31,7 @@ class BitreserveClient
         'debug' => false,
         'timeout' => 10,
         'user_agent' => 'bitreserve-sdk-php {version} (https://github.com/seegno/bitreserve-sdk-php)',
-        'version' => '1.0.1',
+        'version' => '1.1.0',
     );
 
     /**
