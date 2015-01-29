@@ -161,10 +161,6 @@ class HttpClient implements HttpClientInterface
      */
     public function request($path, $body, $httpMethod = 'GET', array $headers = array(), array $options = array())
     {
-        if (!empty($this->options['api_version'])) {
-            $path = sprintf('%s%s', $this->options['api_version'], $path);
-        }
-
         if (!empty($this->options['debug'])) {
             $options['debug'] = $this->options['debug'];
         }

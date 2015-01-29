@@ -10,7 +10,6 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
-use ReflectionMethod;
 use ReflectionProperty;
 
 class HttpClientTest extends \PHPUnit_Framework_TestCase

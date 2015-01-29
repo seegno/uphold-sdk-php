@@ -247,7 +247,7 @@ class BitreserveClient
     public function get($path, array $parameters = array(), $requestHeaders = array())
     {
         $response = $this->getHttpClient()->get(
-            $path,
+            $this->buildPath($path),
             $parameters,
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
@@ -267,7 +267,7 @@ class BitreserveClient
     public function post($path, array $parameters = array(), $requestHeaders = array())
     {
         $response = $this->getHttpClient()->post(
-            $path,
+            $this->buildPath($path),
             $this->createJsonBody($parameters),
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
@@ -287,7 +287,7 @@ class BitreserveClient
     public function patch($path, array $parameters = array(), $requestHeaders = array())
     {
         $response = $this->getHttpClient()->patch(
-            $path,
+            $this->buildPath($path),
             $this->createJsonBody($parameters),
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
@@ -307,7 +307,7 @@ class BitreserveClient
     public function put($path, array $parameters = array(), $requestHeaders = array())
     {
         $response = $this->getHttpClient()->put(
-            $path,
+            $this->buildPath($path),
             $this->createJsonBody($parameters),
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
@@ -327,12 +327,26 @@ class BitreserveClient
     public function delete($path, array $parameters = array(), $requestHeaders = array())
     {
         $response = $this->getHttpClient()->delete(
-            $path,
+            $this->buildPath($path),
             $this->createJsonBody($parameters),
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
 
         return ResponseMediator::getContent($response);
+    }
+
+    /**
+     * Build the API path that includes the API version.
+     *
+     * @return string API path.
+     */
+    protected function buildPath($path)
+    {
+        if (empty($this->options['api_version'])) {
+            return $path;
+        }
+
+        return sprintf('%s%s', $this->options['api_version'], $path);
     }
 
     /**
