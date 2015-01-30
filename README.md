@@ -63,7 +63,7 @@ Then, create a new instance of the `Client` class with token. Take a look at the
 ```php
 require_once 'vendor/autoload.php';
 
-use \Bitreserve\BitreserveClient as Client;
+use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
@@ -72,11 +72,55 @@ $client = new Client('AUTHORIZATION_TOKEN');
 $user = $client->getUser();
 ```
 
+### Get ticker
+```php
+require_once 'vendor/autoload.php';
+
+use Bitreserve\BitreserveClient as Client;
+
+// Initialize the client. In this case, we don't need an
+// AUTHORIZATION_TOKEN because the Ticker endpoint is public.
+$client = new Client();
+
+// Get tickers.
+$tickers = $client->getTicker();
+```
+
+Or you could get a ticker for a specific currency:
+
+```php
+// Get tickers for BTC.
+$tickers = $client->getTickerByCurrency('BTC');
+```
+
+The above produces the output shown below:
+
+```php
+Array
+(
+    [0] => Bitreserve\Model\Ticker Object
+        (
+            [ask:protected] => 1
+            [bid:protected] => 1
+            [currency:protected] => BTC
+            [pair:protected] => BTCBTC
+        )
+
+    [1] => Bitreserve\Model\Ticker Object
+        (
+            [ask:protected] => 234.89
+            [bid:protected] => 234.8
+            [currency:protected] => USD
+            [pair:protected] => BTCUSD
+        )
+)
+```
+
 ### Create and commit a new transaction
 ```php
 require_once 'vendor/autoload.php';
 
-use \Bitreserve\BitreserveClient as Client;
+use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
