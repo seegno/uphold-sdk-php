@@ -6,6 +6,7 @@ use Bitreserve\Exception\RuntimeException;
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\HttpClientInterface;
 use Bitreserve\HttpClient\Message\ResponseMediator;
+use Bitreserve\Model\Reserve;
 use Bitreserve\Model\Ticker;
 use Bitreserve\Model\Token;
 use Bitreserve\Model\Transaction;
@@ -21,6 +22,13 @@ class BitreserveClient
      * @var HttpClient
      */
     private $httpClient;
+
+    /**
+     * Current Reserve object.
+     *
+     * @var Reserve
+     */
+    private $reserve;
 
     /**
      * @var array
@@ -200,6 +208,22 @@ class BitreserveClient
         return array_map(function($transaction) {
             return new Transaction($this, $transaction);
         }, $data);
+    }
+
+    /**
+     * Get a reserve object or create a new one.
+     *
+     * @return Reserve The reserve object.
+     */
+    public function getReserve()
+    {
+        if ($this->reserve) {
+            return $this->reserve;
+        }
+
+        $this->reserve = new Reserve($this);
+
+        return $this->reserve;
     }
 
     /**

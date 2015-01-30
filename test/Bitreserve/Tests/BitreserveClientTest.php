@@ -223,6 +223,16 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldReturnReserve()
+    {
+        $client = new BitreserveClient();
+
+        $this->assertInstanceOf('Bitreserve\Model\Reserve', $client->getReserve());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnUser()
     {
         $data = array('username' => 'foobar');
