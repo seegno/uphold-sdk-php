@@ -105,6 +105,66 @@ Array
 )
 ```
 
+### Get user cards
+```php
+require_once 'vendor/autoload.php';
+
+use Bitreserve\BitreserveClient as Client;
+
+// Initialize the client.
+$client = new Client('AUTHORIZATION_TOKEN');
+
+// Get current user cards.
+$cards = $user->getCards();
+```
+
+### Create new card
+```php
+require_once 'vendor/autoload.php';
+
+use Bitreserve\BitreserveClient as Client;
+
+// Initialize the client.
+$client = new Client('AUTHORIZATION_TOKEN');
+
+// Create a new 'BTC' card.
+$card = $user->createCard('My new card', 'BTC');
+```
+
+The above produces the output shown below:
+
+```php
+Bitreserve\Model\Card Object
+(
+    [id:protected] => ade869d8-7913-4f67-bb4d-72719f0a2be0
+    [address:protected] => Array
+        (
+            [bitcoin] => 1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH
+        )
+
+    [addresses:protected] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH
+                    [network] => bitcoin
+                )
+
+        )
+
+    [available:protected] => 0.00
+    [balance:protected] => 0.00
+    [currency:protected] => BTC
+    [label:protected] => My new card
+    [lastTransactionAt:protected] =>
+    [transactions:protected] =>
+    [settings] => Array
+        (
+            [position] => 10
+        )
+)
+```
+
 ### Get ticker
 ```php
 require_once 'vendor/autoload.php';
