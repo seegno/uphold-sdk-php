@@ -231,6 +231,30 @@ $transaction = $card->createTransaction('foo@bar.com', '2.0', 'BTC');
 $transaction->commit();
 ```
 
+The above produces the output shown below:
+
+```php
+Bitreserve\Model\Transaction Object
+(
+    [id:protected] => a97bb994-6e24-4a89-b653-e0a6d0bcf634
+    [createdAt:protected] => 2015-01-30T11:46:11.439Z
+    [denomination:protected] => Array
+        (
+            [pair] => BTCBTC
+            [rate] => 1
+            [amount] => 2.0
+            [currency] => BTC
+        )
+    [destination:protected] => <snip>
+    [message:protected] =>
+    [origin:protected] => <snip>
+    [params:protected] => <snip>
+    [refundedById:protected] =>
+    [status:protected] => completed
+    [type] => transfer
+)
+```
+
 ### Get all public transactions
 ```php
 require_once 'vendor/autoload.php';
