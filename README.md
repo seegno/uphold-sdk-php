@@ -42,7 +42,7 @@ Require the library package as a dependency:
 ```json
 {
     "require": {
-        "seegno/bitreserve-sdk-php": "1.0.*"
+        "seegno/bitreserve-sdk-php": "1.1.*"
     }
 }
 ```
