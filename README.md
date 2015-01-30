@@ -72,6 +72,39 @@ $client = new Client('AUTHORIZATION_TOKEN');
 $user = $client->getUser();
 ```
 
+### Get user balances
+```php
+require_once 'vendor/autoload.php';
+
+use Bitreserve\BitreserveClient as Client;
+
+// Initialize the client.
+$client = new Client('AUTHORIZATION_TOKEN');
+
+// Get the current user.
+$user = $client->getUser();
+
+// Get user balances for all currencies.
+$balances = $user->getBalances();
+```
+
+You could get user total balance:
+
+```php
+// Get user total balance.
+$totalBalance = $user->getTotalBalance();
+```
+
+The above produces the output shown below:
+
+```php
+Array
+(
+    [amount] => 3.14
+    [currency] => BTC
+)
+```
+
 ### Get ticker
 ```php
 require_once 'vendor/autoload.php';
