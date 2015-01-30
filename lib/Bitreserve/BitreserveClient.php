@@ -184,30 +184,26 @@ class BitreserveClient
 
     /**
      * Return the public view of any transaction.
-     * Be advised that this method has the potential to return a great deal of data.
      *
      * @return Transaction The transaction identified by a given id.
+     *
+     * @deprecated Method deprecated in Release 1.2.0
      */
     public function getTransactionById($id)
     {
-        $data = $this->get(sprintf('/reserve/transactions/%s', $id));
-
-        return new Transaction($this, $data);
+        return $this->getReserve()->getTransactionById($id);
     }
 
     /**
      * Return the public view of all transactions from the beginning of time.
-     * Be advised that this method has the potential to return a great deal of data.
      *
      * @return array The list all public transactions.
+     *
+     * @deprecated Method deprecated in Release 1.2.0
      */
     public function getTransactions()
     {
-        $data = $this->get('/reserve/transactions');
-
-        return array_map(function($transaction) {
-            return new Transaction($this, $transaction);
-        }, $data);
+        return $this->getReserve()->getTransactions();
     }
 
     /**
