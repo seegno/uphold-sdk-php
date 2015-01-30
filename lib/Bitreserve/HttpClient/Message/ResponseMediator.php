@@ -10,8 +10,9 @@ class ResponseMediator
     /**
      * Get API rate limits from the response headers.
      *
-     * @param  Response $response The response
-     * @return array              The complete rate limits headers.
+     * @param Response $response The response.
+     *
+     * @return array
      */
     public static function getApiRateLimit(Response $response)
     {
@@ -25,8 +26,9 @@ class ResponseMediator
     /**
      * Get the decoded body from the response.
      *
-     * @param  Response $response The response
-     * @return mixed              Decoded body.
+     * @param Response $response The response.
+     *
+     * @return mixed
      */
     public static function getContent(Response $response)
     {
@@ -43,9 +45,9 @@ class ResponseMediator
     /**
      * Get response error.
      *
-     * @param  Response $response The response.
+     * @param Response $response The response.
      *
-     * @return string             The error code.
+     * @return string
      */
     public static function getError(Response $response)
     {
@@ -69,9 +71,9 @@ class ResponseMediator
     /**
      * Get error description.
      *
-     * @param  Response $response The response.
+     * @param Response $response The response.
      *
-     * @return string             The error description.
+     * @return string
      */
     public static function getErrorDescription(Response $response)
     {
@@ -99,8 +101,9 @@ class ResponseMediator
     /**
      * Checks if the response is a client error.
      *
-     * @param  Response $response The response
-     * @return boolean            Returns true if the response is a client error.
+     * @param Response $response The response.
+     *
+     * @return boolean
      */
     public static function isClientError(Response $response)
     {
@@ -110,8 +113,9 @@ class ResponseMediator
     /**
      * Checks if the response is a server error.
      *
-     * @param  Response $response The response
-     * @return boolean            Returns true if the response is a server error.
+     * @param Response $response The response.
+     *
+     * @return boolean
      */
     public static function isServerError(Response $response)
     {

@@ -4,6 +4,9 @@ namespace Bitreserve\Model;
 
 use Bitreserve\BitreserveClient;
 
+/**
+ * Contact Model.
+ */
 class Contact extends BaseModel implements ContactInterface
 {
     /**

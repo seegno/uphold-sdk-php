@@ -5,7 +5,7 @@ namespace Bitreserve\Model;
 use Bitreserve\BitreserveClient;
 
 /**
- * Card
+ * Card Model.
  */
 class Card extends BaseModel implements CardInterface
 {
@@ -63,7 +63,7 @@ class Card extends BaseModel implements CardInterface
      * Constructor.
      *
      * @param BitreserveClient $client Bitreserve client
-     * @param array $data User data
+     * @param array $data User data.
      */
     public function __construct(BitreserveClient $client, $data)
     {

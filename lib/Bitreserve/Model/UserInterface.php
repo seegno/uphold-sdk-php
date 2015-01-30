@@ -35,14 +35,14 @@ interface UserInterface
     /**
      * Gets current user’s cards on a given currency.
      *
-     * @return array of cards
+     * @return array
      */
     public function getCardsByCurrency($currency);
 
     /**
      * Gets current user contacts.
      *
-     * @return array  A of user contacts.
+     * @return array
      */
     public function getContacts();
 
@@ -112,7 +112,7 @@ interface UserInterface
     /**
      * Gets user current total balance.
      *
-     * @return string Total balance.
+     * @return string
      */
     public function getTotalBalance();
 
@@ -133,14 +133,17 @@ interface UserInterface
     /**
      * Creates a new Card for this user.
      *
-     * @return Card returns a Card Object
+     * @param string $label Card label.
+     * @param string $currency Card currency
+     *
+     * @return Card
      */
     public function createCard($label, $currency);
 
     /**
      * Update current user information.
      *
-     * @param array $params
+     * @param array $params List of parameters to update.
      *
      * @return $this
      */

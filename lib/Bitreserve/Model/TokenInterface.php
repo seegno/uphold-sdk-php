@@ -10,7 +10,7 @@ interface TokenInterface
     /**
      * Gets Current User.
      *
-     * @return User $user
+     * @return User
      */
     public function getUser();
 }

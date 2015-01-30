@@ -2,6 +2,9 @@
 
 namespace Bitreserve\Model;
 
+/**
+ * Base Model.
+ */
 abstract class BaseModel
 {
     /**
@@ -22,7 +25,7 @@ abstract class BaseModel
     /**
      * Returns all fields from the model.
      *
-     * @return array All fields
+     * @return array
      */
     public function toArray()
     {
@@ -42,7 +45,7 @@ abstract class BaseModel
     /**
      * Update Model fields based on data received.
      *
-     * @param  array $data Object fields.
+     * @param array $data Object fields.
      *
      * @return BaseModel
      */
