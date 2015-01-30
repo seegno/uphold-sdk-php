@@ -64,11 +64,11 @@ interface CardInterface
     public function getLastTransactionAt();
 
     /**
-     * Gets card position.
+     * Gets card settings.
      *
-     * @return $position
+     * @return $settings
      */
-    public function getPosition();
+    public function getSettings();
 
     /**
      * Gets a transaction from this card based on given id.
@@ -85,12 +85,6 @@ interface CardInterface
      * @return array $transactions An array of transactions.
      */
     public function getTransactions();
-
-    /**
-     * Creates a new transaction.
-     *
-     * @return $transaction
-     */
 
     /**
      * Creates a new transaction.

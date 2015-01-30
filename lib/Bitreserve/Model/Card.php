@@ -50,9 +50,9 @@ class Card extends BaseModel implements CardInterface
     protected $lastTransactionAt;
 
     /**
-     * @var position
+     * @var settings
      */
-    protected $position;
+    protected $settings;
 
     /**
      * @var transactions
@@ -139,9 +139,9 @@ class Card extends BaseModel implements CardInterface
     /**
      * {@inheritdoc}
      */
-    public function getPosition()
+    public function getSettings()
     {
-        return $this->position;
+        return $this->settings;
     }
 
     /**

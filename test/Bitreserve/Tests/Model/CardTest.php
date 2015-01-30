@@ -122,15 +122,15 @@ class CardTest extends TestCase
     /**
      * @test
      */
-    public function shouldReturnPosition()
+    public function shouldReturnSettings()
     {
-        $data = array('position' => '3');
+        $data = array('settings' => array('position' => '3', 'starred' => true));
 
         $client = $this->getBitreserveClientMock();
 
         $card = new Card($client, $data);
 
-        $this->assertEquals($data['position'], $card->getPosition());
+        $this->assertEquals($data['settings'], $card->getSettings());
     }
 
     /**
