@@ -8,7 +8,7 @@ use \Bitreserve\BitreserveClient as Client;
 // AUTHORIZATION_TOKEN because the Ticker endpoint is public.
 $client = new Client();
 
-// Get current user cards.
+// Get tickers.
 $tickers = $client->getTicker();
 
 echo "*** Current exchange rates ***\n";

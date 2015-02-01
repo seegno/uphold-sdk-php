@@ -42,7 +42,7 @@ Require the library package as a dependency:
 ```json
 {
     "require": {
-        "seegno/bitreserve-sdk-php": "1.0.*"
+        "seegno/bitreserve-sdk-php": "1.1.*"
     }
 }
 ```
@@ -63,7 +63,7 @@ Then, create a new instance of the `Client` class with token. Take a look at the
 ```php
 require_once 'vendor/autoload.php';
 
-use \Bitreserve\BitreserveClient as Client;
+use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
@@ -72,11 +72,148 @@ $client = new Client('AUTHORIZATION_TOKEN');
 $user = $client->getUser();
 ```
 
+### Get user balances
+```php
+require_once 'vendor/autoload.php';
+
+use Bitreserve\BitreserveClient as Client;
+
+// Initialize the client.
+$client = new Client('AUTHORIZATION_TOKEN');
+
+// Get the current user.
+$user = $client->getUser();
+
+// Get user balances for all currencies.
+$balances = $user->getBalances();
+```
+
+You could get user total balance:
+
+```php
+// Get user total balance.
+$totalBalance = $user->getTotalBalance();
+```
+
+The above produces the output shown below:
+
+```php
+Array
+(
+    [amount] => 3.14
+    [currency] => BTC
+)
+```
+
+### Get user cards
+```php
+require_once 'vendor/autoload.php';
+
+use Bitreserve\BitreserveClient as Client;
+
+// Initialize the client.
+$client = new Client('AUTHORIZATION_TOKEN');
+
+// Get current user cards.
+$cards = $user->getCards();
+```
+
+### Create new card
+```php
+require_once 'vendor/autoload.php';
+
+use Bitreserve\BitreserveClient as Client;
+
+// Initialize the client.
+$client = new Client('AUTHORIZATION_TOKEN');
+
+// Create a new 'BTC' card.
+$card = $user->createCard('My new card', 'BTC');
+```
+
+The above produces the output shown below:
+
+```php
+Bitreserve\Model\Card Object
+(
+    [id:protected] => ade869d8-7913-4f67-bb4d-72719f0a2be0
+    [address:protected] => Array
+        (
+            [bitcoin] => 1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH
+        )
+
+    [addresses:protected] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH
+                    [network] => bitcoin
+                )
+
+        )
+
+    [available:protected] => 0.00
+    [balance:protected] => 0.00
+    [currency:protected] => BTC
+    [label:protected] => My new card
+    [lastTransactionAt:protected] =>
+    [transactions:protected] =>
+    [settings] => Array
+        (
+            [position] => 10
+        )
+)
+```
+
+### Get ticker
+```php
+require_once 'vendor/autoload.php';
+
+use Bitreserve\BitreserveClient as Client;
+
+// Initialize the client. In this case, we don't need an
+// AUTHORIZATION_TOKEN because the Ticker endpoint is public.
+$client = new Client();
+
+// Get tickers.
+$tickers = $client->getTicker();
+```
+
+Or you could get a ticker for a specific currency:
+
+```php
+// Get tickers for BTC.
+$tickers = $client->getTickerByCurrency('BTC');
+```
+
+The above produces the output shown below:
+
+```php
+Array
+(
+    [0] => Bitreserve\Model\Ticker Object
+        (
+            [ask:protected] => 1
+            [bid:protected] => 1
+            [currency:protected] => BTC
+            [pair:protected] => BTCBTC
+        )
+
+    [1] => Bitreserve\Model\Ticker Object
+        (
+            [ask:protected] => 234.89
+            [bid:protected] => 234.8
+            [currency:protected] => USD
+            [pair:protected] => BTCUSD
+        )
+)
+```
+
 ### Create and commit a new transaction
 ```php
 require_once 'vendor/autoload.php';
 
-use \Bitreserve\BitreserveClient as Client;
+use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
@@ -92,6 +229,30 @@ $transaction = $card->createTransaction('foo@bar.com', '2.0', 'BTC');
 
 // Commit the transaction.
 $transaction->commit();
+```
+
+The above produces the output shown below:
+
+```php
+Bitreserve\Model\Transaction Object
+(
+    [id:protected] => a97bb994-6e24-4a89-b653-e0a6d0bcf634
+    [createdAt:protected] => 2015-01-30T11:46:11.439Z
+    [denomination:protected] => Array
+        (
+            [pair] => BTCBTC
+            [rate] => 1
+            [amount] => 2.0
+            [currency] => BTC
+        )
+    [destination:protected] => <snip>
+    [message:protected] =>
+    [origin:protected] => <snip>
+    [params:protected] => <snip>
+    [refundedById:protected] =>
+    [status:protected] => completed
+    [type] => transfer
+)
 ```
 
 ### Get all public transactions
