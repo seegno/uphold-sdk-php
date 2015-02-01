@@ -94,6 +94,41 @@ $transaction = $card->createTransaction('foo@bar.com', '2.0', 'BTC');
 $transaction->commit();
 ```
 
+### Get all public transactions
+```php
+require_once 'vendor/autoload.php';
+
+use \Bitreserve\BitreserveClient as Client;
+
+// Initialize the client. In this case, we don't need an
+// AUTHORIZATION_TOKEN because the Ticker endpoint is public.
+$client = new Client();
+
+// Get all public transactions.
+$transactions = $client->getReserve()->getTransactions();
+```
+
+Or you could get a specific public transaction:
+
+```php
+// Get one public transaction.
+$transaction = $client->getReserve()->getTransactionById('a97bb994-6e24-4a89-b653-e0a6d0bcf634');
+```
+
+### Get reserve status
+```php
+require_once 'vendor/autoload.php';
+
+use \Bitreserve\BitreserveClient as Client;
+
+// Initialize the client. In this case, we don't need an
+// AUTHORIZATION_TOKEN because the Ticker endpoint is public.
+$client = new Client();
+
+// Get the reserve summary of all the obligations and assets within it.
+$statistics = $client->getReserve()->getStatistics();
+```
+
 ## Contributing & Development
 
 #### Contributing

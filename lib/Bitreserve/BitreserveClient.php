@@ -6,6 +6,7 @@ use Bitreserve\Exception\RuntimeException;
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\HttpClientInterface;
 use Bitreserve\HttpClient\Message\ResponseMediator;
+use Bitreserve\Model\Reserve;
 use Bitreserve\Model\Ticker;
 use Bitreserve\Model\Token;
 use Bitreserve\Model\Transaction;
@@ -21,6 +22,13 @@ class BitreserveClient
      * @var HttpClient
      */
     private $httpClient;
+
+    /**
+     * Current Reserve object.
+     *
+     * @var Reserve
+     */
+    private $reserve;
 
     /**
      * @var array
@@ -176,30 +184,42 @@ class BitreserveClient
 
     /**
      * Return the public view of any transaction.
-     * Be advised that this method has the potential to return a great deal of data.
      *
      * @return Transaction The transaction identified by a given id.
+     *
+     * @deprecated Method deprecated in Release 1.2.0
      */
     public function getTransactionById($id)
     {
-        $data = $this->get(sprintf('/reserve/transactions/%s', $id));
-
-        return new Transaction($this, $data);
+        return $this->getReserve()->getTransactionById($id);
     }
 
     /**
      * Return the public view of all transactions from the beginning of time.
-     * Be advised that this method has the potential to return a great deal of data.
      *
      * @return array The list all public transactions.
+     *
+     * @deprecated Method deprecated in Release 1.2.0
      */
     public function getTransactions()
     {
-        $data = $this->get('/reserve/transactions');
+        return $this->getReserve()->getTransactions();
+    }
 
-        return array_map(function($transaction) {
-            return new Transaction($this, $transaction);
-        }, $data);
+    /**
+     * Get a reserve object or create a new one.
+     *
+     * @return Reserve The reserve object.
+     */
+    public function getReserve()
+    {
+        if ($this->reserve) {
+            return $this->reserve;
+        }
+
+        $this->reserve = new Reserve($this);
+
+        return $this->reserve;
     }
 
     /**
