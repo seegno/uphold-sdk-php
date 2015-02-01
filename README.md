@@ -92,7 +92,7 @@ You could get user total balance:
 
 ```php
 // Get user total balance.
-$totalBalance = $user->getTotalBalance();
+$balance = $user->getTotalBalance();
 ```
 
 The above produces the output shown below:
