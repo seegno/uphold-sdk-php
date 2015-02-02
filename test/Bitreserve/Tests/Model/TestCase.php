@@ -23,7 +23,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->getMock();
     }
 
-    public function getBitreserveClientMock(array $methods = array())
+    protected function getBitreserveClientMock(array $methods = array())
     {
         $methods = array_merge(
             array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'setHeaders', 'getOption'),
@@ -33,7 +33,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         return $this->getMock('Bitreserve\BitreserveClient', $methods);
     }
 
-    public function getHttpClientMock(array $methods = array())
+    protected function getHttpClientMock(array $methods = array())
     {
         $methods = array_merge(
             array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'setHeaders', 'getOption'),
