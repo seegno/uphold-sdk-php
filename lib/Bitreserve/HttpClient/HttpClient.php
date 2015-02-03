@@ -96,27 +96,6 @@ class HttpClient implements HttpClientInterface
     }
 
     /**
-     * Adds new event listener.
-     *
-     * @param string    $eventName Event listener.
-     * @param array     $listener  Event .
-     */
-    public function addListener($eventName, $listener)
-    {
-        $this->client->getEmitter()->on($eventName, $listener);
-    }
-
-    /**
-     * Add new event subscriber.
-     *
-     * @param EventSubscriberInterface $subscriber Subscriber object
-     */
-    public function addSubscriber(EventSubscriberInterface $subscriber)
-    {
-        $this->client->getEmitter()->attach($subscriber);
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function get($path, array $parameters = array(), array $headers = array())
