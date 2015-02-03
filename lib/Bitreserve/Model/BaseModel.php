@@ -43,11 +43,15 @@ abstract class BaseModel
      * Update Model fields based on data received.
      *
      * @param  array $data Object fields.
+     *
+     * @return BaseModel
      */
     protected function updateFields($data)
     {
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
+
+        return $this;
     }
 }
