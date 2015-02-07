@@ -66,7 +66,7 @@ class BitreserveClientTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\BadRequestException
+     * @expectedException Bitreserve\Exception\BadRequestException
      */
     public function shouldThrowExceptionWhenCurrencyIsNotValid()
     {

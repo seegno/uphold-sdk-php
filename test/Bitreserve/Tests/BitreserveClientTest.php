@@ -408,7 +408,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function getBitreserveClientMock()
+    protected function getBitreserveClientMock()
     {
         $methods = array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'getOption', 'setHeaders');
 
@@ -417,7 +417,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
             ->getMock();
     }
 
-    public function getHttpClientMock()
+    protected function getHttpClientMock()
     {
         $methods = array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'setHeaders');
 

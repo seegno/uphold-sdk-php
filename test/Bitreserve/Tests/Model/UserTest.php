@@ -312,9 +312,7 @@ class UserTest extends TestCase
 
         $user = new User($client, $data);
 
-        $totalBalance = $user->getTotalBalance();
-
-        $this->assertEquals(array('amount' => '58.05', 'currency' => 'USD'), $totalBalance);
+        $this->assertEquals(array('amount' => '58.05', 'currency' => 'USD'), $user->getTotalBalance());
     }
 
     /**

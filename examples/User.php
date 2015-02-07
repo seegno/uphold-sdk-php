@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-use \Bitreserve\BitreserveClient as Client;
+use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
@@ -16,9 +16,10 @@ echo sprintf("Username: %s\n", $user->getUsername());
 echo sprintf("Email: %s\n", $user->getEmail());
 echo sprintf("Country: %s\n", $user->getCountry());
 
-$totalBalance = $user->getTotalBalance();
+// Get user total balance.
+$balance = $user->getTotalBalance();
 
-echo sprintf("Total Balance: %s %s\n", $totalBalance['amount'], $totalBalance['currency']);
+echo sprintf("Total Balance: %s %s\n", $balance['amount'], $balance['currency']);
 
 // Get balances for all currencies.
 echo "\n*** User Balances ***\n";

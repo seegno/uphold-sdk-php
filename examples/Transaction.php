@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-use \Bitreserve\BitreserveClient as Client;
+use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');

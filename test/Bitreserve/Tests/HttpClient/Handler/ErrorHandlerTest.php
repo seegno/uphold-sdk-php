@@ -32,7 +32,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\LogicException
+     * @expectedException Bitreserve\Exception\LogicException
      */
     public function shouldThrowLogicExceptionWhenALogicExceptionIsGiven()
     {
@@ -42,7 +42,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\RuntimeException
+     * @expectedException Bitreserve\Exception\RuntimeException
      */
     public function shouldThrowRuntimeExceptionWhenARuntimeExceptionIsGiven()
     {
@@ -52,7 +52,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\RuntimeException
+     * @expectedException Bitreserve\Exception\RuntimeException
      */
     public function shouldThrowRuntimeExceptionWhenARequestExceptionOrLogicExceptionIsNotGiven()
     {
@@ -62,7 +62,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\BadRequestException
+     * @expectedException Bitreserve\Exception\BadRequestException
      */
     public function shouldThrowBadRequestExceptionWhenStatusCodeIs400()
     {
@@ -75,7 +75,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\AuthenticationRequiredException
+     * @expectedException Bitreserve\Exception\AuthenticationRequiredException
      */
     public function shouldThrowAuthenticationRequiredExceptionWhenStatusCodeIs401()
     {
@@ -93,7 +93,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\TwoFactorAuthenticationRequiredException
+     * @expectedException Bitreserve\Exception\TwoFactorAuthenticationRequiredException
      */
     public function shouldThrowTwoFactorAuthenticationRequiredExceptionWhenStatusCodeIs401()
     {
@@ -111,7 +111,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\RuntimeException
+     * @expectedException Bitreserve\Exception\RuntimeException
      */
     public function shouldThrowRuntimeExceptionWhenStatusCodeIs403()
     {
@@ -124,7 +124,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\NotFoundException
+     * @expectedException Bitreserve\Exception\NotFoundException
      */
     public function shouldThrowNotFoundExceptionWhenStatusCodeIs404()
     {
@@ -137,7 +137,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\ApiLimitExceedException
+     * @expectedException Bitreserve\Exception\ApiLimitExceedException
      */
     public function shouldThrowApiLimitExceedException()
     {
@@ -159,7 +159,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Bitreserve\Exception\RuntimeException
+     * @expectedException Bitreserve\Exception\RuntimeException
      */
     public function shouldThrowRuntimeExceptionWhenStatusCodeIs500()
     {

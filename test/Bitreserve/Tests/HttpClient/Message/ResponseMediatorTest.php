@@ -100,7 +100,7 @@ class ResponseMediatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, ResponseMediator::getApiRateLimit($response));
     }
 
-    private function getResponseMock()
+    protected function getResponseMock()
     {
         return $this->getMockBuilder('GuzzleHttp\Message\Response')->disableOriginalConstructor()->getMock();
     }
