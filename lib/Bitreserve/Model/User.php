@@ -4,6 +4,9 @@ namespace Bitreserve\Model;
 
 use Bitreserve\BitreserveClient;
 
+/**
+ * User Model.
+ */
 class User extends BaseModel implements UserInterface
 {
     /**
@@ -54,8 +57,8 @@ class User extends BaseModel implements UserInterface
     /**
      * Constructor.
      *
-     * @param BitreserveClient $client Bitreserve client
-     * @param array $data User data
+     * @param BitreserveClient $client Bitreserve client.
+     * @param array $data User data.
      */
     public function __construct(BitreserveClient $client, $data)
     {

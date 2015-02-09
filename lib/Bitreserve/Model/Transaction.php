@@ -6,7 +6,7 @@ use Bitreserve\BitreserveClient;
 use Bitreserve\Exception\LogicException;
 
 /**
- * Tokem Model.
+ * Transaction Model.
  */
 class Transaction extends BaseModel implements TransactionInterface
 {
@@ -58,8 +58,8 @@ class Transaction extends BaseModel implements TransactionInterface
     /**
      * Constructor.
      *
-     * @param BitreserveClient $client Bitreserve client
-     * @param array $data User data
+     * @param BitreserveClient $client Bitreserve client.
+     * @param array $data User data.
      */
     public function __construct(BitreserveClient $client, $data)
     {

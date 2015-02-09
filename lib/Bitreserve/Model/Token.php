@@ -13,7 +13,7 @@ class Token extends BaseModel implements TokenInterface
     /**
      * Constructor.
      *
-     * @param BitreserveClient $client Bitreserve client
+     * @param BitreserveClient $client Bitreserve client.
      */
     public function __construct(BitreserveClient $client)
     {

@@ -73,35 +73,36 @@ interface CardInterface
     /**
      * Gets a transaction from this card based on given id.
      *
-     * @param  string $id Transaction id.
+     * @param string $id Transaction id.
      *
-     * @return Transaction $transaction One instance of transaction.
+     * @return Transaction
      */
     public function getTransactionById($id);
 
     /**
      * Gets the transactions associated with the card identified by the user.
      *
-     * @return array $transactions An array of transactions.
+     * @return array
      */
     public function getTransactions();
 
     /**
      * Creates a new transaction.
      *
-     * @param  string $destination  Email or bitcoin address.
-     * @param  string $amount       The amount to be transfered.
-     * @param  array $denomination  Transaction denomination.
+     * @param string $destination Email or bitcoin address.
+     * @param string $amount The amount to be transfered.
+     * @param array $denomination Transaction denomination.
      *
-     * @return Transaction          An Instance of a transaction.
+     * @return Transaction
      */
     public function createTransaction($destination, $amount, $denomination);
 
     /**
-     * Updates card information
-     * @param  array  $params Card information to update.
+     * Updates card information.
      *
-     * @return Card           Updated card.
+     * @param array $params Card information to update.
+     *
+     * @return Card
      */
     public function update(array $params);
 }

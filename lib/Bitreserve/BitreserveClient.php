@@ -74,9 +74,9 @@ class BitreserveClient
     /**
      * Get client option.
      *
-     * @param  string $name Option name.
+     * @param string $name Option name.
      *
-     * @return mixed        Option value.
+     * @return mixed
      */
     public function getOption($name)
     {
@@ -90,7 +90,7 @@ class BitreserveClient
     /**
      * Get all client options.
      *
-     * @return array An array of options.
+     * @return array
      */
     public function getOptions()
     {
@@ -108,7 +108,7 @@ class BitreserveClient
     /**
      * Sets client option.
      *
-     * @param string $name  Option name.
+     * @param string $name Option name.
      * @param mixed $value Option value.
      */
     public function setOption($name, $value)
@@ -121,7 +121,7 @@ class BitreserveClient
     /**
      * Retrieve all available currencies.
      *
-     * @return array The list of all available currencies.
+     * @return array
      */
     public function getCurrencies()
     {
@@ -141,7 +141,7 @@ class BitreserveClient
     /**
      * Retrieve all exchanges rates for all currency pairs.
      *
-     * @return array The current rates as provided by the ticker.
+     * @return array
      */
     public function getTicker()
     {
@@ -155,7 +155,9 @@ class BitreserveClient
     /**
      * Retrieve all exchanges rates relative to a given currency.
      *
-     * @return array The current rates for the currency specific as provided by the ticker.
+     * @param string $currency The filter currency.
+     *
+     * @return array
      */
     public function getTickerByCurrency($currency)
     {
@@ -169,7 +171,7 @@ class BitreserveClient
     /**
      * Get the current token or create a new one.
      *
-     * @return Token A token object.
+     * @return Token
      */
     public function getToken()
     {
@@ -185,7 +187,9 @@ class BitreserveClient
     /**
      * Return the public view of any transaction.
      *
-     * @return Transaction The transaction identified by a given id.
+     * @param string $id The transaction id.
+     *
+     * @return Transaction
      *
      * @deprecated Method deprecated in Release 1.2.0
      */
@@ -197,7 +201,7 @@ class BitreserveClient
     /**
      * Return the public view of all transactions from the beginning of time.
      *
-     * @return array The list all public transactions.
+     * @return array
      *
      * @deprecated Method deprecated in Release 1.2.0
      */
@@ -209,7 +213,7 @@ class BitreserveClient
     /**
      * Get a reserve object or create a new one.
      *
-     * @return Reserve The reserve object.
+     * @return Reserve
      */
     public function getReserve()
     {
@@ -225,7 +229,7 @@ class BitreserveClient
     /**
      * Get current user.
      *
-     * @return User The current user object.
+     * @return User
      */
     public function getUser()
     {
@@ -235,12 +239,12 @@ class BitreserveClient
     /**
      * Create a new Personal Access Token (PAT).
      *
-     * @param  string $login       Login email or username.
-     * @param  string $password    Password.
-     * @param  string $description PAT description.
-     * @param  string $otp         Verification code
+     * @param string $login Login email or username.
+     * @param string $password Password.
+     * @param string $description PAT description.
+     * @param string $otp Verification code
      *
-     * @return array               New PAT information.
+     * @return array
      */
     public function createToken($login, $password, $description, $otp = null)
     {
@@ -258,9 +262,9 @@ class BitreserveClient
     /**
      * Send a GET request with query parameters.
      *
-     * @param string $path              Request path.
-     * @param array $parameters         GET parameters.
-     * @param array $requestHeaders     Request Headers.
+     * @param string $path Request path.
+     * @param array $parameters GET parameters.
+     * @param array $requestHeaders Request Headers.
      *
      * @return \GuzzleHttp\EntityBodyInterface|mixed|string
      */
@@ -278,9 +282,9 @@ class BitreserveClient
     /**
      * Send a POST request with JSON-encoded parameters.
      *
-     * @param string $path              Request path.
-     * @param array $parameters         POST parameters to be JSON encoded.
-     * @param array $requestHeaders     Request headers.
+     * @param string $path Request path.
+     * @param array $parameters POST parameters to be JSON encoded.
+     * @param array $requestHeaders Request headers.
      *
      * @return \GuzzleHttp\EntityBodyInterface|mixed|string
      */
@@ -298,9 +302,9 @@ class BitreserveClient
     /**
      * Send a PATCH request with JSON-encoded parameters.
      *
-     * @param string $path              Request path.
-     * @param array $parameters         POST parameters to be JSON encoded.
-     * @param array $requestHeaders     Request headers.
+     * @param string $path Request path.
+     * @param array $parameters POST parameters to be JSON encoded.
+     * @param array $requestHeaders Request headers.
      *
      * @return \GuzzleHttp\EntityBodyInterface|mixed|string
      */
@@ -318,9 +322,9 @@ class BitreserveClient
     /**
      * Send a PUT request with JSON-encoded parameters.
      *
-     * @param string $path              Request path.
-     * @param array $parameters         POST parameters to be JSON encoded.
-     * @param array $requestHeaders     Request headers.
+     * @param string $path Request path.
+     * @param array $parameters POST parameters to be JSON encoded.
+     * @param array $requestHeaders Request headers.
      *
      * @return \GuzzleHttp\EntityBodyInterface|mixed|string
      */
@@ -338,9 +342,9 @@ class BitreserveClient
     /**
      * Send a DELETE request with JSON-encoded parameters.
      *
-     * @param string $path              Request path.
-     * @param array $parameters         POST parameters to be JSON encoded.
-     * @param array $requestHeaders     Request headers.
+     * @param string $path Request path.
+     * @param array $parameters POST parameters to be JSON encoded.
+     * @param array $requestHeaders Request headers.
      *
      * @return \GuzzleHttp\EntityBodyInterface|mixed|string
      */
@@ -358,7 +362,7 @@ class BitreserveClient
     /**
      * Build the API path that includes the API version.
      *
-     * @return string API path.
+     * @return string
      */
     protected function buildPath($path)
     {
@@ -374,7 +378,7 @@ class BitreserveClient
      *
      * @param array $parameters Request parameters
      *
-     * @return null|string The parameters in JSON format.
+     * @return null|string
      */
     protected function createJsonBody(array $parameters)
     {
@@ -390,7 +394,7 @@ class BitreserveClient
     /**
      * Create the API default headers that are mandatory.
      *
-     * @return array The list of default headers.
+     * @return array
      */
     protected function getDefaultHeaders()
     {

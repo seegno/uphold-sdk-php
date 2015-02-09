@@ -14,7 +14,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\Response;
 
 /**
- * ErrorHandler
+ * ErrorHandler.
  */
 class ErrorHandler
 {
@@ -36,7 +36,7 @@ class ErrorHandler
     /**
      * Handles different types of exceptions.
      *
-     * @param  \Exception $e The exception.
+     * @param \Exception $e The exception.
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class ErrorHandler
     /**
      * Handles a Request Exception.
      *
-     * @param  RequestException $e The request exception.
+     * @param RequestException $e The request exception.
      *
      * @return void
      */

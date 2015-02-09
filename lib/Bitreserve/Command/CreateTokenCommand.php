@@ -12,6 +12,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
+/**
+ * Command to create a new Personal Access Token
+ */
 class CreateTokenCommand extends Command
 {
     /**
@@ -26,7 +29,7 @@ class CreateTokenCommand extends Command
     /**
      * Initializes the command.
      *
-     * @param InputInterface  $input  An InputInterface instance
+     * @param InputInterface $input An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
      * @return void
@@ -96,9 +99,9 @@ class CreateTokenCommand extends Command
     }
 
     /**
-     * Request a new personal access token to the API.
+     * Request and returns a new personal access token to the API.
      *
-     * @return array The new personal access token.
+     * @return array
      */
     public function requestToken()
     {
@@ -108,7 +111,7 @@ class CreateTokenCommand extends Command
     /**
      * Get PAT description from the output.
      *
-     * @return string Description.
+     * @return string
      */
     public function getDescription()
     {
@@ -126,7 +129,7 @@ class CreateTokenCommand extends Command
     /**
      * Get user login (username or email).
      *
-     * @return string Login.
+     * @return string
      */
     public function getLogin()
     {
@@ -144,7 +147,7 @@ class CreateTokenCommand extends Command
     /**
      * Get user password.
      *
-     * @return string Password.
+     * @return string
      */
     public function getPassword()
     {
@@ -162,7 +165,7 @@ class CreateTokenCommand extends Command
     /**
      * Get user account verification code (OTP).
      *
-     * @return void Verification code.
+     * @return void
      */
     public function getOtp()
     {

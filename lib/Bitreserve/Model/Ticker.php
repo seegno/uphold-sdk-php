@@ -4,6 +4,9 @@ namespace Bitreserve\Model;
 
 use Bitreserve\BitreserveClient;
 
+/**
+ * Ticker Model.
+ */
 class Ticker extends BaseModel implements TickerInterface
 {
     /**
@@ -29,8 +32,8 @@ class Ticker extends BaseModel implements TickerInterface
     /**
      * Constructor.
      *
-     * @param BitreserveClient $client Bitreserve client
-     * @param array $data User data
+     * @param BitreserveClient $client Bitreserve client.
+     * @param array $data User data.
      */
     public function __construct(BitreserveClient $client, $data)
     {
