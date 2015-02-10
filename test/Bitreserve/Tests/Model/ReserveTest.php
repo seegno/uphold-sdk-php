@@ -25,6 +25,26 @@ class ReserveTest extends TestCase
     /**
      * @test
      */
+    public function shouldReturnLedger()
+    {
+        $data = array('foo' => 'bar');
+
+        $response = $this->getResponseMock($data);
+
+        $client = $this->getBitreserveClientMock();
+        $client->expects($this->once())
+            ->method('get')
+            ->with('/reserve/ledger')
+            ->will($this->returnValue($response));
+
+        $reserve = new Reserve($client);
+
+        $this->assertEquals($data, $reserve->getLedger());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnStatistics()
     {
         $data = array('foo' => 'bar');
