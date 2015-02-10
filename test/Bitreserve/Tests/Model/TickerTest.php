@@ -4,6 +4,9 @@ namespace Bitreserve\Tests\Model;
 
 use Bitreserve\Model\Ticker;
 
+/**
+ * TickerTest.
+ */
 class TickerTest extends TestCase
 {
     /**

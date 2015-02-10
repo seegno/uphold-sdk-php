@@ -5,6 +5,9 @@ namespace Bitreserve\Tests\Model;
 use Bitreserve\BitreserveClient;
 use Bitreserve\Model\User;
 
+/**
+ * UserTest.
+ */
 class UserTest extends TestCase
 {
     /**
@@ -28,11 +31,13 @@ class UserTest extends TestCase
     {
         $data = array('firstName' => 'foo', 'lastName' => 'bar');
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('patch')
             ->with('/me',$data)
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, $data);
 
@@ -167,11 +172,13 @@ class UserTest extends TestCase
             'theme' => 'minimalistic',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, $data);
 
@@ -192,11 +199,13 @@ class UserTest extends TestCase
             'internationalMasked' => '+X XXX-XXX-XX04',
         );
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me/phones')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, $data);
 
@@ -216,11 +225,13 @@ class UserTest extends TestCase
             'lastName' => 'Bar',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me/contacts')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, $data);
 
@@ -245,11 +256,13 @@ class UserTest extends TestCase
             'total' => '58.05',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, $data);
 
@@ -273,11 +286,13 @@ class UserTest extends TestCase
             'total' => '58.05',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, $data);
 
@@ -304,11 +319,13 @@ class UserTest extends TestCase
                 'currency' => 'USD',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, $data);
 
@@ -332,11 +349,13 @@ class UserTest extends TestCase
             'balance' => '499.23',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me/cards')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, array('username' => 'foobar'));
 
@@ -368,11 +387,13 @@ class UserTest extends TestCase
             'balance' => '499.23',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me/cards')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, array('username' => 'foobar'));
 
@@ -395,11 +416,13 @@ class UserTest extends TestCase
             'currency' => 'BTC',
         );
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('post')
             ->with('/me/cards')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, array('username' => 'foobar'));
 
@@ -434,11 +457,13 @@ class UserTest extends TestCase
             ))
         );
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with(sprintf('/me/cards/%s', $data['id']))
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, array('username' => 'foobar'));
 
@@ -461,11 +486,13 @@ class UserTest extends TestCase
             'status' => 'completed',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/me/transactions')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $user = new User($client, array('username' => 'foobar'));
 

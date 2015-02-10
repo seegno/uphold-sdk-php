@@ -5,6 +5,8 @@ namespace Bitreserve\Tests\Functional;
 use Bitreserve\BitreserveClient;
 
 /**
+ * BitreserveClientTest.
+ *
  * @group functional
  */
 class BitreserveClientTest extends TestCase

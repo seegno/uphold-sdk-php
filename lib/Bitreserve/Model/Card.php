@@ -149,9 +149,9 @@ class Card extends BaseModel implements CardInterface
      */
     public function getTransactionById($id)
     {
-        $data = $this->client->get(sprintf('/me/cards/%s/transactions', $this->id));
+        $response = $this->client->get(sprintf('/me/cards/%s/transactions', $this->id));
 
-        foreach ($data as $transaction) {
+        foreach ($response->getContent() as $transaction) {
             if ($id !== $transaction['id']) {
                 continue;
             }
@@ -167,11 +167,11 @@ class Card extends BaseModel implements CardInterface
      */
     public function getTransactions()
     {
-        $data = $this->client->get(sprintf('/me/cards/%s/transactions', $this->id));
+        $response = $this->client->get(sprintf('/me/cards/%s/transactions', $this->id));
 
         return array_map(function($transaction) {
             return new Transaction($this->client, $transaction);
-        }, $data);
+        }, $response->getContent());
     }
 
     /**
@@ -186,9 +186,9 @@ class Card extends BaseModel implements CardInterface
                 'currency' => $currency,
         ));
 
-        $data = $this->client->post(sprintf('/me/cards/%s/transactions', $this->id), $postData);
+        $response = $this->client->post(sprintf('/me/cards/%s/transactions', $this->id), $postData);
 
-        $transaction = new Transaction($this->client, $data);
+        $transaction = new Transaction($this->client, $response->getContent());
 
         return $transaction;
     }
@@ -198,9 +198,9 @@ class Card extends BaseModel implements CardInterface
      */
     public function update(array $params)
     {
-        $data = $this->client->patch(sprintf('/me/cards/%s', $this->id), $params);
+        $response = $this->client->patch(sprintf('/me/cards/%s', $this->id), $params);
 
-        $this->updateFields($data);
+        $this->updateFields($response->getContent());
 
         return $this;
     }
