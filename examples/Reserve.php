@@ -12,3 +12,8 @@ $client = new Client();
 $statistics = $client->getReserve()->getStatistics();
 
 print_r($statistics);
+
+// Get the reserve ledger
+$ledger = $client->getReserve()->getLedger();
+
+print_r($ledger);

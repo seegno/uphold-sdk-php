@@ -22,6 +22,16 @@ class Reserve extends BaseModel implements ReserveInterface
     /**
      * {@inheritdoc}
      */
+    public function getLedger()
+    {
+        $response = $this->client->get('/reserve/ledger');
+
+        return $response->getContent();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getStatistics()
     {
         $response = $this->client->get('/reserve/statistics');
