@@ -3,6 +3,7 @@
 namespace Bitreserve\HttpClient;
 
 use Bitreserve\HttpClient\Handler\ErrorHandler;
+use Bitreserve\HttpClient\Message\MessageFactory;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -49,7 +50,10 @@ class HttpClient implements HttpClientInterface
      */
     public function __construct(array $options = array())
     {
-        $this->options = array_merge($this->options, $options);
+        $this->options = array_merge($this->options,
+            array('message_factory' => new MessageFactory()),
+            $options
+        );
 
         $this->client = new GuzzleClient($this->options);
         $this->errorHandler = new ErrorHandler($this->options);

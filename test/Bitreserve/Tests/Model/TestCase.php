@@ -2,6 +2,9 @@
 
 namespace Bitreserve\Tests\Model;
 
+/**
+ * TestCase.
+ */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     abstract protected function getModelClass();
@@ -41,5 +44,22 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         );
 
         return $this->getMock('Bitreserve\HttpClient\HttpClientInterface', $methods);
+    }
+
+    protected function getResponseMock($content = null)
+    {
+        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        if (null === $content) {
+            return $response;
+        }
+
+        $response->expects($this->any())
+            ->method('getContent')
+            ->will($this->returnValue($content));
+
+        return $response;
     }
 }

@@ -24,7 +24,9 @@ class Reserve extends BaseModel implements ReserveInterface
      */
     public function getStatistics()
     {
-        return $this->client->get('/reserve/statistics');
+        $response = $this->client->get('/reserve/statistics');
+
+        return $response->getContent();
     }
 
     /**
@@ -32,9 +34,9 @@ class Reserve extends BaseModel implements ReserveInterface
      */
     public function getTransactionById($id)
     {
-        $data = $this->client->get(sprintf('/reserve/transactions/%s', $id));
+        $response = $this->client->get(sprintf('/reserve/transactions/%s', $id));
 
-        return new Transaction($this->client, $data);
+        return new Transaction($this->client, $response->getContent());
     }
 
     /**
@@ -42,10 +44,10 @@ class Reserve extends BaseModel implements ReserveInterface
      */
     public function getTransactions()
     {
-        $data = $this->client->get('/reserve/transactions');
+        $response = $this->client->get('/reserve/transactions');
 
         return array_map(function($transaction) {
             return new Transaction($this->client, $transaction);
-        }, $data);
+        }, $response->getContent());
     }
 }

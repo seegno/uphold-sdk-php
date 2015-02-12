@@ -4,8 +4,12 @@ namespace Bitreserve\Tests\HttpClient\Handler;
 
 use Bitreserve\Exception\RuntimeException;
 use Bitreserve\HttpClient\Handler\ErrorHandler;
+use Bitreserve\HttpClient\Message\Response;
 use GuzzleHttp\Exception\RequestException;
 
+/**
+ * ErrorHandlerTest.
+ */
 class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -14,7 +18,9 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function shouldCallOnRequestExceptionWhenARequestExceptionIsGiven()
     {
         $request = $this->getRequestMock();
-        $response = $this->getResponseMock();
+        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $exception = new RequestException('Request exception', $request, $response);
 
@@ -67,7 +73,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function shouldThrowBadRequestExceptionWhenStatusCodeIs400()
     {
         $request = $this->getRequestMock();
-        $response = $this->getResponseMock(400);
+        $response = new Response(400);
 
         $errorHandler = new ErrorHandler();
         $errorHandler->onException(new RequestException('400 error', $request, $response));
@@ -80,7 +86,10 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function shouldThrowAuthenticationRequiredExceptionWhenStatusCodeIs401()
     {
         $request = $this->getRequestMock();
-        $response = $this->getResponseMock(401);
+        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+            ->setConstructorArgs(array(401))
+            ->setMethods(array('getHeader'))
+            ->getMock();
 
         $response->expects($this->once())
             ->method('getHeader')
@@ -98,12 +107,15 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function shouldThrowTwoFactorAuthenticationRequiredExceptionWhenStatusCodeIs401()
     {
         $request = $this->getRequestMock();
-        $response = $this->getResponseMock(401);
+        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+            ->setConstructorArgs(array(401))
+            ->setMethods(array('getHeader'))
+            ->getMock();
 
         $response->expects($this->once())
             ->method('getHeader')
             ->with('X-Bitreserve-OTP')
-            ->will($this->returnVAlue('required'));
+            ->will($this->returnValue('required'));
 
         $errorHandler = new ErrorHandler();
         $errorHandler->onException(new RequestException('401 error', $request, $response));
@@ -116,7 +128,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function shouldThrowRuntimeExceptionWhenStatusCodeIs403()
     {
         $request = $this->getRequestMock();
-        $response = $this->getResponseMock(403);
+        $response = new Response(403);
 
         $errorHandler = new ErrorHandler();
         $errorHandler->onException(new RequestException('403 error', $request, $response));
@@ -129,7 +141,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function shouldThrowNotFoundExceptionWhenStatusCodeIs404()
     {
         $request = $this->getRequestMock();
-        $response = $this->getResponseMock(404);
+        $response = new Response(404);
 
         $errorHandler = new ErrorHandler();
         $errorHandler->onException(new RequestException('404 error', $request, $response));
@@ -142,7 +154,10 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function shouldThrowApiLimitExceedException()
     {
         $request = $this->getRequestMock();
-        $response = $this->getResponseMock(429);
+        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+            ->setConstructorArgs(array(429))
+            ->setMethods(array('getHeader'))
+            ->getMock();
 
         $response->expects($this->exactly(3))
             ->method('getHeader')
@@ -164,7 +179,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     public function shouldThrowRuntimeExceptionWhenStatusCodeIs500()
     {
         $request = $this->getRequestMock();
-        $response = $this->getResponseMock(500);
+        $response = new Response(500);
 
         $errorHandler = new ErrorHandler();
         $errorHandler->onException(new RequestException('500 error', $request, $response));
@@ -175,22 +190,5 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         return $this->getMockBuilder('GuzzleHttp\Message\Request')
             ->disableOriginalConstructor()
             ->getMock();
-    }
-
-    protected function getResponseMock($statusCode = null)
-    {
-        $response = $this->getMockBuilder('GuzzleHttp\Message\Response')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        if (null === $statusCode) {
-            return $response;
-        }
-
-        $response->expects($this->any())
-            ->method('getStatusCode')
-            ->will($this->returnValue($statusCode));
-
-        return $response;
     }
 }

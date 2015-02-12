@@ -4,6 +4,9 @@ namespace Bitreserve\Tests\Model;
 
 use Bitreserve\Model\Contact;
 
+/**
+ * ContactTest.
+ */
 class ContactTest extends TestCase
 {
     /**

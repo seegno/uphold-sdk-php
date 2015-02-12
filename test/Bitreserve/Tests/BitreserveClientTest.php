@@ -3,10 +3,11 @@
 namespace Bitreserve\Tests;
 
 use Bitreserve\BitreserveClient;
-use Bitreserve\HttpClient;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Stream\Stream;
+use Bitreserve\Model\User;
 
+/**
+ * BitreserveClientTest.
+ */
 class BitreserveClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -76,6 +77,8 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
             'pair' => 'BTCUSD',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('get'))
             ->getMock();
@@ -83,7 +86,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $client->expects($this->once())
             ->method('get')
             ->with('/ticker')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $tickers = $client->getTicker();
 
@@ -113,6 +116,8 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
             'pair' => 'BTCUSD',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('get'))
             ->getMock();
@@ -120,7 +125,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $client->expects($this->once())
             ->method('get')
             ->with(sprintf('/ticker/%s', $expectedCurrency))
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $tickers = $client->getTickerByCurrency($expectedCurrency);
 
@@ -152,6 +157,8 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
 
         $expectedCurrencies = array('BTC', 'USD');
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('get'))
             ->getMock();
@@ -159,7 +166,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $client->expects($this->once())
             ->method('get')
             ->with('/ticker')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $currencies = $client->getCurrencies();
 
@@ -183,11 +190,13 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
             'foo' => 'bar',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/reserve/transactions')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $transactions = $client->getTransactions();
 
@@ -208,11 +217,13 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
             'foo' => 'bar',
         );
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with(sprintf('/reserve/transactions/%s', $expectedTransactionId))
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $transaction = $client->getTransactionById($expectedTransactionId);
 
@@ -239,14 +250,18 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
 
         $client = $this->getBitreserveClientMock();
 
-        $client->expects($this->once())
-            ->method('getOption')
-            ->with('bearer')
-            ->will($this->returnValue('token'));
+        $token = $this->getMockBuilder('Token')
+            ->disableOriginalConstructor()
+            ->setMethods(array('getUser'))
+            ->getMock();
+
+        $token->expects($this->once())
+            ->method('getUser')
+            ->will($this->returnValue(new User($client, $data)));
 
         $client->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($data));
+            ->method('getToken')
+            ->will($this->returnValue($token));
 
         $user = $client->getUser();
 
@@ -269,6 +284,10 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
             'X-Bitreserve-OTP' => $otp,
         );
 
+        $data = array('foo' => 'bar');
+
+        $response = $this->getResponseMock($data);
+
         $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('getDefaultHeaders', 'post'))
             ->getMock();
@@ -280,9 +299,9 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $client->expects($this->once())
             ->method('post')
             ->with('/me/tokens', array('description' => $description), $headers)
-            ->will($this->returnValue(array('foo' => 'bar')));
+            ->will($this->returnValue($response));
 
-        $this->assertEquals(array('foo' => 'bar'), $client->createToken($login, $password, $description));
+        $this->assertEquals($data, $client->createToken($login, $password, $description));
     }
 
     /**
@@ -300,6 +319,10 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
             'X-Bitreserve-OTP' => $otp,
         );
 
+        $data = array('foo' => 'bar');
+
+        $response = $this->getResponseMock($data);
+
         $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('getDefaultHeaders', 'post'))
             ->getMock();
@@ -311,9 +334,9 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $client->expects($this->once())
             ->method('post')
             ->with('/me/tokens', array('description' => $description), $headers)
-            ->will($this->returnValue(array('foo' => 'bar')));
+            ->will($this->returnValue($response));
 
-        $this->assertEquals(array('foo' => 'bar'), $client->createToken($login, $password, $description, $otp));
+        $this->assertEquals($data, $client->createToken($login, $password, $description, $otp));
     }
 
     /**
@@ -329,7 +352,8 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $path = '/path';
 
         $expectedArray = array('value');
-        $stream = Stream::factory(json_encode($expectedArray));
+
+        $response = $this->getResponseMock($expectedArray);
 
         $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('createJsonBody', 'getDefaultHeaders'))
@@ -349,12 +373,14 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $httpClient->expects($this->once())
             ->method($httpMethod)
             ->with(sprintf('%s%s', $apiVersion, $path), $body, array_merge($options, $defaultOptions))
-            ->will($this->returnValue(new Response(200, array(), $stream)));
+            ->will($this->returnValue($response));
 
         $client->setHttpClient($httpClient);
         $client->setOption('api_version', $apiVersion);
 
-        $this->assertEquals($expectedArray, $client->$httpMethod('/path', $params, $options));
+        $response = $client->$httpMethod('/path', $params, $options);
+
+        $this->assertEquals($expectedArray, $response->getContent());
     }
 
     /**
@@ -369,7 +395,8 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $path = '/path';
 
         $expectedArray = array('value');
-        $stream = Stream::factory(json_encode($expectedArray));
+
+        $response = $this->getResponseMock($expectedArray);
 
         $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('createJsonBody', 'getDefaultHeaders'))
@@ -389,12 +416,14 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         $httpClient->expects($this->once())
             ->method($httpMethod)
             ->with($path, $body, array_merge($options, $defaultOptions))
-            ->will($this->returnValue(new Response(200, array(), $stream)));
+            ->will($this->returnValue($response));
 
         $client->setHttpClient($httpClient);
         $client->setOption('api_version', null);
 
-        $this->assertEquals($expectedArray, $client->$httpMethod('/path', $params, $options));
+        $response = $client->$httpMethod('/path', $params, $options);
+
+        $this->assertEquals($expectedArray, $response->getContent());
     }
 
     public function getDefaultRequestHttpMethods()
@@ -410,7 +439,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
 
     protected function getBitreserveClientMock()
     {
-        $methods = array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'getOption', 'setHeaders');
+        $methods = array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'getOption', 'setHeaders', 'getToken');
 
         return $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods($methods)
@@ -424,5 +453,22 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
         return $this->getMockBuilder('Bitreserve\HttpClient\HttpClientInterface')
             ->setMethods($methods)
             ->getMock();
+    }
+
+    protected function getResponseMock($content = null)
+    {
+        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        if (null === $content) {
+            return $response;
+        }
+
+        $response->expects($this->any())
+            ->method('getContent')
+            ->will($this->returnValue($content));
+
+        return $response;
     }
 }

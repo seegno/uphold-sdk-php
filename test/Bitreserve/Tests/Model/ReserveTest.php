@@ -4,6 +4,9 @@ namespace Bitreserve\Tests\Model;
 
 use Bitreserve\Model\Reserve;
 
+/**
+ * ReserveTest.
+ */
 class ReserveTest extends TestCase
 {
     /**
@@ -26,11 +29,13 @@ class ReserveTest extends TestCase
     {
         $data = array('foo' => 'bar');
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/reserve/statistics')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $reserve = new Reserve($client);
 
@@ -50,11 +55,13 @@ class ReserveTest extends TestCase
             'status' => 'pending',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with('/reserve/transactions')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $reserve = new Reserve($client);
 
@@ -74,11 +81,13 @@ class ReserveTest extends TestCase
             'status' => 'completed',
         );
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with(sprintf('/reserve/transactions/%s', $data['id']))
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $reserve = new Reserve($client);
 

@@ -4,6 +4,9 @@ namespace Bitreserve\Tests\Model;
 
 use Bitreserve\Model\Card;
 
+/**
+ * CardTest.
+ */
 class CardTest extends TestCase
 {
     /**
@@ -160,13 +163,15 @@ class CardTest extends TestCase
             'status' => 'completed',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
 
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with(sprintf('/me/cards/%s/transactions', $cardData['id']))
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $card = new Card($client, $cardData);
 
@@ -194,13 +199,15 @@ class CardTest extends TestCase
             'status' => 'completed',
         ));
 
+        $response = $this->getResponseMock($data);
+
         $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
 
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('get')
             ->with(sprintf('/me/cards/%s/transactions', $cardData['id']))
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $card = new Card($client, $cardData);
 
@@ -229,11 +236,13 @@ class CardTest extends TestCase
             'status' => 'pending',
         );
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('post')
             ->with(sprintf('/me/cards/%s/transactions', $cardData['id']), $postData)
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $card = new Card($client, $cardData);
 

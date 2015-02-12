@@ -153,9 +153,9 @@ class Transaction extends BaseModel implements TransactionInterface
             throw new LogicException(sprintf('This transaction cannot be committed, because the current status is "%s"', $this->status));
         }
 
-        $data = $this->client->post(sprintf('/me/cards/%s/transactions/%s/commit', $this->origin['CardId'], $this->id));
+        $response = $this->client->post(sprintf('/me/cards/%s/transactions/%s/commit', $this->origin['CardId'], $this->id));
 
-        $this->updateFields($data);
+        $this->updateFields($response->getContent());
     }
 
     /**
@@ -175,8 +175,8 @@ class Transaction extends BaseModel implements TransactionInterface
             throw new LogicException(sprintf('This transaction cannot be cancelled, because the current status is %s', $this->status));
         }
 
-        $data = $this->client->post(sprintf('/me/cards/%s/transactions/%s/cancel', $this->origin['CardId'], $this->id));
+        $response = $this->client->post(sprintf('/me/cards/%s/transactions/%s/cancel', $this->origin['CardId'], $this->id));
 
-        $this->updateFields($data);
+        $this->updateFields($response->getContent());
     }
 }

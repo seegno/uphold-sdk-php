@@ -72,9 +72,9 @@ class User extends BaseModel implements UserInterface
      */
     public function getBalances()
     {
-        $data = $this->client->get('/me');
+        $response = $this->client->get('/me');
 
-        $this->updateFields($data);
+        $this->updateFields($response->getContent());
 
         return $this->balances['currencies'];
     }
@@ -84,9 +84,9 @@ class User extends BaseModel implements UserInterface
      */
     public function getBalanceByCurrency($currency)
     {
-        $data = $this->client->get('/me');
+        $response = $this->client->get('/me');
 
-        $this->updateFields($data);
+        $this->updateFields($response->getContent());
 
         foreach ($this->balances['currencies'] as $balanceCurrency => $balance) {
             if ($currency === $balanceCurrency) {
@@ -102,9 +102,9 @@ class User extends BaseModel implements UserInterface
      */
     public function getCardById($id)
     {
-        $data = $this->client->get(sprintf('/me/cards/%s', $id));
+        $response = $this->client->get(sprintf('/me/cards/%s', $id));
 
-        return new Card($this->client, $data);
+        return new Card($this->client, $response->getContent());
     }
 
     /**
@@ -112,11 +112,11 @@ class User extends BaseModel implements UserInterface
      */
     public function getCards()
     {
-        $data = $this->client->get('/me/cards');
+        $response = $this->client->get('/me/cards');
 
         return array_map(function($card) {
             return new Card($this->client, $card);
-        }, $data);
+        }, $response->getContent());
     }
 
     /**
@@ -124,9 +124,9 @@ class User extends BaseModel implements UserInterface
      */
     public function getCardsByCurrency($currency)
     {
-        $data = $this->client->get('/me/cards');
+        $response = $this->client->get('/me/cards');
 
-        $cards = array_reduce($data, function($cards, $card) use ($currency) {
+        $cards = array_reduce($response->getContent(), function($cards, $card) use ($currency) {
             if ($currency !== $card['currency']) {
                 return $cards;
             }
@@ -144,11 +144,11 @@ class User extends BaseModel implements UserInterface
      */
     public function getContacts()
     {
-        $data = $this->client->get('/me/contacts');
+        $response = $this->client->get('/me/contacts');
 
         return array_map(function($contact) {
             return new Contact($this->client, $contact);
-        }, $data);
+        }, $response->getContent());
     }
 
     /**
@@ -197,9 +197,9 @@ class User extends BaseModel implements UserInterface
      */
     public function getPhones()
     {
-        $data = $this->client->get('/me/phones');
+        $response = $this->client->get('/me/phones');
 
-        $this->phones = $data;
+        $this->phones = $response->getContent();
 
         return $this->phones;
     }
@@ -209,9 +209,9 @@ class User extends BaseModel implements UserInterface
      */
     public function getSettings()
     {
-        $data = $this->client->get('/me');
+        $response = $this->client->get('/me');
 
-        $this->updateFields($data);
+        $this->updateFields($response->getContent());
 
         return $this->settings;
     }
@@ -237,9 +237,9 @@ class User extends BaseModel implements UserInterface
      */
     public function getTotalBalance()
     {
-        $data = $this->client->get('/me');
+        $response = $this->client->get('/me');
 
-        $this->updateFields($data);
+        $this->updateFields($response->getContent());
 
         return array(
             'amount' => $this->balances['total'],
@@ -252,11 +252,11 @@ class User extends BaseModel implements UserInterface
      */
     public function getTransactions()
     {
-        $data = $this->client->get('/me/transactions');
+        $response = $this->client->get('/me/transactions');
 
         return array_map(function($transaction) {
             return new Transaction($this->client, $transaction);
-        }, $data);
+        }, $response->getContent());
     }
 
     /**
@@ -272,9 +272,9 @@ class User extends BaseModel implements UserInterface
      */
     public function createCard($label, $currency)
     {
-        $data = $this->client->post('/me/cards', array('label' => $label, 'currency' => $currency));
+        $response = $this->client->post('/me/cards', array('label' => $label, 'currency' => $currency));
 
-        return new Card($this->client, $data);
+        return new Card($this->client, $response->getContent());
     }
 
     /**
@@ -282,9 +282,9 @@ class User extends BaseModel implements UserInterface
      */
     public function update(array $params)
     {
-        $data = $this->client->patch('/me', $params);
+        $response = $this->client->patch('/me', $params);
 
-        $this->updateFields($data);
+        $this->updateFields($response->getContent());
 
         return $this;
     }

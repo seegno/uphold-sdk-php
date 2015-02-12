@@ -2,10 +2,8 @@
 
 namespace Bitreserve;
 
-use Bitreserve\Exception\RuntimeException;
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\HttpClientInterface;
-use Bitreserve\HttpClient\Message\ResponseMediator;
 use Bitreserve\Model\Reserve;
 use Bitreserve\Model\Ticker;
 use Bitreserve\Model\Token;
@@ -145,11 +143,11 @@ class BitreserveClient
      */
     public function getTicker()
     {
-        $data = $this->get('/ticker');
+        $response = $this->get('/ticker');
 
         return array_map(function($ticker) {
             return new Ticker($this, $ticker);
-        }, $data);
+        }, $response->getContent());
     }
 
     /**
@@ -161,11 +159,11 @@ class BitreserveClient
      */
     public function getTickerByCurrency($currency)
     {
-        $data = $this->get(sprintf('/ticker/%s', rawurlencode($currency)));
+        $response = $this->get(sprintf('/ticker/%s', rawurlencode($currency)));
 
         return array_map(function($ticker) {
             return new Ticker($this, $ticker);
-        }, $data);
+        }, $response->getContent());
     }
 
     /**
@@ -253,10 +251,12 @@ class BitreserveClient
             'X-Bitreserve-OTP' => $otp,
         ));
 
-        return $this->post('/me/tokens',
+        $response = $this->post('/me/tokens',
             array('description' => $description),
             $headers
         );
+
+        return $response->getContent();
     }
 
     /**
@@ -270,13 +270,11 @@ class BitreserveClient
      */
     public function get($path, array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->getHttpClient()->get(
+        return $this->getHttpClient()->get(
             $this->buildPath($path),
             $parameters,
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
-
-        return ResponseMediator::getContent($response);
     }
 
     /**
@@ -290,13 +288,11 @@ class BitreserveClient
      */
     public function post($path, array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->getHttpClient()->post(
+        return $this->getHttpClient()->post(
             $this->buildPath($path),
             $this->createJsonBody($parameters),
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
-
-        return ResponseMediator::getContent($response);
     }
 
     /**
@@ -310,13 +306,11 @@ class BitreserveClient
      */
     public function patch($path, array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->getHttpClient()->patch(
+        return $this->getHttpClient()->patch(
             $this->buildPath($path),
             $this->createJsonBody($parameters),
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
-
-        return ResponseMediator::getContent($response);
     }
 
     /**
@@ -330,13 +324,11 @@ class BitreserveClient
      */
     public function put($path, array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->getHttpClient()->put(
+        return $this->getHttpClient()->put(
             $this->buildPath($path),
             $this->createJsonBody($parameters),
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
-
-        return ResponseMediator::getContent($response);
     }
 
     /**
@@ -350,13 +342,11 @@ class BitreserveClient
      */
     public function delete($path, array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->getHttpClient()->delete(
+        return $this->getHttpClient()->delete(
             $this->buildPath($path),
             $this->createJsonBody($parameters),
             array_merge($this->getDefaultHeaders(), $requestHeaders)
         );
-
-        return ResponseMediator::getContent($response);
     }
 
     /**

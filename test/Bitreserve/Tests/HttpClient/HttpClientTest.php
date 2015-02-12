@@ -5,13 +5,15 @@ namespace Bitreserve\Tests\HttpClient;
 use Bitreserve\BitreserveClient;
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\Listener\ErrorListener;
-use Bitreserve\HttpClient\Message\ResponseMediator;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
 use ReflectionProperty;
 
+/**
+ * HttpClientTest.
+ */
 class HttpClientTest extends \PHPUnit_Framework_TestCase
 {
     /**

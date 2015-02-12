@@ -7,6 +7,8 @@ use Bitreserve\Exception\ApiLimitExceedException;
 use Bitreserve\Exception\RuntimeException;
 
 /**
+ * TestCase.
+ *
  * @group functional
  */
 class TestCase extends \PHPUnit_Framework_TestCase

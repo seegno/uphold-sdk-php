@@ -4,8 +4,10 @@ namespace Bitreserve\Tests\Model;
 
 use Bitreserve\BitreserveClient;
 use Bitreserve\Model\Token;
-use Bitreserve\Model\User;
 
+/**
+ * TokenTest.
+ */
 class TokenTest extends TestCase
 {
     /**
@@ -32,6 +34,8 @@ class TokenTest extends TestCase
     {
         $data = array('username' => 'foobar');
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
 
         $client->expects($this->once())
@@ -41,7 +45,8 @@ class TokenTest extends TestCase
 
         $client->expects($this->once())
             ->method('get')
-            ->will($this->returnValue($data));
+            ->with('/me')
+            ->will($this->returnValue($response));
 
         $token = new Token($client);
 

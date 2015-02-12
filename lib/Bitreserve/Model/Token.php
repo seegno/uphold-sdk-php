@@ -29,8 +29,8 @@ class Token extends BaseModel implements TokenInterface
      */
     public function getUser()
     {
-        $data = $this->client->get('/me');
+        $response = $this->client->get('/me');
 
-        return new User($this->client, $data);
+        return new User($this->client, $response->getContent());
     }
 }

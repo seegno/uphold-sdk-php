@@ -9,9 +9,8 @@ use Bitreserve\Exception\LogicException;
 use Bitreserve\Exception\NotFoundException;
 use Bitreserve\Exception\RuntimeException;
 use Bitreserve\Exception\TwoFactorAuthenticationRequiredException;
-use Bitreserve\HttpClient\Message\ResponseMediator;
+use Bitreserve\HttpClient\Message\Response;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Response;
 
 /**
  * ErrorHandler.
@@ -66,14 +65,14 @@ class ErrorHandler
         $response = $e->getResponse();
         $statusCode = $response->getStatusCode();
 
-        $isClientError = ResponseMediator::isClientError($response);
-        $isServerError = ResponseMediator::isServerError($response);
+        $isClientError = $response->isClientError();
+        $isServerError = $response->isServerError();
 
         if ($isClientError || $isServerError) {
-            $content = ResponseMediator::getContent($response);
+            $content = $response->getContent();
 
-            $error = ResponseMediator::getError($response);
-            $description = ResponseMediator::getErrorDescription($response);
+            $error = $response->getError();
+            $description = $response->getErrorDescription();
 
             if (400 === $statusCode) {
                 throw new BadRequestException($description, $error, $statusCode, $response, $request);
@@ -98,7 +97,7 @@ class ErrorHandler
             }
 
             if (429 === $statusCode) {
-                $rateLimit = ResponseMediator::getApiRateLimit($response);
+                $rateLimit = $response->getApiRateLimit();
 
                 $description = sprintf('You have reached Bitreserve API limit. API limit is: %s. Your remaining requests will be reset at %s.', $rateLimit['limit'], date('Y-m-d H:i:s', $rateLimit['reset']));
 

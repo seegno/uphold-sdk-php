@@ -2,9 +2,10 @@
 
 namespace Bitreserve\Tests\HttpClient\Message;
 
-use Bitreserve\HttpClient\Message\ResponseMediator;
-
-class ResponseMediatorTest extends \PHPUnit_Framework_TestCase
+/**
+ * ResponseTest.
+ */
+class ResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -18,7 +19,7 @@ class ResponseMediatorTest extends \PHPUnit_Framework_TestCase
             ->method('getBody')
             ->will($this->returnValue(json_encode($data)));
 
-        $this->assertEquals($data, ResponseMediator::getContent($response));
+        $this->assertEquals($data, $response->getContent());
     }
 
     /**
@@ -31,7 +32,7 @@ class ResponseMediatorTest extends \PHPUnit_Framework_TestCase
             ->method('getStatusCode')
             ->will($this->returnValue(400));
 
-        $this->assertEquals(true, ResponseMediator::isClientError($response));
+        $this->assertEquals(true, $response->isClientError());
     }
 
     /**
@@ -44,7 +45,7 @@ class ResponseMediatorTest extends \PHPUnit_Framework_TestCase
             ->method('getStatusCode')
             ->will($this->returnValue(300));
 
-        $this->assertEquals(false, ResponseMediator::isClientError($response));
+        $this->assertEquals(false, $response->isClientError());
     }
 
     /**
@@ -57,7 +58,7 @@ class ResponseMediatorTest extends \PHPUnit_Framework_TestCase
             ->method('getStatusCode')
             ->will($this->returnValue(500));
 
-        $this->assertEquals(true, ResponseMediator::isServerError($response));
+        $this->assertEquals(true, $response->isServerError());
     }
 
     /**
@@ -70,7 +71,7 @@ class ResponseMediatorTest extends \PHPUnit_Framework_TestCase
             ->method('getStatusCode')
             ->will($this->returnValue(300));
 
-        $this->assertEquals(false, ResponseMediator::isServerError($response));
+        $this->assertEquals(false, $response->isServerError());
     }
 
     /**
@@ -97,11 +98,14 @@ class ResponseMediatorTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->onConsecutiveCalls($data['limit'], $data['remaining'], $data['reset']));
 
-        $this->assertEquals($data, ResponseMediator::getApiRateLimit($response));
+        $this->assertEquals($data, $response->getApiRateLimit());
     }
 
     protected function getResponseMock()
     {
-        return $this->getMockBuilder('GuzzleHttp\Message\Response')->disableOriginalConstructor()->getMock();
+        return $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+            ->disableOriginalConstructor()
+            ->setMethods(array('getBody', 'getStatusCode', 'getHeader'))
+            ->getMock();
     }
 }

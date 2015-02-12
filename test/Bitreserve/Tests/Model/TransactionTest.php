@@ -4,6 +4,9 @@ namespace Bitreserve\Tests\Model;
 
 use Bitreserve\Model\Transaction;
 
+/**
+ * TransactionTest.
+ */
 class TransactionTest extends TestCase
 {
     /**
@@ -165,11 +168,13 @@ class TransactionTest extends TestCase
             'status' => 'pending',
         );
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('post')
             ->with(sprintf('/me/cards/%s/transactions/%s/commit', $data['origin']['CardId'], $data['id']))
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $transaction = new Transaction($client, $data);
         $transaction->commit();
@@ -228,11 +233,13 @@ class TransactionTest extends TestCase
             'status' => 'waiting',
         );
 
+        $response = $this->getResponseMock($data);
+
         $client = $this->getBitreserveClientMock();
         $client->expects($this->once())
             ->method('post')
             ->with(sprintf('/me/cards/%s/transactions/%s/cancel', $data['origin']['CardId'], $data['id']))
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($response));
 
         $transaction = new Transaction($client, $data);
         $transaction->cancel();
