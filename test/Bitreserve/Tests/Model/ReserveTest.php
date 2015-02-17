@@ -39,7 +39,13 @@ class ReserveTest extends TestCase
 
         $reserve = new Reserve($client);
 
-        $this->assertEquals($data, $reserve->getLedger());
+        $pager = $reserve->getLedger();
+
+        $this->assertInstanceOf('Bitreserve\Paginator\Paginator', $pager);
+
+        $ledger = $pager->getNext();
+
+        $this->assertEquals($data, $ledger);
     }
 
     /**
@@ -85,7 +91,11 @@ class ReserveTest extends TestCase
 
         $reserve = new Reserve($client);
 
-        $transactions = $reserve->getTransactions();
+        $pager = $reserve->getTransactions();
+
+        $this->assertInstanceOf('Bitreserve\Paginator\Paginator', $pager);
+
+        $transactions = $pager->getNext();
 
         foreach ($transactions as $key => $transaction) {
             $this->assertInstanceOf('Bitreserve\Model\Transaction', $transaction);
@@ -94,6 +104,9 @@ class ReserveTest extends TestCase
         }
     }
 
+    /**
+     * @test
+     */
     public function shouldReturnOneTransaction()
     {
         $data = array(

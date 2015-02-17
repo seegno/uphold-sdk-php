@@ -3,6 +3,7 @@
 namespace Bitreserve\Model;
 
 use Bitreserve\BitreserveClient;
+use Bitreserve\Paginator\Paginator;
 
 /**
  * User Model.
@@ -252,11 +253,10 @@ class User extends BaseModel implements UserInterface
      */
     public function getTransactions()
     {
-        $response = $this->client->get('/me/transactions');
+        $pager = new Paginator($this->client, '/me/transactions');
+        $pager->setModel('Bitreserve\Model\Transaction');
 
-        return array_map(function($transaction) {
-            return new Transaction($this->client, $transaction);
-        }, $response->getContent());
+        return $pager;
     }
 
     /**

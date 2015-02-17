@@ -175,7 +175,11 @@ class CardTest extends TestCase
 
         $card = new Card($client, $cardData);
 
-        $transactions = $card->getTransactions();
+        $pager = $card->getTransactions();
+
+        $this->assertInstanceOf('Bitreserve\Paginator\Paginator', $pager);
+
+        $transactions = $pager->getNext();
 
         $this->assertCount(count($data), $transactions);
 

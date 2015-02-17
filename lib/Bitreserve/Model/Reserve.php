@@ -3,6 +3,7 @@
 namespace Bitreserve\Model;
 
 use Bitreserve\BitreserveClient;
+use Bitreserve\Paginator\Paginator;
 
 /**
  * Reserve Model.
@@ -24,9 +25,7 @@ class Reserve extends BaseModel implements ReserveInterface
      */
     public function getLedger()
     {
-        $response = $this->client->get('/reserve/ledger');
-
-        return $response->getContent();
+        return new Paginator($this->client, '/reserve/ledger');
     }
 
     /**
@@ -54,10 +53,9 @@ class Reserve extends BaseModel implements ReserveInterface
      */
     public function getTransactions()
     {
-        $response = $this->client->get('/reserve/transactions');
+        $pager = new Paginator($this->client, '/reserve/transactions');
+        $pager->setModel('Bitreserve\Model\Transaction');
 
-        return array_map(function($transaction) {
-            return new Transaction($this->client, $transaction);
-        }, $response->getContent());
+        return $pager;
     }
 }

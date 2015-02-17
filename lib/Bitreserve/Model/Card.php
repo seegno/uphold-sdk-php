@@ -3,6 +3,7 @@
 namespace Bitreserve\Model;
 
 use Bitreserve\BitreserveClient;
+use Bitreserve\Paginator\Paginator;
 
 /**
  * Card Model.
@@ -149,11 +150,10 @@ class Card extends BaseModel implements CardInterface
      */
     public function getTransactions()
     {
-        $response = $this->client->get(sprintf('/me/cards/%s/transactions', $this->id));
+        $pager = new Paginator($this->client, sprintf('/me/cards/%s/transactions', $this->id));
+        $pager->setModel('Bitreserve\Model\Transaction');
 
-        return array_map(function($transaction) {
-            return new Transaction($this->client, $transaction);
-        }, $response->getContent());
+        return $pager;
     }
 
     /**
