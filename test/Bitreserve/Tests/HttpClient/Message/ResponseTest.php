@@ -25,6 +25,40 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldReturnParsedContentRangeHeader()
+    {
+        $response = $this->getResponseMock();
+        $response->expects($this->any())
+            ->method('getHeader')
+            ->with('Content-Range')
+            ->will($this->returnValue('items 0-19/200'));
+
+        $contentRange = $response->getContentRange();
+
+        $this->assertEquals('0', $contentRange['start']);
+        $this->assertEquals('19', $contentRange['end']);
+        $this->assertEquals('200', $contentRange['count']);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnNullIfContentRangeHeaderIsEmpty()
+    {
+        $response = $this->getResponseMock();
+        $response->expects($this->any())
+            ->method('getHeader')
+            ->with('Content-Range')
+            ->will($this->returnValue(''));
+
+        $contentRange = $response->getContentRange();
+
+        $this->assertEquals(NULL, $contentRange);
+    }
+
+    /**
+     * @test
+     */
     public function shouldCheckIfIsClientErrorAndReturnTrueWhenStatusCodeIs400()
     {
         $response = $this->getResponseMock();
