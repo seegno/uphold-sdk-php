@@ -71,15 +71,6 @@ interface CardInterface
     public function getSettings();
 
     /**
-     * Gets a transaction from this card based on given id.
-     *
-     * @param string $id Transaction id.
-     *
-     * @return Transaction
-     */
-    public function getTransactionById($id);
-
-    /**
      * Gets the transactions associated with the card identified by the user.
      *
      * @return array
