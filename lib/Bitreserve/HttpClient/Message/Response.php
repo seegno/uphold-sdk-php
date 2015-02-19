@@ -41,6 +41,29 @@ class Response extends BaseResponse
     }
 
     /**
+     * Get parsed content range header.
+     *
+     * @return array
+     */
+    public function getContentRange()
+    {
+        $contentRange = (string) $this->getHeader('Content-Range');
+
+        if (!$contentRange) {
+            return null;
+        }
+
+        $matches = array();
+        preg_match('/^.*\ (\d*)-(\d*)\/(\d*)$/', $contentRange, $matches);
+
+        return array(
+            'count' => (int) $matches[3],
+            'end' => (int) $matches[2],
+            'start' => (int) $matches[1],
+        );
+    }
+
+    /**
      * Get response error.
      *
      * @return string

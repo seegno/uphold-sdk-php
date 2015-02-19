@@ -198,7 +198,11 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
             ->with('/reserve/transactions')
             ->will($this->returnValue($response));
 
-        $transactions = $client->getTransactions();
+        $pager = $client->getTransactions();
+
+        $this->assertInstanceOf('Bitreserve\Paginator\Paginator', $pager);
+
+        $transactions = $pager->getNext();
 
         foreach ($transactions as $transaction) {
             $this->assertInstanceOf('Bitreserve\Model\Transaction', $transaction);

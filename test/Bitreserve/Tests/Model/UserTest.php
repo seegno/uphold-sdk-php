@@ -496,7 +496,11 @@ class UserTest extends TestCase
 
         $user = new User($client, array('username' => 'foobar'));
 
-        $transactions = $user->getTransactions();
+        $pager = $user->getTransactions();
+
+        $this->assertInstanceOf('Bitreserve\Paginator\Paginator', $pager);
+
+        $transactions = $pager->getNext();
 
         $this->assertCount(count($data), $transactions);
 

@@ -11,22 +11,26 @@ $client = new Client('AUTHORIZATION_TOKEN');
 $user = $client->getUser();
 
 // Get user transactions.
-$transactions = $user->getTransactions();
+$pager = $user->getTransactions();
 
 echo "*** List of user transactions ***\n";
 
-foreach ($transactions as $transaction) {
-    echo sprintf("Date: %s\n", $transaction->getCreatedAt());
-    echo sprintf("Status: %s\n", $transaction->getStatus());
+while ($pager->hasNext()) {
+    $transactions = $pager->getNext();
 
-    $origin = $transaction->getOrigin();
-    echo sprintf("Origin: %s\n", $origin['description']);
+    foreach ($transactions as $transaction) {
+        echo sprintf("Date: %s\n", $transaction->getCreatedAt());
+        echo sprintf("Status: %s\n", $transaction->getStatus());
 
-    $destination = $transaction->getDestination();
-    echo sprintf("Destination: %s\n", $destination['description']);
+        $origin = $transaction->getOrigin();
+        echo sprintf("Origin: %s\n", $origin['description']);
 
-    echo sprintf("Amount: %s %s\n", $destination['amount'], $destination['currency']);
-    echo "\n";
+        $destination = $transaction->getDestination();
+        echo sprintf("Destination: %s\n", $destination['description']);
+
+        echo sprintf("Amount: %s %s\n", $destination['amount'], $destination['currency']);
+        echo "\n";
+    }
 }
 
 echo "\n*** Create and commit a new transaction ***\n";

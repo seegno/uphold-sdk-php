@@ -44,31 +44,7 @@ class BitreserveClientTest extends TestCase
 
     /**
      * @test
-     */
-    public function shouldReturnTransactions()
-    {
-        $transactions = $this->client->getTransactions();
-
-        // Test only one object because method returns a lot of transactions.
-        $this->assertInstanceOf('Bitreserve\Model\Transaction', $transactions[0]);
-    }
-
-    /**
-     * @test
-     */
-    public function shouldReturnOneTransactions()
-    {
-        $exampleTransactionId = '66fc2a0d-a933-45f0-ba27-8cf12870fcce';
-
-        $transaction = $this->client->getTransactionById($exampleTransactionId);
-
-        $this->assertInstanceOf('Bitreserve\Model\Transaction', $transaction);
-        $this->assertEquals($exampleTransactionId, $transaction->getId());
-    }
-
-    /**
-     * @test
-     * @expectedException Bitreserve\Exception\BadRequestException
+     * @expectedException Bitreserve\Exception\NotFoundException
      */
     public function shouldThrowExceptionWhenCurrencyIsNotValid()
     {
