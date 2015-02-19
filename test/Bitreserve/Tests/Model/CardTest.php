@@ -187,39 +187,6 @@ class CardTest extends TestCase
     /**
      * @test
      */
-    public function shouldReturnOneTransactionById()
-    {
-        $expectedTransactionId = 'a97bb994-6e24-4a89-b653-e0a6d0bcf634';
-
-        $data = array(array(
-            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
-            'status' => 'pending',
-        ), array(
-            'id' => 'b97bb994-6e24-4a89-b653-e0a6d0bcf635',
-            'status' => 'completed',
-        ));
-
-        $response = $this->getResponseMock($data);
-
-        $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
-
-        $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
-            ->method('get')
-            ->with(sprintf('/me/cards/%s/transactions', $cardData['id']))
-            ->will($this->returnValue($response));
-
-        $card = new Card($client, $cardData);
-
-        $transaction = $card->getTransactionById($expectedTransactionId);
-
-        $this->assertInstanceOf('Bitreserve\Model\Transaction', $transaction);
-        $this->assertEquals($expectedTransactionId, $transaction->getId());
-    }
-
-    /**
-     * @test
-     */
     public function shouldCreateNewTransaction()
     {
         $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');

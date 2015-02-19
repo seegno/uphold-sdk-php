@@ -147,24 +147,6 @@ class Card extends BaseModel implements CardInterface
     /**
      * {@inheritdoc}
      */
-    public function getTransactionById($id)
-    {
-        $response = $this->client->get(sprintf('/me/cards/%s/transactions', $this->id));
-
-        foreach ($response->getContent() as $transaction) {
-            if ($id !== $transaction['id']) {
-                continue;
-            }
-
-            return new Transaction($this->client, $transaction);
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getTransactions()
     {
         $response = $this->client->get(sprintf('/me/cards/%s/transactions', $this->id));
