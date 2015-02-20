@@ -266,7 +266,10 @@ use \Bitreserve\BitreserveClient as Client;
 $client = new Client();
 
 // Get all public transactions.
-$transactions = $client->getReserve()->getTransactions();
+$pager = $client->getReserve()->getTransactions();
+
+// Get next page of transactions.
+$transactions = $pager->getNext();
 ```
 
 Or you could get a specific public transaction:
@@ -288,6 +291,23 @@ $client = new Client();
 
 // Get the reserve summary of all the obligations and assets within it.
 $statistics = $client->getReserve()->getStatistics();
+```
+
+### Pagination
+
+Some endpoints will return a paginator. Here is some examples on how you can handle it.
+
+```php
+// Get public transactions.
+$pager = $client->getReserve()->getTransactions();
+
+// Check whether the paginator has a valid next page.
+while($pager->hasNext()) {
+    // Get next page with results.
+    $transactions = $pager->getNext();
+
+    // Do something...
+}
 ```
 
 ## Contributing & Development
