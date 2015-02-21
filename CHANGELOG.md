@@ -1,5 +1,19 @@
 ## Changelog
 
+### 2.0.0 / 2015-02-21
+- [#52](https://github.com/seegno/bitreserve-sdk-php/pull/52) Add paginator examples to README (@nunorafaelrocha)
+- [#50](https://github.com/seegno/bitreserve-sdk-php/pull/50) Add pagination support (@nunorafaelrocha)
+- [#51](https://github.com/seegno/bitreserve-sdk-php/pull/51) Remove unused http client methods (@nunorafaelrocha)
+- [#49](https://github.com/seegno/bitreserve-sdk-php/pull/49) Remove incorrect endpoint from card model (@nunorafaelrocha)
+- [#48](https://github.com/seegno/bitreserve-sdk-php/pull/48) Add reserve ledger endpoint (@nunorafaelrocha)
+- [#46](https://github.com/seegno/bitreserve-sdk-php/pull/46) Add response class for handle response objects (@nunorafaelrocha)
+- [#42](https://github.com/seegno/bitreserve-sdk-php/pull/42) Update docblocks (@nunorafaelrocha)
+- [#44](https://github.com/seegno/bitreserve-sdk-php/pull/44) Add code improvements (@nunorafaelrocha)
+- [#43](https://github.com/seegno/bitreserve-sdk-php/pull/43) Remove HttpClient unused methods (@nunorafaelrocha)
+- [#38](https://github.com/seegno/bitreserve-sdk-php/pull/38) Update readme (@nunorafaelrocha)
+- [#40](https://github.com/seegno/bitreserve-sdk-php/pull/40) Add reserve model (@nunorafaelrocha)
+- [#39](https://github.com/seegno/bitreserve-sdk-php/pull/39) Update card model (@nunorafaelrocha)
+
 ### 1.1.0 / 2015-01-29
 - [#34](https://github.com/seegno/bitreserve-sdk-php/pull/34) Improve injection of API version on request path (@nunorafaelrocha)
 - [#37](https://github.com/seegno/bitreserve-sdk-php/pull/37) Add docker support to travis (@fixe)
