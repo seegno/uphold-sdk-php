@@ -10,37 +10,51 @@ use Bitreserve\BitreserveClient;
 class Contact extends BaseModel implements ContactInterface
 {
     /**
-     * @var id
+     * Id.
+     *
+     * @var string
      */
     protected $id;
 
     /**
-     * @var addresses
+     * List of contact addresses.
+     *
+     * @var array
      */
     protected $addresses;
 
     /**
-     * @var company
+     * Company.
+     *
+     * @var string
      */
     protected $company;
 
     /**
-     * @var emails
+     * List of contact emails.
+     *
+     * @var array
      */
     protected $emails;
 
     /**
-     * @var firstName
+     * First name.
+     *
+     * @var string
      */
     protected $firstName;
 
     /**
-     * @var lastName
+     * Last name.
+     *
+     * @var string
      */
     protected $lastName;
 
     /**
-     * @var name
+     * Name.
+     *
+     * @var string
      */
     protected $name;
 

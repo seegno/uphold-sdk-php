@@ -11,47 +11,65 @@ use Bitreserve\Paginator\Paginator;
 class User extends BaseModel implements UserInterface
 {
     /**
-     * @var country
+     * Country.
+     *
+     * @var string
      */
     protected $country;
 
     /**
-     * @var email
+     * Email.
+     *
+     * @var string
      */
     protected $email;
 
     /**
-     * @var firstName
+     * First name.
+     *
+     * @var string
      */
     protected $fistName;
 
     /**
-     * @var lastName
+     * Last name.
+     *
+     * @var string
      */
     protected $lastName;
 
     /**
-     * @var name
+     * Name.
+     *
+     * @var string
      */
     protected $name;
 
     /**
-     * @var settings
+     * User settings.
+     *
+     * @var array
      */
     protected $settings;
 
     /**
-     * @var state
+     * State.
+     *
+     * @var string
      */
     protected $state;
 
     /**
-     * @var state
+     * User status.
+     *
+     * @var array
      */
     protected $status;
 
     /**
-     * @var username
+     * Username.
+     *
+     * @var string
      */
     protected $username;
 

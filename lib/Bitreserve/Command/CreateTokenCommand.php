@@ -39,7 +39,7 @@ class CreateTokenCommand extends Command
         // Command line output interface.
         $this->output = $output;
 
-        // Bitreserve Client.
+        // Bitreserve client.
         $this->client = new BitreserveClient();
 
         // Input variables.

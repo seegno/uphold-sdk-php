@@ -8,7 +8,7 @@ namespace Bitreserve\Paginator;
 class Paginator
 {
     /**
-     * Bitreserve Client.
+     * Bitreserve client.
      *
      * @var BitreserveClient
      */
@@ -66,7 +66,7 @@ class Paginator
     /**
      * Constructor.
      *
-     * @param BitreserveClient $client Bitreserve Client.
+     * @param BitreserveClient $client Bitreserve client.
      * @param string $path Request path.
      * @param array $parameters Request parameters.
      * @param array $headers Request headers.
