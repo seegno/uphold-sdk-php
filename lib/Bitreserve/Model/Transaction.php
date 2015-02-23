@@ -11,49 +11,74 @@ use Bitreserve\Exception\LogicException;
 class Transaction extends BaseModel implements TransactionInterface
 {
     /**
-     * @var id
+     * Id.
+     *
+     * @var string
      */
     protected $id;
 
     /**
-     * @var createdAt
+     * Created at.
+     *
+     * @var string
      */
     protected $createdAt;
 
     /**
-     * @var denomination
+     * Denomination.
+     *
+     * @var array
      */
     protected $denomination;
 
     /**
-     * @var destination
+     * Destination.
+     *
+     * @var array
      */
     protected $destination;
 
     /**
-     * @var message
+     * Message.
+     *
+     * @var string
      */
     protected $message;
 
     /**
-     * @var origin
+     * Origin information.
+     *
+     * @var array
      */
     protected $origin;
 
     /**
-     * @var params
+     * Params.
+     *
+     * @var array
      */
     protected $params;
 
     /**
-     * @var refundedById
+     * Refunded by id.
+     *
+     * @var string.
      */
     protected $refundedById;
 
     /**
-     * @var status
+     * Status.
+     *
+     * @var string
      */
     protected $status;
+
+    /**
+     * Type.
+     *
+     * @var string
+     */
+    protected $type;
 
     /**
      * Constructor.
@@ -138,6 +163,14 @@ class Transaction extends BaseModel implements TransactionInterface
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
