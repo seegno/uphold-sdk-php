@@ -56,11 +56,6 @@ class Card extends BaseModel implements CardInterface
     protected $settings;
 
     /**
-     * @var transactions
-     */
-    protected $transactions;
-
-    /**
      * Constructor.
      *
      * @param BitreserveClient $client Bitreserve client
