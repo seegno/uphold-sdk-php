@@ -63,6 +63,6 @@ class BitreserveClientException extends \Exception
      */
     public function getRequest()
     {
-        return $this->response;
+        return $this->request;
     }
 }
