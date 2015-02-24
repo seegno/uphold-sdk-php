@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.0.1 / 2015-02-24
+- [#53](https://github.com/seegno/bitreserve-sdk-php/pull/53) Improve bitreserve client exception (@nunorafaelrocha)
+
 ### 2.0.0 / 2015-02-21
 - [#52](https://github.com/seegno/bitreserve-sdk-php/pull/52) Add paginator examples to README (@nunorafaelrocha)
 - [#50](https://github.com/seegno/bitreserve-sdk-php/pull/50) Add pagination support (@nunorafaelrocha)
