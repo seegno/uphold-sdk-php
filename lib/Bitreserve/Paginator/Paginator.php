@@ -158,9 +158,9 @@ class Paginator
     }
 
     /**
-     * Get next results page.
+     * Check whether the paginator has a valid next page.
      *
-     * @return mixed
+     * @return boolean
      */
     public function hasNext()
     {
