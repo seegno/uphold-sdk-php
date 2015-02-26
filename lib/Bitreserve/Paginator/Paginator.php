@@ -158,7 +158,7 @@ class Paginator
     }
 
     /**
-     * Check whether the paginator has a valid next page.
+     * Check whether the paginator has a next page.
      *
      * @return boolean
      */
