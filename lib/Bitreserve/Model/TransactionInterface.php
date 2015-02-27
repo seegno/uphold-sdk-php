@@ -8,67 +8,74 @@ namespace Bitreserve\Model;
 interface TransactionInterface
 {
     /**
-     * Gets transaction creation date.
+     * Get transaction creation date.
      *
      * @return $createdAt
      */
     public function getCreatedAt();
 
     /**
-     * Gets transaction denomination.
+     * Get transaction denomination.
      *
      * @return $denomination
      */
     public function getDenomination();
 
     /**
-     * Gets transaction destinantion.
+     * Get transaction destinantion.
      *
      * @return $destination
      */
     public function getDestination();
 
     /**
-     * Gets transaction id.
+     * Get transaction id.
      *
      * @return $id
      */
     public function getId();
 
     /**
-     * Gets transaction message.
+     * Get transaction message.
      *
      * @return $message
      */
     public function getMessage();
 
     /**
-     * Gets transaction origin.
+     * Get transaction origin.
      *
      * @return $origin
      */
     public function getOrigin();
 
     /**
-     * Gets transaction params.
+     * Get transaction params.
      *
      * @return $params
      */
     public function getParams();
 
     /**
-     * Gets transaction refunded by id.
+     * Get transaction refunded by id.
      *
      * @return $refundedById
      */
     public function getRefundedById();
 
     /**
-     * Gets transaction current status.
+     * Get transaction current status.
      *
      * @return $status
      */
     public function getStatus();
+
+    /**
+     * Get transaction type.
+     *
+     * @return $type
+     */
+    public function getType();
 
     /**
      * Cancel current transaction.

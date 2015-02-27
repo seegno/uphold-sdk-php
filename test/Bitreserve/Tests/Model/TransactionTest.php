@@ -157,6 +157,20 @@ class TransactionTest extends TestCase
     /**
      * @test
      */
+    public function shouldReturnType()
+    {
+        $data = array('type' => 'foobar');
+
+        $client = $this->getBitreserveClientMock();
+
+        $transaction = new Transaction($client, $data);
+
+        $this->assertEquals($data['type'], $transaction->getType());
+    }
+
+    /**
+     * @test
+     */
     public function shouldCommit()
     {
         $data = array(
