@@ -8,6 +8,41 @@ namespace Bitreserve\Exception;
 class BitreserveClientException extends \Exception
 {
     /**
+     * Error.
+     *
+     * @var mixed
+     */
+    protected $error;
+
+    /**
+     * HttpCode.
+     *
+     * @var int
+     */
+    protected $httpCode;
+
+    /**
+     * Message.
+     *
+     * @var string.
+     */
+    protected $message;
+
+    /**
+     * Request.
+     *
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * Response.
+     *
+     * @var Response
+     */
+    protected $response;
+
+    /**
      * Constructor.
      *
      * @param string $message  Exception message
