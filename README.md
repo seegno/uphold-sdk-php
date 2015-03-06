@@ -127,6 +127,9 @@ use Bitreserve\BitreserveClient as Client;
 // Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
 
+// Get the current user.
+$user = $client->getUser();
+
 // Create a new 'BTC' card.
 $card = $user->createCard('My new card', 'BTC');
 ```
