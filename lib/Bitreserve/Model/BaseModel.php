@@ -8,7 +8,9 @@ namespace Bitreserve\Model;
 abstract class BaseModel
 {
     /**
-     * @var client
+     * Bitreserve client.
+     *
+     * @var BitreserveClient
      */
     protected $client;
 

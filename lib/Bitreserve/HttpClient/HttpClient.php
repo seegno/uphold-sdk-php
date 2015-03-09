@@ -14,17 +14,23 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class HttpClient implements HttpClientInterface
 {
     /**
-     * @var $client
+     * Bitreserve client.
+     *
+     * @var BitreserveClient
      */
-    private $client;
+    protected $client;
 
     /**
-     * @var $errorHandler
+     * Error handler.
+     *
+     * @var ErrorHandler
      */
     private $errorHandler;
 
     /**
-     * @var $headers
+     * Request headers.
+     *
+     * @var array
      */
     protected $headers = array();
 

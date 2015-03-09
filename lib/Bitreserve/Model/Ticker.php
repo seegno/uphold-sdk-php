@@ -10,22 +10,30 @@ use Bitreserve\BitreserveClient;
 class Ticker extends BaseModel implements TickerInterface
 {
     /**
-     * @var ask
+     * Ask.
+     *
+     * @var string
      */
     protected $ask;
 
     /**
-     * @var bid
+     * Bid.
+     *
+     * @var string
      */
     protected $bid;
 
     /**
-     * @var currency
+     * Currency.
+     *
+     * @var string
      */
     protected $currency;
 
     /**
-     * @var pair
+     * Pair.
+     *
+     * @var string
      */
     protected $pair;
 

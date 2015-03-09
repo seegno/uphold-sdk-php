@@ -11,47 +11,65 @@ use Bitreserve\Paginator\Paginator;
 class Card extends BaseModel implements CardInterface
 {
     /**
-     * @var id
+     * Id.
+     *
+     * @var string
      */
     protected $id;
 
     /**
-     * @var address
+     * Address.
+     *
+     * @var string
      */
     protected $address;
 
     /**
-     * @var addresses
+     * List of card addresses.
+     *
+     * @var array
      */
     protected $addresses;
 
     /**
-     * @var available
+     * Available amount.
+     *
+     * @var string
      */
     protected $available;
 
     /**
-     * @var balance
+     * Balance amount.
+     *
+     * @var string
      */
     protected $balance;
 
     /**
-     * @var currency
+     * Currency.
+     *
+     * @var string
      */
     protected $currency;
 
     /**
-     * @var label
+     * Label.
+     *
+     * @var string
      */
     protected $label;
 
     /**
-     * @var lastTransactionAt
+     * Last transaction date.
+     *
+     * @var string
      */
     protected $lastTransactionAt;
 
     /**
-     * @var settings
+     * Settings.
+     *
+     * @var array
      */
     protected $settings;
 

@@ -18,7 +18,9 @@ use GuzzleHttp\Exception\RequestException;
 class ErrorHandler
 {
     /**
-     * @var $options
+     * Handler options.
+     *
+     * @var array
      */
     private $options;
 
