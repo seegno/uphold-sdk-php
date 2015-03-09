@@ -114,6 +114,9 @@ use Bitreserve\BitreserveClient as Client;
 // Initialize the client.
 $client = new Client('AUTHORIZATION_TOKEN');
 
+// Get the current user.
+$user = $client->getUser();
+
 // Get current user cards.
 $cards = $user->getCards();
 ```
