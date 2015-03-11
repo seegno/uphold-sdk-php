@@ -1,5 +1,17 @@
 ## Changelog
 
+### 2.0.2 / 2015-03-11
+- [#60](https://github.com/seegno/bitreserve-sdk-php/pull/60) Add reserve model functional test (@nunorafaelrocha)
+- [#61](https://github.com/seegno/bitreserve-sdk-php/pull/61) Fix get user cards example in README (@nunorafaelrocha)
+- [#63](https://github.com/seegno/bitreserve-sdk-php/pull/63) Update variables docblocks (@nunorafaelrocha)
+- [#62](https://github.com/seegno/bitreserve-sdk-php/pull/62) Fix create new card example in README (@nunorafaelrocha)
+- [#59](https://github.com/seegno/bitreserve-sdk-php/pull/59) Update bitreserve client exception class (@nunorafaelrocha)
+- [#58](https://github.com/seegno/bitreserve-sdk-php/pull/58) Remove response mediator (@nunorafaelrocha)
+- [#57](https://github.com/seegno/bitreserve-sdk-php/pull/57) Remove unused variables (@nunorafaelrocha)
+- [#56](https://github.com/seegno/bitreserve-sdk-php/pull/56) Remove unused variable from the card model (@nunorafaelrocha)
+- [#55](https://github.com/seegno/bitreserve-sdk-php/pull/55) Improve transaction model (@nunorafaelrocha)
+- [#54](https://github.com/seegno/bitreserve-sdk-php/pull/54) Fix `hasNext` method docblock (@nunorafaelrocha)
+
 ### 2.0.1 / 2015-02-24
 - [#53](https://github.com/seegno/bitreserve-sdk-php/pull/53) Improve bitreserve client exception (@nunorafaelrocha)
 
