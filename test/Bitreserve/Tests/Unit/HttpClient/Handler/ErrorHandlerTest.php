@@ -1,6 +1,6 @@
 <?php
 
-namespace Bitreserve\Tests\HttpClient\Handler;
+namespace Bitreserve\Tests\Unit\HttpClient\Handler;
 
 use Bitreserve\Exception\RuntimeException;
 use Bitreserve\HttpClient\Handler\ErrorHandler;

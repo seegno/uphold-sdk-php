@@ -1,6 +1,6 @@
 <?php
 
-namespace Bitreserve\Tests;
+namespace Bitreserve\Tests\Unit;
 
 use Bitreserve\BitreserveClient;
 use Bitreserve\Model\User;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bitreserve\Tests\Model;
+namespace Bitreserve\Tests\Unit\Model;
 
 use Bitreserve\Model\Ticker;
 
