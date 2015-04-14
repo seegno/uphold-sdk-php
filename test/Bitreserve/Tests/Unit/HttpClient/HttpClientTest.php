@@ -1,6 +1,6 @@
 <?php
 
-namespace Bitreserve\Tests\HttpClient;
+namespace Bitreserve\Tests\Unit\HttpClient;
 
 use Bitreserve\BitreserveClient;
 use Bitreserve\HttpClient\HttpClient;

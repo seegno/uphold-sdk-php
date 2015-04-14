@@ -1,6 +1,6 @@
 <?php
 
-namespace Bitreserve\Tests\HttpClient\Message;
+namespace Bitreserve\Tests\Unit\HttpClient\Message;
 
 /**
  * ResponseTest.

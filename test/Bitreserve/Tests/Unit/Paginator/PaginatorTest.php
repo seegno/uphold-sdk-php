@@ -1,6 +1,6 @@
 <?php
 
-namespace Bitreserve\Tests\Paginator;
+namespace Bitreserve\Tests\Unit\Paginator;
 
 use Bitreserve\Paginator\ArrayPaginator;
 use Bitreserve\Paginator\Paginator;

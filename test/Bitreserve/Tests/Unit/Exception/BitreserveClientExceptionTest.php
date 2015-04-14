@@ -1,6 +1,6 @@
 <?php
 
-namespace Bitreserve\Tests\Exception;
+namespace Bitreserve\Tests\Unit\Exception;
 
 use Bitreserve\Exception\BitreserveClientException;
 
