@@ -7,8 +7,18 @@ namespace Bitreserve\Tests\Unit\Model;
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Get Model class.
+     *
+     * @return string
+     */
     abstract protected function getModelClass();
 
+    /**
+     * Get Model mock.
+     *
+     * @return mixed
+     */
     protected function getModelMock()
     {
         $httpClient = $this->getMock('GuzzleHttp\Client', array('send'));
@@ -26,6 +36,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->getMock();
     }
 
+    /**
+     * Get BitreserveClient mock.
+     *
+     * @param array $methods Mocked methods.
+     *
+     * @return BitreserveClient
+     */
     protected function getBitreserveClientMock(array $methods = array())
     {
         $methods = array_merge(
@@ -36,6 +53,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         return $this->getMock('Bitreserve\BitreserveClient', $methods);
     }
 
+    /**
+     * Get HttpClient mock.
+     *
+     * @param array $methods Mocked methods.
+     *
+     * @return HttpClient
+     */
     protected function getHttpClientMock(array $methods = array())
     {
         $methods = array_merge(
@@ -46,6 +70,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         return $this->getMock('Bitreserve\HttpClient\HttpClientInterface', $methods);
     }
 
+    /**
+     * Get Response mock.
+     *
+     * @param mixed $content Response content.
+     *
+     * @return Response
+     */
     protected function getResponseMock($content = null)
     {
         $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
