@@ -4,11 +4,12 @@ namespace Bitreserve\Tests\Unit;
 
 use Bitreserve\BitreserveClient;
 use Bitreserve\Model\User;
+use Bitreserve\Tests\Unit\TestCase;
 
 /**
  * BitreserveClientTest.
  */
-class BitreserveClientTest extends \PHPUnit_Framework_TestCase
+class BitreserveClientTest extends TestCase
 {
     /**
      * @test
@@ -66,15 +67,15 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
     public function shouldReturnTickers()
     {
         $data = array(array(
-            'ask' => '1',
-            'bid' => '1',
-            'currency' => 'BTC',
-            'pair' => 'BTCBTC',
+            'ask' => $this->faker->randomFloat,
+            'bid' => $this->faker->randomFloat,
+            'currency' => $this->faker->currencyCode,
+            'pair' => sprintf('%s%s', $this->faker->currencyCode, $this->faker->currencyCode),
         ), array(
-            'ask' => '440.99',
-            'bid' => '440',
-            'currency' => 'USD',
-            'pair' => 'BTCUSD',
+            'ask' => $this->faker->randomFloat,
+            'bid' => $this->faker->randomFloat,
+            'currency' => $this->faker->currencyCode,
+            'pair' => sprintf('%s%s', $this->faker->currencyCode, $this->faker->currencyCode),
         ));
 
         $response = $this->getResponseMock($data);
@@ -102,18 +103,18 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldReturnTickersByCurrency()
     {
-        $expectedCurrency = 'BTC';
+        $expectedCurrency = $this->faker->currencyCode;
 
         $data = array(array(
-            'ask' => '1',
-            'bid' => '1',
-            'currency' => 'BTC',
-            'pair' => 'BTCBTC',
+            'ask' => $this->faker->randomFloat,
+            'bid' => $this->faker->randomFloat,
+            'currency' => $expectedCurrency,
+            'pair' => sprintf('%s%s', $expectedCurrency, $this->faker->currencyCode),
         ), array(
-            'ask' => '440.99',
-            'bid' => '440',
-            'currency' => 'USD',
-            'pair' => 'BTCUSD',
+            'ask' => $this->faker->randomFloat,
+            'bid' => $this->faker->randomFloat,
+            'currency' => $this->faker->currencyCode,
+            'pair' => sprintf('%s%s', $expectedCurrency, $this->faker->currencyCode),
         ));
 
         $response = $this->getResponseMock($data);
@@ -143,19 +144,22 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldReturnCurrencies()
     {
-        $data = array(array(
-            'ask' => '1',
-            'bid' => '1',
-            'currency' => 'BTC',
-            'pair' => 'BTCBTC',
-        ), array(
-            'ask' => '440.99',
-            'bid' => '440',
-            'currency' => 'USD',
-            'pair' => 'BTCUSD',
-        ));
+        $expectedCurrencies = array(
+            $this->faker->currencyCode,
+            $this->faker->currencyCode,
+        );
 
-        $expectedCurrencies = array('BTC', 'USD');
+        $data = array(array(
+            'ask' => $this->faker->randomFloat,
+            'bid' => $this->faker->randomFloat,
+            'currency' => $expectedCurrencies[0],
+            'pair' => sprintf('%s%s', $expectedCurrencies[0], $this->faker->currencyCode),
+        ), array(
+            'ask' => $this->faker->randomFloat,
+            'bid' => $this->faker->randomFloat,
+            'currency' => $expectedCurrencies[1],
+            'pair' => sprintf('%s%s', $expectedCurrencies[1], $this->faker->currencyCode),
+        ));
 
         $response = $this->getResponseMock($data);
 
@@ -250,7 +254,7 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldReturnUser()
     {
-        $data = array('username' => 'foobar');
+        $data = array('username' => $this->faker->userName);
 
         $client = $this->getBitreserveClientMock();
 
@@ -278,9 +282,9 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldCreateToken()
     {
-        $login = 'foobar';
-        $password = 'foobar';
-        $description = 'foobar';
+        $login = $this->faker->userName;
+        $password = $this->faker->password;
+        $description = $this->faker->sentence;
         $otp = null;
 
         $headers = array(
@@ -313,10 +317,10 @@ class BitreserveClientTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldCreateTokenWithOTP()
     {
-        $login = 'foobar';
-        $password = 'foobar';
-        $description = 'foobar';
-        $otp = 'foobar';
+        $login = $this->faker->userName;
+        $password = $this->faker->password;
+        $description = $this->faker->sentence;
+        $otp = $this->faker->randomNumber(6);
 
         $headers = array(
             'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
