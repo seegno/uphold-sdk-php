@@ -14,15 +14,15 @@ class BitreserveClientTest extends TestCase
     /**
      * @test
      */
-    public function shouldReturnTickers()
+    public function shouldReturnRates()
     {
-        $tickers = $this->client->getTicker();
+        $rates = $this->client->getTicker();
 
-        foreach ($tickers as $ticker) {
-            $this->assertObjectHasAttribute('ask', $ticker);
-            $this->assertObjectHasAttribute('bid', $ticker);
-            $this->assertObjectHasAttribute('currency', $ticker);
-            $this->assertObjectHasAttribute('pair', $ticker);
+        foreach ($rates as $rate) {
+            $this->assertObjectHasAttribute('ask', $rate);
+            $this->assertObjectHasAttribute('bid', $rate);
+            $this->assertObjectHasAttribute('currency', $rate);
+            $this->assertObjectHasAttribute('pair', $rate);
         }
     }
 
@@ -30,15 +30,15 @@ class BitreserveClientTest extends TestCase
      * @test
      * @dataProvider getCurrenciesProvider
      */
-    public function shouldReturnTickersForACurrency($currency)
+    public function shouldReturnRatesForACurrency($currency)
     {
-        $tickers = $this->client->getTickerByCurrency($currency);
+        $rates = $this->client->getTickerByCurrency($currency);
 
-        foreach ($tickers as $ticker) {
-            $this->assertObjectHasAttribute('ask', $ticker);
-            $this->assertObjectHasAttribute('bid', $ticker);
-            $this->assertObjectHasAttribute('currency', $ticker);
-            $this->assertObjectHasAttribute('pair', $ticker);
+        foreach ($rates as $rate) {
+            $this->assertObjectHasAttribute('ask', $rate);
+            $this->assertObjectHasAttribute('bid', $rate);
+            $this->assertObjectHasAttribute('currency', $rate);
+            $this->assertObjectHasAttribute('pair', $rate);
         }
     }
 
@@ -50,7 +50,7 @@ class BitreserveClientTest extends TestCase
     {
         $currency = 'FOO';
 
-        $tickers = $this->client->getTickerByCurrency($currency);
+        $rates = $this->client->getTickerByCurrency($currency);
     }
 
     /**

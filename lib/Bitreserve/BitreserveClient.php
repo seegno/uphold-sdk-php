@@ -4,8 +4,8 @@ namespace Bitreserve;
 
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\HttpClientInterface;
+use Bitreserve\Model\Rate;
 use Bitreserve\Model\Reserve;
-use Bitreserve\Model\Ticker;
 use Bitreserve\Model\Token;
 use Bitreserve\Model\Transaction;
 
@@ -123,14 +123,14 @@ class BitreserveClient
      */
     public function getCurrencies()
     {
-        $tickers = $this->getTicker();
+        $rates = $this->getTicker();
 
-        return array_reduce($tickers, function($currencies, $ticker) {
-            if (in_array($ticker->getCurrency(), $currencies)) {
+        return array_reduce($rates, function($currencies, $rate) {
+            if (in_array($rate->getCurrency(), $currencies)) {
                 return $currencies;
             }
 
-            $currencies[] = $ticker->getCurrency();
+            $currencies[] = $rate->getCurrency();
 
             return $currencies;
         }, array());
@@ -145,8 +145,8 @@ class BitreserveClient
     {
         $response = $this->get('/ticker');
 
-        return array_map(function($ticker) {
-            return new Ticker($this, $ticker);
+        return array_map(function($rate) {
+            return new Rate($this,($rate));
         }, $response->getContent());
     }
 
@@ -161,8 +161,8 @@ class BitreserveClient
     {
         $response = $this->get(sprintf('/ticker/%s', rawurlencode($currency)));
 
-        return array_map(function($ticker) {
-            return new Ticker($this, $ticker);
+        return array_map(function($rate) {
+            return new Rate($this, $rate);
         }, $response->getContent());
     }
 

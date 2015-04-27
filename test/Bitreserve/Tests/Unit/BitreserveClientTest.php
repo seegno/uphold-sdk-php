@@ -64,7 +64,7 @@ class BitreserveClientTest extends TestCase
     /**
      * @test
      */
-    public function shouldReturnTickers()
+    public function shouldReturnRates()
     {
         $data = array(array(
             'ask' => $this->faker->randomFloat,
@@ -89,19 +89,19 @@ class BitreserveClientTest extends TestCase
             ->with('/ticker')
             ->will($this->returnValue($response));
 
-        $tickers = $client->getTicker();
+        $rates = $client->getTicker();
 
-        $this->assertCount(count($data), $tickers);
+        $this->assertCount(count($data), $rates);
 
-        foreach ($tickers as $ticker) {
-            $this->assertInstanceOf('Bitreserve\Model\Ticker', $ticker);
+        foreach ($rates as $rate) {
+            $this->assertInstanceOf('Bitreserve\Model\Rate', $rate);
         }
     }
 
     /**
      * @test
      */
-    public function shouldReturnTickersByCurrency()
+    public function shouldReturnRatesByCurrency()
     {
         $expectedCurrency = $this->faker->currencyCode;
 
@@ -128,14 +128,14 @@ class BitreserveClientTest extends TestCase
             ->with(sprintf('/ticker/%s', $expectedCurrency))
             ->will($this->returnValue($response));
 
-        $tickers = $client->getTickerByCurrency($expectedCurrency);
+        $rates = $client->getTickerByCurrency($expectedCurrency);
 
-        $this->assertCount(count($data), $tickers);
+        $this->assertCount(count($data), $rates);
 
-        foreach ($tickers as $ticker) {
-            $this->assertInstanceOf('Bitreserve\Model\Ticker', $ticker);
+        foreach ($rates as $rate) {
+            $this->assertInstanceOf('Bitreserve\Model\Rate', $rate);
 
-            $this->assertRegExp(sprintf('/%s/', $expectedCurrency), $ticker->getPair());
+            $this->assertRegExp(sprintf('/%s/', $expectedCurrency), $rate->getPair());
         }
     }
 
