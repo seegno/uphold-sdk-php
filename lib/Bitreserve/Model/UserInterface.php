@@ -126,9 +126,11 @@ interface UserInterface
     /**
      * Gets all transactions associated with the current user.
      *
+     * @param string $limit Number of transactions.
+     *
      * @return $transactions
      */
-    public function getTransactions();
+    public function getTransactions($limit = null);
 
     /**
      * Gets user username.

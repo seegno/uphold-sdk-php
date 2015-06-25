@@ -37,7 +37,7 @@ class User extends BaseModel implements UserInterface
      *
      * @var string
      */
-    protected $fistName;
+    protected $firstName;
 
     /**
      * Last name.
@@ -285,9 +285,9 @@ class User extends BaseModel implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getTransactions()
+    public function getTransactions($limit = null)
     {
-        $pager = new Paginator($this->client, '/me/transactions');
+        $pager = new Paginator($this->client, '/me/transactions', array(), array(), $limit);
         $pager->setModel('Bitreserve\Model\Transaction');
 
         return $pager;
