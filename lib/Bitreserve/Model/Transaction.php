@@ -197,7 +197,7 @@ class Transaction extends BaseModel implements TransactionInterface
     public function cancel()
     {
         if (empty($this->origin['CardId'])) {
-            throw new LogicException('Origin CardId is missing from this transaction');
+            throw new LogicException('Origin `CardId` is missing from this transaction');
         }
 
         if ('pending' === $this->status) {
@@ -209,6 +209,24 @@ class Transaction extends BaseModel implements TransactionInterface
         }
 
         $response = $this->client->post(sprintf('/me/cards/%s/transactions/%s/cancel', $this->origin['CardId'], $this->id));
+
+        $this->updateFields($response->getContent());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resend()
+    {
+        if (empty($this->origin['CardId'])) {
+            throw new LogicException('Origin `CardId` is missing from this transaction');
+        }
+
+        if ('waiting' !== $this->status) {
+            throw new LogicException(sprintf('This transaction cannot be resent, because the current status is %s', $this->status));
+        }
+
+        $response = $this->client->post(sprintf('/me/cards/%s/transactions/%s/resend', $this->origin['CardId'], $this->id));
 
         $this->updateFields($response->getContent());
     }
