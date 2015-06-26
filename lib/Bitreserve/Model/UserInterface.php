@@ -155,4 +155,11 @@ interface UserInterface
      * @return $this
      */
     public function update(array $params);
+
+    /**
+     * Revoke current token.
+     *
+     * @return Response
+     */
+    public function revokeToken();
 }
