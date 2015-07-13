@@ -3,7 +3,7 @@
 namespace Bitreserve\Model;
 
 /**
- * TokenInterface.
+ * TransactionInterface.
  */
 interface TransactionInterface
 {
