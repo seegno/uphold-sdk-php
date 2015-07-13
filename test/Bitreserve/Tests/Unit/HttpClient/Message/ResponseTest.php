@@ -135,6 +135,11 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, $response->getApiRateLimit());
     }
 
+    /**
+     * Get response mock.
+     *
+     * @return Response.
+     */
     protected function getResponseMock()
     {
         return $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
