@@ -34,31 +34,11 @@ class BitreserveClientTest extends TestCase
     /**
      * @test
      */
-    public function shouldReturnBearerWhenPassingInConstructor()
+    public function shouldReturnOptionWhenPassingInConstructor()
     {
-        $client = new BitreserveClient('bearer');
+        $client = new BitreserveClient(array('foo' => 'bar'));
 
-        $this->assertEquals('bearer', $client->getOption('bearer'));
-    }
-
-    /**
-     * @test
-     */
-    public function shouldReturnATokenModel()
-    {
-        $client = new BitreserveClient('bearer');
-
-        $this->assertInstanceOf('Bitreserve\Model\Token', $client->getToken());
-    }
-
-    /**
-     * @test
-     * @expectedException Bitreserve\Exception\AuthenticationRequiredException
-     */
-    public function shouldThrowAuthenticationRequiredExceptionWhenGettingToken()
-    {
-        $client = new BitreserveClient();
-        $client->getToken();
+        $this->assertEquals('bar', $client->getOption('foo'));
     }
 
     /**
@@ -256,22 +236,40 @@ class BitreserveClientTest extends TestCase
     {
         $data = array('username' => $this->faker->userName);
 
-        $client = $this->getBitreserveClientMock();
+        $response = $this->getResponseMock($data);
+        $userClient = $this->getBitreserveClientMock();
 
-        $token = $this->getMockBuilder('Token')
+        $userClient
+            ->expects($this->once())
+            ->method('get')
+            ->with('/me')
+            ->will($this->returnValue($response));
+
+        $factory = $this
+            ->getMockBuilder('Bitreserve\Factory\BitreserveClientFactory')
             ->disableOriginalConstructor()
-            ->setMethods(array('getUser'))
-            ->getMock();
+            ->setMethods(array('create'))
+            ->getMock()
+        ;
 
-        $token->expects($this->once())
-            ->method('getUser')
-            ->will($this->returnValue(new User($client, $data)));
+        $factory
+            ->expects($this->once())
+            ->method('create')
+            ->with($this->callback(function($options) {
+                return !empty($options['bearer']) && 'foobar' === $options['bearer'];
+            }))
+            ->will($this->returnValue($userClient))
+        ;
 
-        $client->expects($this->once())
-            ->method('getToken')
-            ->will($this->returnValue($token));
+        $client = $this->getBitreserveClientMock(array('getFactory'));
 
-        $user = $client->getUser();
+        $client
+            ->expects($this->once())
+            ->method('getFactory')
+            ->will($this->returnValue($factory))
+        ;
+
+        $user = $client->getUser('foobar');
 
         $this->assertInstanceOf('Bitreserve\Model\User', $user);
         $this->assertEquals($data['username'], $user->getUsername());
@@ -450,9 +448,12 @@ class BitreserveClientTest extends TestCase
      *
      * @return BitreserveClient
      */
-    protected function getBitreserveClientMock()
+    protected function getBitreserveClientMock(array $methods = array())
     {
-        $methods = array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'getOption', 'setHeaders', 'getToken');
+        $methods = array_merge(
+            array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'getOption', 'setHeaders'),
+            $methods
+        );
 
         return $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods($methods)
