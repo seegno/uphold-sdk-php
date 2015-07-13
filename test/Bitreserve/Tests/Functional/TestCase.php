@@ -3,8 +3,6 @@
 namespace Bitreserve\Tests\Functional;
 
 use Bitreserve\BitreserveClient;
-use Bitreserve\Exception\ApiLimitExceedException;
-use Bitreserve\Exception\RuntimeException;
 
 /**
  * TestCase.
