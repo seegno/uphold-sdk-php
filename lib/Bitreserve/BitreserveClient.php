@@ -123,7 +123,7 @@ class BitreserveClient
      */
     public function getCurrencies()
     {
-        $rates = $this->getTicker();
+        $rates = $this->getRates();
 
         return array_reduce($rates, function($currencies, $rate) {
             if (in_array($rate->getCurrency(), $currencies)) {
@@ -141,7 +141,7 @@ class BitreserveClient
      *
      * @return array
      */
-    public function getTicker()
+    public function getRates()
     {
         $response = $this->get('/ticker');
 
@@ -157,7 +157,7 @@ class BitreserveClient
      *
      * @return array
      */
-    public function getTickerByCurrency($currency)
+    public function getRatesByCurrency($currency)
     {
         $response = $this->get(sprintf('/ticker/%s', rawurlencode($currency)));
 

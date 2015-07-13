@@ -16,7 +16,7 @@ class BitreserveClientTest extends TestCase
      */
     public function shouldReturnRates()
     {
-        $rates = $this->client->getTicker();
+        $rates = $this->client->getRates();
 
         foreach ($rates as $rate) {
             $this->assertObjectHasAttribute('ask', $rate);
@@ -32,7 +32,7 @@ class BitreserveClientTest extends TestCase
      */
     public function shouldReturnRatesForACurrency($currency)
     {
-        $rates = $this->client->getTickerByCurrency($currency);
+        $rates = $this->client->getRatesByCurrency($currency);
 
         foreach ($rates as $rate) {
             $this->assertObjectHasAttribute('ask', $rate);
@@ -50,7 +50,7 @@ class BitreserveClientTest extends TestCase
     {
         $currency = 'FOO';
 
-        $rates = $this->client->getTickerByCurrency($currency);
+        $rates = $this->client->getRatesByCurrency($currency);
     }
 
     /**

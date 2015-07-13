@@ -171,7 +171,7 @@ Bitreserve\Model\Card Object
 )
 ```
 
-### Get ticker
+### Get rates
 ```php
 require_once 'vendor/autoload.php';
 
@@ -182,14 +182,14 @@ use Bitreserve\BitreserveClient as Client;
 $client = new Client();
 
 // Get rates.
-$rates = $client->getTicker();
+$rates = $client->getRates();
 ```
 
-Or you could get a ticker for a specific currency:
+Or you could get rates for a specific currency:
 
 ```php
 // Get rates for BTC.
-$rates = $client->getTickerByCurrency('BTC');
+$rates = $client->getRatesByCurrency('BTC');
 ```
 
 The above produces the output shown below:

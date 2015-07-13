@@ -9,7 +9,7 @@ use Bitreserve\BitreserveClient as Client;
 $client = new Client();
 
 // Get rates.
-$rates = $client->getTicker();
+$rates = $client->getRates();
 
 echo "*** Current exchange rates ***\n";
 

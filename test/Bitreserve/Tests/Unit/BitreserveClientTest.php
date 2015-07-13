@@ -89,7 +89,7 @@ class BitreserveClientTest extends TestCase
             ->with('/ticker')
             ->will($this->returnValue($response));
 
-        $rates = $client->getTicker();
+        $rates = $client->getRates();
 
         $this->assertCount(count($data), $rates);
 
@@ -128,7 +128,7 @@ class BitreserveClientTest extends TestCase
             ->with(sprintf('/ticker/%s', $expectedCurrency))
             ->will($this->returnValue($response));
 
-        $rates = $client->getTickerByCurrency($expectedCurrency);
+        $rates = $client->getRatesByCurrency($expectedCurrency);
 
         $this->assertCount(count($data), $rates);
 
