@@ -54,6 +54,13 @@ interface UserInterface
     public function getCountry();
 
     /**
+     * Gets user currencies.
+     *
+     * @return $currencies
+     */
+    public function getCurrencies();
+
+    /**
      * Gets user email.
      *
      * @return $email

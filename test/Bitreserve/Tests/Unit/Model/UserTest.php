@@ -134,6 +134,20 @@ class UserTest extends TestCase
     /**
      * @test
      */
+    public function shouldReturnCurrencies()
+    {
+        $data = array('currencies' => array('BTC', 'EUR', 'USD'));
+
+        $client = $this->getBitreserveClientMock();
+
+        $user = new User($client, $data);
+
+        $this->assertEquals($data['currencies'], $user->getCurrencies());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnState()
     {
         $data = array('state' => 'CA');

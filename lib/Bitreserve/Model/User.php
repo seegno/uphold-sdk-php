@@ -18,6 +18,13 @@ class User extends BaseModel implements UserInterface
     protected $country;
 
     /**
+     * Currencies.
+     *
+     * @var string
+     */
+    protected $currencies;
+
+    /**
      * Email.
      *
      * @var string
@@ -176,6 +183,14 @@ class User extends BaseModel implements UserInterface
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrencies()
+    {
+        return $this->currencies;
     }
 
     /**
