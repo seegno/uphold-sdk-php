@@ -2,6 +2,7 @@
 
 namespace Bitreserve;
 
+use Bitreserve\Factory\BitreserveClientFactory;
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\HttpClientInterface;
 use Bitreserve\Model\Rate;
@@ -44,7 +45,7 @@ class BitreserveClient
     /**
      * Constructor.
      *
-     * @param string|null $bearer Authorization Token.
+     * @param Array $options BitreserveClient options.
      */
     public function __construct(array $options = array())
     {
@@ -61,6 +62,16 @@ class BitreserveClient
     public function getHttpClient()
     {
         return $this->httpClient;
+    }
+
+    /**
+     * Get BitreserveClient factory.
+     *
+     * @return BitreserveClientFactory
+     */
+    public function getFactory()
+    {
+        return new BitreserveClientFactory();
     }
 
     /**
@@ -211,7 +222,7 @@ class BitreserveClient
     {
         $options = array_merge($this->options, array('bearer' => $bearerToken));
 
-        $client = new BitreserveClient($options);
+        $client = $this->getFactory()->create($options);
 
         $response = $client->get('/me');
 
