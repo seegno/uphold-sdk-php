@@ -2,26 +2,26 @@
 
 namespace Bitreserve\Tests\Unit\Model;
 
-use Bitreserve\Model\Ticker;
+use Bitreserve\Model\Rate;
 
 /**
- * TickerTest.
+ * RateTest.
  */
-class TickerTest extends TestCase
+class RateTest extends TestCase
 {
     /**
      * @test
      */
-    public function shouldReturnInstanceOfTicker()
+    public function shouldReturnInstanceOfRate()
     {
         $data = array('ask' => '1');
 
         $client = $this->getBitreserveClientMock();
 
-        $ticker = new Ticker($client, $data);
+        $rate = new Rate($client, $data);
 
-        $this->assertInstanceOf('Bitreserve\BitreserveClient', $ticker->getClient());
-        $this->assertInstanceOf('Bitreserve\Model\Ticker', $ticker);
+        $this->assertInstanceOf('Bitreserve\BitreserveClient', $rate->getClient());
+        $this->assertInstanceOf('Bitreserve\Model\Rate', $rate);
     }
 
     /**
@@ -33,9 +33,9 @@ class TickerTest extends TestCase
 
         $client = $this->getBitreserveClientMock();
 
-        $ticker = new Ticker($client, $data);
+        $rate = new Rate($client, $data);
 
-        $this->assertEquals($data['ask'], $ticker->getAsk());
+        $this->assertEquals($data['ask'], $rate->getAsk());
     }
 
     /**
@@ -47,9 +47,9 @@ class TickerTest extends TestCase
 
         $client = $this->getBitreserveClientMock();
 
-        $ticker = new Ticker($client, $data);
+        $rate = new Rate($client, $data);
 
-        $this->assertEquals($data['bid'], $ticker->getBid());
+        $this->assertEquals($data['bid'], $rate->getBid());
     }
 
     /**
@@ -61,9 +61,9 @@ class TickerTest extends TestCase
 
         $client = $this->getBitreserveClientMock();
 
-        $ticker = new Ticker($client, $data);
+        $rate = new Rate($client, $data);
 
-        $this->assertEquals($data['currency'], $ticker->getCurrency());
+        $this->assertEquals($data['currency'], $rate->getCurrency());
     }
 
     /**
@@ -75,13 +75,13 @@ class TickerTest extends TestCase
 
         $client = $this->getBitreserveClientMock();
 
-        $ticker = new Ticker($client, $data);
+        $rate = new Rate($client, $data);
 
-        $this->assertEquals($data['pair'], $ticker->getPair());
+        $this->assertEquals($data['pair'], $rate->getPair());
     }
 
     protected function getModelClass()
     {
-        return 'Bitreserve\Model\Ticker';
+        return 'Bitreserve\Model\Rate';
     }
 }

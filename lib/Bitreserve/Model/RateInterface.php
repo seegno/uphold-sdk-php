@@ -3,33 +3,33 @@
 namespace Bitreserve\Model;
 
 /**
- * TokenInterface.
+ * RateInterface.
  */
-interface TickerInterface
+interface RateInterface
 {
     /**
-     * Gets ticker ask.
+     * Gets rate ask.
      *
      * @return $ask
      */
     public function getAsk();
 
     /**
-     * Gets ticker bid.
+     * Gets rate bid.
      *
      * @return $bid
      */
     public function getBid();
 
     /**
-     * Gets ticker currency.
+     * Gets rate currency.
      *
      * @return $currency
      */
     public function getCurrency();
 
     /**
-     * Gets ticker pair.
+     * Gets rate pair.
      *
      * @return $pair
      */

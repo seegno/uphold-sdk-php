@@ -171,7 +171,7 @@ Bitreserve\Model\Card Object
 )
 ```
 
-### Get ticker
+### Get rates
 ```php
 require_once 'vendor/autoload.php';
 
@@ -181,15 +181,15 @@ use Bitreserve\BitreserveClient as Client;
 // AUTHORIZATION_TOKEN because the Ticker endpoint is public.
 $client = new Client();
 
-// Get tickers.
-$tickers = $client->getTicker();
+// Get rates.
+$rates = $client->getRates();
 ```
 
-Or you could get a ticker for a specific currency:
+Or you could get rates for a specific currency:
 
 ```php
-// Get tickers for BTC.
-$tickers = $client->getTickerByCurrency('BTC');
+// Get rates for BTC.
+$rates = $client->getRatesByCurrency('BTC');
 ```
 
 The above produces the output shown below:
@@ -197,7 +197,7 @@ The above produces the output shown below:
 ```php
 Array
 (
-    [0] => Bitreserve\Model\Ticker Object
+    [0] => Bitreserve\Model\Rate Object
         (
             [ask:protected] => 1
             [bid:protected] => 1
@@ -205,7 +205,7 @@ Array
             [pair:protected] => BTCBTC
         )
 
-    [1] => Bitreserve\Model\Ticker Object
+    [1] => Bitreserve\Model\Rate Object
         (
             [ask:protected] => 234.89
             [bid:protected] => 234.8

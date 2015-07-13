@@ -8,14 +8,14 @@ use Bitreserve\BitreserveClient as Client;
 // AUTHORIZATION_TOKEN because the Ticker endpoint is public.
 $client = new Client();
 
-// Get tickers.
-$tickers = $client->getTicker();
+// Get rates.
+$rates = $client->getRates();
 
 echo "*** Current exchange rates ***\n";
 
-foreach ($tickers as $ticker) {
-    echo sprintf("Pair: %s\n", $ticker->getPair());
-    echo sprintf("Ask: 1 %s = %s %s\n", substr($ticker->getPair(), 0, 3), $ticker->getAsk(), $ticker->getCurrency());
-    echo sprintf("Bid: 1 %s = %s %s\n", substr($ticker->getPair(), 0, 3), $ticker->getBid(), $ticker->getCurrency());
+foreach ($rates as $rate) {
+    echo sprintf("Pair: %s\n", $rate->getPair());
+    echo sprintf("Ask: 1 %s = %s %s\n", substr($rate->getPair(), 0, 3), $rate->getAsk(), $rate->getCurrency());
+    echo sprintf("Bid: 1 %s = %s %s\n", substr($rate->getPair(), 0, 3), $rate->getBid(), $rate->getCurrency());
     echo "\n";
 }

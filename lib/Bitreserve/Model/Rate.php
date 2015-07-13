@@ -5,9 +5,9 @@ namespace Bitreserve\Model;
 use Bitreserve\BitreserveClient;
 
 /**
- * Ticker Model.
+ * Rate Model.
  */
-class Ticker extends BaseModel implements TickerInterface
+class Rate extends BaseModel implements RateInterface
 {
     /**
      * Ask.
