@@ -523,6 +523,58 @@ class UserTest extends TestCase
         }
     }
 
+    /**
+     * @test
+     * @expectedException Bitreserve\Exception\AuthenticationRequiredException
+     * @expectedExceptionMessage Missing bearer authorization
+     */
+    public function shouldThrowAuthenticationRequiredExceptionOnRevokeTokenWhenBearerTokenIsMissing()
+    {
+        $client = $this->getBitreserveClientMock();
+
+        $client->expects($this->once())
+            ->method('getOption')
+            ->with('bearer')
+            ->will($this->returnValue(null))
+        ;
+
+        $user = new User($client, array('username' => 'foobar'));
+
+        $user->revokeToken();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldRevokeToken()
+    {
+        $bearerToken = 'foobar';
+        $expectedResult = 'qux';
+
+        $client = $this->getBitreserveClientMock();
+
+        $client->expects($this->once())
+            ->method('getOption')
+            ->with('bearer')
+            ->will($this->returnValue($bearerToken))
+        ;
+
+        $client->expects($this->once())
+            ->method('get')
+            ->with(sprintf('/me/tokens/%s', $bearerToken))
+            ->will($this->returnValue($expectedResult))
+        ;
+
+        $user = new User($client, array('username' => 'foobar'));
+
+        $this->assertEquals($expectedResult, $user->revokeToken());
+    }
+
+    /**
+     * Get currencies provider.
+     *
+     * @return array
+     */
     public function getCurrenciesProvider()
     {
         return array(
@@ -532,6 +584,11 @@ class UserTest extends TestCase
         );
     }
 
+    /**
+     * Get model class.
+     *
+     * @return string
+     */
     protected function getModelClass()
     {
         return 'Bitreserve\Model\User';
