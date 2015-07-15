@@ -93,7 +93,7 @@ class CreateTokenCommand extends Command
         $output->writeln("\n\n");
         $output->writeln("<yellow>Here is your new Personal Access Token</yellow>\n");
         $output->writeln(sprintf('Description: <green>%s</green>', $pat['description']));
-        $output->writeln(sprintf('Access Token: <green>%s</green>', $pat['access_token']));
+        $output->writeln(sprintf('Access Token: <green>%s</green>', $pat['accessToken']));
         $output->writeln('');
         $output->writeln('<red>Keep it secret. Keep it safe.</red>');
     }
