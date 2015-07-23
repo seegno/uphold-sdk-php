@@ -3,6 +3,7 @@
 namespace Bitreserve\Model;
 
 use Bitreserve\BitreserveClient;
+use Bitreserve\Exception\AuthenticationRequiredException;
 use Bitreserve\Paginator\Paginator;
 
 /**
@@ -36,7 +37,7 @@ class User extends BaseModel implements UserInterface
      *
      * @var string
      */
-    protected $fistName;
+    protected $firstName;
 
     /**
      * Last name.
@@ -284,9 +285,9 @@ class User extends BaseModel implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getTransactions()
+    public function getTransactions($limit = null)
     {
-        $pager = new Paginator($this->client, '/me/transactions');
+        $pager = new Paginator($this->client, '/me/transactions', array(), array(), $limit);
         $pager->setModel('Bitreserve\Model\Transaction');
 
         return $pager;
@@ -320,5 +321,19 @@ class User extends BaseModel implements UserInterface
         $this->updateFields($response->getContent());
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function revokeToken()
+    {
+        $bearerToken = $this->client->getOption('bearer');
+
+        if (!$bearerToken) {
+            throw new AuthenticationRequiredException('Missing bearer authorization');
+        }
+
+        return $this->client->get(sprintf('/me/tokens/%s', $bearerToken));
     }
 }

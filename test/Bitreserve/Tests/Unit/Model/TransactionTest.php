@@ -300,6 +300,7 @@ class TransactionTest extends TestCase
     /**
      * @test
      * @expectedException Bitreserve\Exception\LogicException
+     * @expectedExceptionMessage Origin `CardId` is missing from this transaction
      */
     public function shouldThrowAnErrorOnCancelWhenCardIdIsNotDefined()
     {
@@ -311,6 +312,45 @@ class TransactionTest extends TestCase
 
         $transaction = new Transaction($client, $data);
         $transaction->cancel();
+    }
+
+    /**
+     * @test
+     * @expectedException Bitreserve\Exception\LogicException
+     * @expectedExceptionMessage Origin `CardId` is missing from this transaction
+     */
+    public function shouldThrowAnErrorOnResendWhenCardIdIsNotDefined()
+    {
+        $data = array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+        );
+
+        $client = $this->getBitreserveClientMock();
+
+        $transaction = new Transaction($client, $data);
+        $transaction->resend();
+    }
+
+    /**
+     * @test
+     * @expectedException Bitreserve\Exception\LogicException
+     * @expectedExceptionMessage This transaction cannot be resent, because the current status is pending
+     */
+    public function shouldThrowAnErrorOnResendWhenStatusIsNotWaiting()
+    {
+        $data = array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'origin' => array(
+                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            ),
+            'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
+            'status' => 'pending',
+        );
+
+        $client = $this->getBitreserveClientMock();
+
+        $transaction = new Transaction($client, $data);
+        $transaction->resend();
     }
 
     protected function getModelClass()

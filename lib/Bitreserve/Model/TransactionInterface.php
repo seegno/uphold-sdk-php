@@ -90,4 +90,11 @@ interface TransactionInterface
      * @return $this
      */
     public function commit();
+
+    /**
+     * Resend current transaction.
+     *
+     * @return $this
+     */
+    public function resend();
 }

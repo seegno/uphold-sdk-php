@@ -2,6 +2,7 @@
 
 namespace Bitreserve;
 
+use Bitreserve\Exception\AuthenticationRequiredException;
 use Bitreserve\Factory\BitreserveClientFactory;
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\HttpClientInterface;
@@ -255,6 +256,46 @@ class BitreserveClient
     }
 
     /**
+     * Authorize user via Bitreserve Connect.
+     *
+     * @param string $code The code parameter that is passed via the Bitreserve Connect callback url.
+     *
+     * @return User
+     */
+    public function authorizeUser($code)
+    {
+        $clientId = $this->getOption('client_id');
+        $clientSecret = $this->getOption('client_secret');
+
+        if (!$clientId) {
+            throw new AuthenticationRequiredException('Missing `client_id` option');
+        }
+
+        if (!$clientSecret) {
+            throw new AuthenticationRequiredException('Missing `client_secret` option');
+        }
+
+        $headers = array(
+            'Accept' => 'application/x-www-form-urlencoded',
+            'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $clientId, $clientSecret))),
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        );
+
+        $parameters = http_build_query(array(
+            'code' => $code,
+            'grant_type' => 'authorization_code',
+        ));
+
+        $response = $this->getHttpClient()->post(
+            '/oauth2/token',
+            $parameters,
+            array_merge($this->getDefaultHeaders(), $headers)
+        );
+
+        return $this->getUser($response->getContent());
+    }
+
+    /**
      * Send a GET request with query parameters.
      *
      * @param string $path Request path.
@@ -346,6 +387,8 @@ class BitreserveClient
 
     /**
      * Build the API path that includes the API version.
+     *
+     * @param string $path The path to append to the base URL.
      *
      * @return string
      */

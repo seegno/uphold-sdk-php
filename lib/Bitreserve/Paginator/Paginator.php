@@ -7,6 +7,8 @@ namespace Bitreserve\Paginator;
  */
 class Paginator
 {
+    CONST PAGINATOR_LIMIT = 50;
+
     /**
      * Bitreserve client.
      *
@@ -61,7 +63,7 @@ class Paginator
      *
      * @var int
      */
-    protected $limit = 50;
+    protected $limit;
 
     /**
      * Constructor.
@@ -70,13 +72,15 @@ class Paginator
      * @param string $path Request path.
      * @param array $parameters Request parameters.
      * @param array $headers Request headers.
+     * @param int $limit Limit.
      */
-    public function __construct($client, $path, $parameters = array(), $headers = array())
+    public function __construct($client, $path, $parameters = array(), $headers = array(), $limit = self::PAGINATOR_LIMIT)
     {
         $this->client = $client;
         $this->path = $path;
         $this->parameters = $parameters;
         $this->headers = $headers;
+        $this->limit = $limit;
     }
 
     /**

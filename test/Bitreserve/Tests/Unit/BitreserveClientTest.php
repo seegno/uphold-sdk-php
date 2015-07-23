@@ -277,6 +277,106 @@ class BitreserveClientTest extends TestCase
 
     /**
      * @test
+     * @expectedException Bitreserve\Exception\AuthenticationRequiredException
+     * @expectedExceptionMessage Missing `client_id` option
+     */
+    public function shouldThrowAuthenticationRequiredExceptionOnAuthorizeUserWhenClientIdIsMissing()
+    {
+        $client = $this->getBitreserveClientMock();
+
+        $client
+            ->expects($this->any())
+            ->method('getOption')
+            ->withConsecutive(array('client_id'), array('client_secret'))
+            ->will($this->returnValue(null))
+        ;
+
+        $client->authorizeUser('foobar');
+    }
+
+    /**
+     * @test
+     * @expectedException Bitreserve\Exception\AuthenticationRequiredException
+     * @expectedExceptionMessage Missing `client_secret` option
+     */
+    public function shouldThrowAuthenticationRequiredExceptionOnAuthorizeUserWhenClientSecretIsMissing()
+    {
+        $client = $this->getBitreserveClientMock();
+
+        $client
+            ->expects($this->any())
+            ->method('getOption')
+            ->withConsecutive(array('client_id'), array('client_secret'))
+            ->will($this->onConsecutiveCalls('qux', null))
+        ;
+
+        $client->authorizeUser('foobar');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnAuthorizedUserWhenResponseReturnsBearerToken()
+    {
+        $clientId = 'qux';
+        $clientSecret = 'waldo';
+        $code = 'foobar';
+
+        $expectedHeaders = array(
+            'Accept' => 'application/x-www-form-urlencoded',
+            'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $clientId, $clientSecret))),
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'foo' => 'bar',
+        );
+
+        $expectedParameters = http_build_query(array(
+            'code' => $code,
+            'grant_type' => 'authorization_code',
+        ));
+
+        $response = $this->getResponseMock('xyzzy');
+
+        $httpClient = $this->getHttpClientMock();
+
+        $httpClient
+            ->expects($this->once())
+            ->method('post')
+            ->with('/oauth2/token', $expectedParameters, $expectedHeaders)
+            ->will($this->returnValue($response))
+        ;
+
+        $client = $this->getBitreserveClientMock(array('getDefaultHeaders', 'getHttpClient', 'getUser'));
+
+        $client
+            ->expects($this->any())
+            ->method('getOption')
+            ->withConsecutive(array('client_id'), array('client_secret'))
+            ->will($this->onConsecutiveCalls($clientId, $clientSecret))
+        ;
+
+        $client->expects($this->any())
+            ->method('getDefaultHeaders')
+            ->will($this->returnValue(array('foo' => 'bar')))
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('getHttpClient')
+            ->will($this->returnValue($httpClient))
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('getUser')
+            ->with('xyzzy')
+            ->will($this->returnValue('fred'))
+        ;
+
+        $this->assertEquals('fred', $client->authorizeUser($code));
+    }
+
+    /**
+     * @test
      */
     public function shouldCreateToken()
     {
@@ -457,7 +557,8 @@ class BitreserveClientTest extends TestCase
 
         return $this->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods($methods)
-            ->getMock();
+            ->getMock()
+        ;
     }
 
     /**
