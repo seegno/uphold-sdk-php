@@ -5,10 +5,10 @@ require_once 'vendor/autoload.php';
 use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
-$client = new Client('AUTHORIZATION_TOKEN');
+$client = new Client();
 
-// Get the current user.
-$user = $client->getUser();
+// Get user.
+$user = $client->getUser('AUTHORIZATION_TOKEN');
 
 // Get current user cards.
 $cards = $user->getCards();

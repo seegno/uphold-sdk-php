@@ -66,10 +66,10 @@ require_once 'vendor/autoload.php';
 use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
-$client = new Client('AUTHORIZATION_TOKEN');
+$client = new Client();
 
-// Get the current user.
-$user = $client->getUser();
+// Get user.
+$user = $client->getUser('AUTHORIZATION_TOKEN');
 ```
 
 ### Get user balances
@@ -79,10 +79,10 @@ require_once 'vendor/autoload.php';
 use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
-$client = new Client('AUTHORIZATION_TOKEN');
+$client = new Client();
 
-// Get the current user.
-$user = $client->getUser();
+// Get user.
+$user = $client->getUser('AUTHORIZATION_TOKEN');
 
 // Get user balances for all currencies.
 $balances = $user->getBalances();
@@ -112,10 +112,10 @@ require_once 'vendor/autoload.php';
 use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
-$client = new Client('AUTHORIZATION_TOKEN');
+$client = new Client();
 
-// Get the current user.
-$user = $client->getUser();
+// Get user.
+$user = $client->getUser('AUTHORIZATION_TOKEN');
 
 // Get current user cards.
 $cards = $user->getCards();
@@ -128,10 +128,10 @@ require_once 'vendor/autoload.php';
 use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
-$client = new Client('AUTHORIZATION_TOKEN');
+$client = new Client();
 
 // Get the current user.
-$user = $client->getUser();
+$user = $client->getUser('AUTHORIZATION_TOKEN');
 
 // Create a new 'BTC' card.
 $card = $user->createCard('My new card', 'BTC');
@@ -177,11 +177,10 @@ require_once 'vendor/autoload.php';
 
 use Bitreserve\BitreserveClient as Client;
 
-// Initialize the client. In this case, we don't need an
-// AUTHORIZATION_TOKEN because the Ticker endpoint is public.
+// Initialize the client.
 $client = new Client();
 
-// Get rates.
+// Get rates (public endpoint).
 $rates = $client->getRates();
 ```
 
@@ -222,10 +221,10 @@ require_once 'vendor/autoload.php';
 use Bitreserve\BitreserveClient as Client;
 
 // Initialize the client.
-$client = new Client('AUTHORIZATION_TOKEN');
+$client = new Client();
 
-// Get the current user.
-$user = $client->getUser();
+// Get user.
+$user = $client->getUser('AUTHORIZATION_TOKEN');
 
 // Get a specific card by id.
 $card = $user->getCardsById('ade869d8-7913-4f67-bb4d-72719f0a2be0');
@@ -267,11 +266,10 @@ require_once 'vendor/autoload.php';
 
 use \Bitreserve\BitreserveClient as Client;
 
-// Initialize the client. In this case, we don't need an
-// AUTHORIZATION_TOKEN because the Ticker endpoint is public.
+// Initialize the client.
 $client = new Client();
 
-// Get all public transactions.
+// Get all public transactions (public endpoint).
 $pager = $client->getReserve()->getTransactions();
 
 // Get next page of transactions.
@@ -291,11 +289,10 @@ require_once 'vendor/autoload.php';
 
 use \Bitreserve\BitreserveClient as Client;
 
-// Initialize the client. In this case, we don't need an
-// AUTHORIZATION_TOKEN because the Ticker endpoint is public.
+// Initialize the client.
 $client = new Client();
 
-// Get the reserve summary of all the obligations and assets within it.
+// Get the reserve summary of all the obligations and assets within it (public endpoint).
 $statistics = $client->getReserve()->getStatistics();
 ```
 

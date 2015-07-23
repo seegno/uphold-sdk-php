@@ -2,12 +2,14 @@
 
 namespace Bitreserve;
 
+use Bitreserve\Factory\BitreserveClientFactory;
 use Bitreserve\HttpClient\HttpClient;
 use Bitreserve\HttpClient\HttpClientInterface;
 use Bitreserve\Model\Rate;
 use Bitreserve\Model\Reserve;
 use Bitreserve\Model\Token;
 use Bitreserve\Model\Transaction;
+use Bitreserve\Model\User;
 
 /**
 * Bitreserve API client.
@@ -41,20 +43,13 @@ class BitreserveClient
     );
 
     /**
-     * Current Token object.
-     *
-     * @var Token
-     */
-    private $token;
-
-    /**
      * Constructor.
      *
-     * @param string|null $bearer Authorization Token.
+     * @param Array $options BitreserveClient options.
      */
-    public function __construct($bearer = null)
+    public function __construct(array $options = array())
     {
-        $this->options = array_merge($this->options, array('bearer' => $bearer));
+        $this->options = array_merge($this->options, $options);
 
         $this->setHttpClient(new HttpClient($this->options));
     }
@@ -67,6 +62,16 @@ class BitreserveClient
     public function getHttpClient()
     {
         return $this->httpClient;
+    }
+
+    /**
+     * Get BitreserveClient factory.
+     *
+     * @return BitreserveClientFactory
+     */
+    public function getFactory()
+    {
+        return new BitreserveClientFactory();
     }
 
     /**
@@ -86,6 +91,19 @@ class BitreserveClient
     }
 
     /**
+     * Sets client option.
+     *
+     * @param string $name Option name.
+     * @param mixed $value Option value.
+     */
+    public function setOption($name, $value)
+    {
+        $this->options[$name] = $value;
+
+        return $this;
+    }
+
+    /**
      * Get all client options.
      *
      * @return array
@@ -101,19 +119,6 @@ class BitreserveClient
     public function setHttpClient(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
-    }
-
-    /**
-     * Sets client option.
-     *
-     * @param string $name Option name.
-     * @param mixed $value Option value.
-     */
-    public function setOption($name, $value)
-    {
-        $this->options[$name] = $value;
-
-        return $this;
     }
 
     /**
@@ -167,22 +172,6 @@ class BitreserveClient
     }
 
     /**
-     * Get the current token or create a new one.
-     *
-     * @return Token
-     */
-    public function getToken()
-    {
-        if ($this->token) {
-            return $this->token;
-        }
-
-        $this->token = new Token($this);
-
-        return $this->token;
-    }
-
-    /**
      * Return the public view of any transaction.
      *
      * @param string $id The transaction id.
@@ -225,13 +214,19 @@ class BitreserveClient
     }
 
     /**
-     * Get current user.
+     * Get user.
      *
      * @return User
      */
-    public function getUser()
+    public function getUser($bearerToken)
     {
-        return $this->getToken()->getUser();
+        $options = array_merge($this->options, array('bearer' => $bearerToken));
+
+        $client = $this->getFactory()->create($options);
+
+        $response = $client->get('/me');
+
+        return new User($client, $response->getContent());
     }
 
     /**
