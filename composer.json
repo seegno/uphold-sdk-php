@@ -1,15 +1,11 @@
 {
     "name": "seegno/bitreserve-sdk-php",
-    "type": "library",
     "description": "Bitreserve SDK PHP for the Bitreserve API",
-    "homepage": "https://github.com/seegno/bitreserve-sdk-php",
+    "version": "2.0.2",
     "keywords": ["bitreserve", "sdk", "php"],
+    "homepage": "https://github.com/seegno/bitreserve-sdk-php",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Bitreserve",
-            "homepage": "http://bitreserve.org"
-        },
         {
             "name": "Nuno Rafael Rocha",
             "email": "nrr@seegno.com",
