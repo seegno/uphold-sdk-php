@@ -80,6 +80,11 @@ class RateTest extends TestCase
         $this->assertEquals($data['pair'], $rate->getPair());
     }
 
+    /**
+     * Get model class.
+     *
+     * @return string
+     */
     protected function getModelClass()
     {
         return 'Bitreserve\Model\Rate';
