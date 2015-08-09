@@ -32,10 +32,13 @@ class ReserveTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/reserve/ledger')
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $reserve = new Reserve($client);
 
@@ -58,10 +61,13 @@ class ReserveTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/reserve/statistics')
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $reserve = new Reserve($client);
 
@@ -84,10 +90,13 @@ class ReserveTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/reserve/transactions')
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $reserve = new Reserve($client);
 
@@ -117,10 +126,13 @@ class ReserveTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with(sprintf('/reserve/transactions/%s', $data['id']))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $reserve = new Reserve($client);
 
@@ -131,6 +143,11 @@ class ReserveTest extends TestCase
         $this->assertEquals($data['status'], $transaction->getStatus());
     }
 
+    /**
+     * Get model class.
+     *
+     * @return string
+     */
     protected function getModelClass()
     {
         return 'Bitreserve\Model\Reserve';
