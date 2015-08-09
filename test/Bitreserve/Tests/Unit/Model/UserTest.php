@@ -2,13 +2,13 @@
 
 namespace Bitreserve\Tests\Unit\Model;
 
-use Bitreserve\BitreserveClient;
 use Bitreserve\Model\User;
+use Bitreserve\Tests\Unit\Model\ModelTestCase;
 
 /**
  * UserTest.
  */
-class UserTest extends TestCase
+class UserTest extends ModelTestCase
 {
     /**
      * @test

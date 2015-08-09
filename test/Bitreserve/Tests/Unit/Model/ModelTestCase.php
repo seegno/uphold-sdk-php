@@ -2,12 +2,12 @@
 
 namespace Bitreserve\Tests\Unit\Model;
 
-use Bitreserve\Tests\Unit\TestCase as BaseTestCase;
+use Seegno\TestBundle\TestCase\BaseTestCase;
 
 /**
- * TestCase.
+ * ModelTestCase.
  */
-abstract class TestCase extends BaseTestCase
+abstract class ModelTestCase extends BaseTestCase
 {
     /**
      * Get Model class.

@@ -3,11 +3,12 @@
 namespace Bitreserve\Tests\Unit\Model;
 
 use Bitreserve\Model\Card;
+use Bitreserve\Tests\Unit\Model\ModelTestCase;
 
 /**
  * CardTest.
  */
-class CardTest extends TestCase
+class CardTest extends ModelTestCase
 {
     /**
      * @test
