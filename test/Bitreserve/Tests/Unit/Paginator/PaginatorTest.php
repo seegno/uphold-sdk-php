@@ -2,13 +2,13 @@
 
 namespace Bitreserve\Tests\Unit\Paginator;
 
-use Bitreserve\Paginator\ArrayPaginator;
 use Bitreserve\Paginator\Paginator;
+use Seegno\TestBundle\TestCase\BaseTestCase;
 
 /**
  * PaginatorTest.
  */
-class PaginatorTest extends \PHPUnit_Framework_TestCase
+class PaginatorTest extends BaseTestCase
 {
     /**
      * @test
@@ -46,23 +46,31 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
             'start' => 0,
         );
 
-        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+        $response = $this
+            ->getMockBuilder('Bitreserve\HttpClient\Message\Response')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
-        $response->expects($this->once())
+        $response
+            ->expects($this->once())
             ->method('getContentRange')
-            ->will($this->returnValue($contentRange));
+            ->will($this->returnValue($contentRange))
+        ;
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->disableOriginalConstructor()
             ->setMethods(array('get'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/path', array(), array('range' => 'items=0-1'))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $pager = new Paginator($client, '/path');
 
@@ -86,27 +94,37 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
             'start' => 0,
         );
 
-        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+        $response = $this
+            ->getMockBuilder('Bitreserve\HttpClient\Message\Response')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
-        $response->expects($this->once())
+        $response
+            ->expects($this->once())
             ->method('getContent')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($data))
+        ;
 
-        $response->expects($this->once())
+        $response
+            ->expects($this->once())
             ->method('getContentRange')
-            ->will($this->returnValue($contentRange));
+            ->will($this->returnValue($contentRange))
+        ;
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->disableOriginalConstructor()
             ->setMethods(array('get'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/path', array(), array('range' => 'items=0-49'))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $pager = new Paginator($client, '/path');
 
@@ -130,30 +148,40 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
             'start' => 0,
         );
 
-        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+        $response = $this
+            ->getMockBuilder('Bitreserve\HttpClient\Message\Response')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
-        $response->expects($this->once())
+        $response
+            ->expects($this->once())
             ->method('getContent')
-            ->will($this->returnValue($data));
+            ->will($this->returnValue($data))
+        ;
 
-        $response->expects($this->once())
+        $response
+            ->expects($this->once())
             ->method('getContentRange')
-            ->will($this->returnValue($contentRange));
+            ->will($this->returnValue($contentRange))
+        ;
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->disableOriginalConstructor()
             ->setMethods(array('get'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/path', array(), array('range' => 'items=0-49'))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $pager = new Paginator($client, '/path');
-            $pager->setModel('Bitreserve\Model\Transaction');
+        $pager->setModel('Bitreserve\Model\Transaction');
 
         $transactions = $pager->getNext();
 
