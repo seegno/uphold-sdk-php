@@ -2,10 +2,12 @@
 
 namespace Bitreserve\Tests\Unit\HttpClient\Message;
 
+use Seegno\TestBundle\TestCase\BaseTestCase;
+
 /**
  * ResponseTest.
  */
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends BaseTestCase
 {
     /**
      * @test
@@ -15,9 +17,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $data = array('foo' => 'bar');
 
         $response = $this->getResponseMock();
-        $response->expects($this->any())
+
+        $response
+            ->expects($this->any())
             ->method('getBody')
-            ->will($this->returnValue(json_encode($data)));
+            ->will($this->returnValue(json_encode($data)))
+        ;
 
         $this->assertEquals($data, $response->getContent());
     }
@@ -28,10 +33,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function shouldReturnParsedContentRangeHeader()
     {
         $response = $this->getResponseMock();
-        $response->expects($this->any())
+
+        $response
+            ->expects($this->any())
             ->method('getHeader')
             ->with('Content-Range')
-            ->will($this->returnValue('items 0-19/200'));
+            ->will($this->returnValue('items 0-19/200'))
+        ;
 
         $contentRange = $response->getContentRange();
 
@@ -46,10 +54,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function shouldReturnNullIfContentRangeHeaderIsEmpty()
     {
         $response = $this->getResponseMock();
-        $response->expects($this->any())
+
+        $response
+            ->expects($this->any())
             ->method('getHeader')
             ->with('Content-Range')
-            ->will($this->returnValue(''));
+            ->will($this->returnValue(''))
+        ;
 
         $contentRange = $response->getContentRange();
 
@@ -62,9 +73,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function shouldCheckIfIsClientErrorAndReturnTrueWhenStatusCodeIs400()
     {
         $response = $this->getResponseMock();
-        $response->expects($this->any())
+
+        $response
+            ->expects($this->any())
             ->method('getStatusCode')
-            ->will($this->returnValue(400));
+            ->will($this->returnValue(400))
+        ;
 
         $this->assertEquals(true, $response->isClientError());
     }
@@ -75,9 +89,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function shouldCheckIfIsClientErrorAndReturnFalseWhenStatusCodeIs300()
     {
         $response = $this->getResponseMock();
-        $response->expects($this->any())
+
+        $response
+            ->expects($this->any())
             ->method('getStatusCode')
-            ->will($this->returnValue(300));
+            ->will($this->returnValue(300))
+        ;
 
         $this->assertEquals(false, $response->isClientError());
     }
@@ -88,9 +105,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function shouldCheckIfIsServerErrorAndReturnTrueWhenStatusCodeIs500()
     {
         $response = $this->getResponseMock();
-        $response->expects($this->any())
+
+        $response
+            ->expects($this->any())
             ->method('getStatusCode')
-            ->will($this->returnValue(500));
+            ->will($this->returnValue(500))
+        ;
 
         $this->assertEquals(true, $response->isServerError());
     }
@@ -101,9 +121,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function shouldCheckIfIsServerErrorAndReturnFalseWhenStatusCodeIs300()
     {
         $response = $this->getResponseMock();
-        $response->expects($this->any())
+
+        $response
+            ->expects($this->any())
             ->method('getStatusCode')
-            ->will($this->returnValue(300));
+            ->will($this->returnValue(300))
+        ;
 
         $this->assertEquals(false, $response->isServerError());
     }
@@ -120,17 +143,23 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         );
 
         $response = $this->getResponseMock();
-        $response->expects($this->any())
+
+        $response
+            ->expects($this->any())
             ->method('getStatusCode')
-            ->will($this->returnValue(429));
-        $response->expects($this->exactly(3))
+            ->will($this->returnValue(429))
+        ;
+
+        $response
+            ->expects($this->exactly(3))
             ->method('getHeader')
             ->withConsecutive(
                 array('X-RateLimit-Limit'),
                 array('X-RateLimit-Remaining'),
                 array('X-RateLimit-Reset')
             )
-            ->will($this->onConsecutiveCalls($data['limit'], $data['remaining'], $data['reset']));
+            ->will($this->onConsecutiveCalls($data['limit'], $data['remaining'], $data['reset']))
+        ;
 
         $this->assertEquals($data, $response->getApiRateLimit());
     }
@@ -142,9 +171,11 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     protected function getResponseMock()
     {
-        return $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+        return $this
+            ->getMockBuilder('Bitreserve\HttpClient\Message\Response')
             ->disableOriginalConstructor()
             ->setMethods(array('getBody', 'getStatusCode', 'getHeader'))
-            ->getMock();
+            ->getMock()
+        ;
     }
 }
