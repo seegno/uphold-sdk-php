@@ -4,12 +4,12 @@ namespace Bitreserve\Tests\Unit;
 
 use Bitreserve\BitreserveClient;
 use Bitreserve\Model\User;
-use Bitreserve\Tests\Unit\TestCase;
+use Seegno\TestBundle\TestCase\BaseTestCase;
 
 /**
  * BitreserveClientTest.
  */
-class BitreserveClientTest extends TestCase
+class BitreserveClientTest extends BaseTestCase
 {
     /**
      * @test
@@ -47,27 +47,31 @@ class BitreserveClientTest extends TestCase
     public function shouldReturnRates()
     {
         $data = array(array(
-            'ask' => $this->faker->randomFloat,
-            'bid' => $this->faker->randomFloat,
-            'currency' => $this->faker->currencyCode,
-            'pair' => sprintf('%s%s', $this->faker->currencyCode, $this->faker->currencyCode),
+            'ask' => $this->getFaker()->randomFloat,
+            'bid' => $this->getFaker()->randomFloat,
+            'currency' => $this->getFaker()->currencyCode,
+            'pair' => sprintf('%s%s', $this->getFaker()->currencyCode, $this->getFaker()->currencyCode),
         ), array(
-            'ask' => $this->faker->randomFloat,
-            'bid' => $this->faker->randomFloat,
-            'currency' => $this->faker->currencyCode,
-            'pair' => sprintf('%s%s', $this->faker->currencyCode, $this->faker->currencyCode),
+            'ask' => $this->getFaker()->randomFloat,
+            'bid' => $this->getFaker()->randomFloat,
+            'currency' => $this->getFaker()->currencyCode,
+            'pair' => sprintf('%s%s', $this->getFaker()->currencyCode, $this->getFaker()->currencyCode),
         ));
 
         $response = $this->getResponseMock($data);
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('get'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/ticker')
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $rates = $client->getRates();
 
@@ -83,30 +87,34 @@ class BitreserveClientTest extends TestCase
      */
     public function shouldReturnRatesByCurrency()
     {
-        $expectedCurrency = $this->faker->currencyCode;
+        $expectedCurrency = $this->getFaker()->currencyCode;
 
         $data = array(array(
-            'ask' => $this->faker->randomFloat,
-            'bid' => $this->faker->randomFloat,
+            'ask' => $this->getFaker()->randomFloat,
+            'bid' => $this->getFaker()->randomFloat,
             'currency' => $expectedCurrency,
-            'pair' => sprintf('%s%s', $expectedCurrency, $this->faker->currencyCode),
+            'pair' => sprintf('%s%s', $expectedCurrency, $this->getFaker()->currencyCode),
         ), array(
-            'ask' => $this->faker->randomFloat,
-            'bid' => $this->faker->randomFloat,
-            'currency' => $this->faker->currencyCode,
-            'pair' => sprintf('%s%s', $expectedCurrency, $this->faker->currencyCode),
+            'ask' => $this->getFaker()->randomFloat,
+            'bid' => $this->getFaker()->randomFloat,
+            'currency' => $this->getFaker()->currencyCode,
+            'pair' => sprintf('%s%s', $expectedCurrency, $this->getFaker()->currencyCode),
         ));
 
         $response = $this->getResponseMock($data);
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('get'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with(sprintf('/ticker/%s', $expectedCurrency))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $rates = $client->getRatesByCurrency($expectedCurrency);
 
@@ -125,32 +133,36 @@ class BitreserveClientTest extends TestCase
     public function shouldReturnCurrencies()
     {
         $expectedCurrencies = array(
-            $this->faker->currencyCode,
-            $this->faker->currencyCode,
+            $this->getFaker()->currencyCode,
+            $this->getFaker()->currencyCode,
         );
 
         $data = array(array(
-            'ask' => $this->faker->randomFloat,
-            'bid' => $this->faker->randomFloat,
+            'ask' => $this->getFaker()->randomFloat,
+            'bid' => $this->getFaker()->randomFloat,
             'currency' => $expectedCurrencies[0],
-            'pair' => sprintf('%s%s', $expectedCurrencies[0], $this->faker->currencyCode),
+            'pair' => sprintf('%s%s', $expectedCurrencies[0], $this->getFaker()->currencyCode),
         ), array(
-            'ask' => $this->faker->randomFloat,
-            'bid' => $this->faker->randomFloat,
+            'ask' => $this->getFaker()->randomFloat,
+            'bid' => $this->getFaker()->randomFloat,
             'currency' => $expectedCurrencies[1],
-            'pair' => sprintf('%s%s', $expectedCurrencies[1], $this->faker->currencyCode),
+            'pair' => sprintf('%s%s', $expectedCurrencies[1], $this->getFaker()->currencyCode),
         ));
 
         $response = $this->getResponseMock($data);
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('get'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/ticker')
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $currencies = $client->getCurrencies();
 
@@ -177,10 +189,13 @@ class BitreserveClientTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with('/reserve/transactions')
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $pager = $client->getTransactions();
 
@@ -208,10 +223,13 @@ class BitreserveClientTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with(sprintf('/reserve/transactions/%s', $expectedTransactionId))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $transaction = $client->getTransactionById($expectedTransactionId);
 
@@ -234,7 +252,7 @@ class BitreserveClientTest extends TestCase
      */
     public function shouldReturnUser()
     {
-        $data = array('username' => $this->faker->userName);
+        $data = array('username' => $this->getFaker()->userName);
 
         $response = $this->getResponseMock($data);
         $userClient = $this->getBitreserveClientMock();
@@ -243,7 +261,8 @@ class BitreserveClientTest extends TestCase
             ->expects($this->once())
             ->method('get')
             ->with('/me')
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $factory = $this
             ->getMockBuilder('Bitreserve\Factory\BitreserveClientFactory')
@@ -354,7 +373,8 @@ class BitreserveClientTest extends TestCase
             ->will($this->onConsecutiveCalls($clientId, $clientSecret))
         ;
 
-        $client->expects($this->any())
+        $client
+            ->expects($this->any())
             ->method('getDefaultHeaders')
             ->will($this->returnValue(array('foo' => 'bar')))
         ;
@@ -380,10 +400,10 @@ class BitreserveClientTest extends TestCase
      */
     public function shouldCreateToken()
     {
-        $login = $this->faker->userName;
-        $password = $this->faker->password;
-        $description = $this->faker->sentence;
+        $description = $this->getFaker()->sentence;
+        $login = $this->getFaker()->userName;
         $otp = null;
+        $password = $this->getFaker()->password;
 
         $headers = array(
             'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
@@ -394,18 +414,24 @@ class BitreserveClientTest extends TestCase
 
         $response = $this->getResponseMock($data);
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('getDefaultHeaders', 'post'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->any())
+        $client
+            ->expects($this->any())
             ->method('getDefaultHeaders')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue(array()))
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('post')
             ->with('/me/tokens', array('description' => $description), $headers)
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $this->assertEquals($data, $client->createToken($login, $password, $description));
     }
@@ -415,10 +441,10 @@ class BitreserveClientTest extends TestCase
      */
     public function shouldCreateTokenWithOTP()
     {
-        $login = $this->faker->userName;
-        $password = $this->faker->password;
-        $description = $this->faker->sentence;
-        $otp = $this->faker->randomNumber(6);
+        $description = $this->getFaker()->sentence;
+        $login = $this->getFaker()->userName;
+        $otp = $this->getFaker()->randomNumber(6);
+        $password = $this->getFaker()->password;
 
         $headers = array(
             'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
@@ -429,18 +455,24 @@ class BitreserveClientTest extends TestCase
 
         $response = $this->getResponseMock($data);
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('getDefaultHeaders', 'post'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->any())
+        $client
+            ->expects($this->any())
             ->method('getDefaultHeaders')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue(array()))
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('post')
             ->with('/me/tokens', array('description' => $description), $headers)
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $this->assertEquals($data, $client->createToken($login, $password, $description, $otp));
     }
@@ -461,25 +493,34 @@ class BitreserveClientTest extends TestCase
 
         $response = $this->getResponseMock($expectedArray);
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('createJsonBody', 'getDefaultHeaders'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->any())
+        $client
+            ->expects($this->any())
             ->method('createJsonBody')
-            ->will($this->returnValue(json_encode($params)));
+            ->will($this->returnValue(json_encode($params)))
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('getDefaultHeaders')
-            ->will($this->returnValue($defaultOptions));
+            ->will($this->returnValue($defaultOptions))
+        ;
 
         $body = $encodedBody ? json_encode($params) : $params;
 
         $httpClient = $this->getHttpClientMock();
-        $httpClient->expects($this->once())
+
+        $httpClient
+            ->expects($this->once())
             ->method($httpMethod)
             ->with(sprintf('%s%s', $apiVersion, $path), $body, array_merge($options, $defaultOptions))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $client->setHttpClient($httpClient);
         $client->setOption('api_version', $apiVersion);
@@ -504,25 +545,34 @@ class BitreserveClientTest extends TestCase
 
         $response = $this->getResponseMock($expectedArray);
 
-        $client = $this->getMockBuilder('Bitreserve\BitreserveClient')
+        $client = $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods(array('createJsonBody', 'getDefaultHeaders'))
-            ->getMock();
+            ->getMock()
+        ;
 
-        $client->expects($this->any())
+        $client
+            ->expects($this->any())
             ->method('createJsonBody')
-            ->will($this->returnValue(json_encode($params)));
+            ->will($this->returnValue(json_encode($params)))
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('getDefaultHeaders')
-            ->will($this->returnValue($defaultOptions));
+            ->will($this->returnValue($defaultOptions))
+        ;
 
         $body = $encodedBody ? json_encode($params) : $params;
 
         $httpClient = $this->getHttpClientMock();
-        $httpClient->expects($this->once())
+
+        $httpClient
+            ->expects($this->once())
             ->method($httpMethod)
             ->with($path, $body, array_merge($options, $defaultOptions))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $client->setHttpClient($httpClient);
         $client->setOption('api_version', null);
@@ -532,6 +582,11 @@ class BitreserveClientTest extends TestCase
         $this->assertEquals($expectedArray, $response->getContent());
     }
 
+    /**
+     * Get default request http methods provider.
+     *
+     * @return array
+     */
     public function getDefaultRequestHttpMethods()
     {
         return array(
@@ -555,7 +610,8 @@ class BitreserveClientTest extends TestCase
             $methods
         );
 
-        return $this->getMockBuilder('Bitreserve\BitreserveClient')
+        return $this
+            ->getMockBuilder('Bitreserve\BitreserveClient')
             ->setMethods($methods)
             ->getMock()
         ;
@@ -570,9 +626,11 @@ class BitreserveClientTest extends TestCase
     {
         $methods = array('get', 'post', 'patch', 'put', 'delete', 'request', 'setOption', 'setHeaders');
 
-        return $this->getMockBuilder('Bitreserve\HttpClient\HttpClientInterface')
+        return $this
+            ->getMockBuilder('Bitreserve\HttpClient\HttpClientInterface')
             ->setMethods($methods)
-            ->getMock();
+            ->getMock()
+        ;
     }
 
     /**
@@ -584,17 +642,21 @@ class BitreserveClientTest extends TestCase
      */
     protected function getResponseMock($content = null)
     {
-        $response = $this->getMockBuilder('Bitreserve\HttpClient\Message\Response')
+        $response = $this
+            ->getMockBuilder('Bitreserve\HttpClient\Message\Response')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
         if (null === $content) {
             return $response;
         }
 
-        $response->expects($this->any())
+        $response
+            ->expects($this->any())
             ->method('getContent')
-            ->will($this->returnValue($content));
+            ->will($this->returnValue($content))
+        ;
 
         return $response;
     }
