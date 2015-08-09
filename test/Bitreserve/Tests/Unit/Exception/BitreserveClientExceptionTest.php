@@ -3,11 +3,12 @@
 namespace Bitreserve\Tests\Unit\Exception;
 
 use Bitreserve\Exception\BitreserveClientException;
+use Seegno\TestBundle\TestCase\BaseTestCase;
 
 /**
  * BitreserveClientExceptionTest.
  */
-class BitreserveClientExceptionTest extends \PHPUnit_Framework_TestCase
+class BitreserveClientExceptionTest extends BaseTestCase
 {
     /**
      * @test
