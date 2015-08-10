@@ -11,7 +11,7 @@ The Bitreserve SDK for PHP provides an easy way for developers to integrate PHP 
 
 ## Requirements
 
-* PHP >= 5.4.4 with the [cURL](http://php.net/manual/en/book.curl.php) extension.
+* PHP >= 5.5 with the [cURL](http://php.net/manual/en/book.curl.php) extension.
 * [Guzzle](https://github.com/guzzle/guzzle) library.
 
 ## Installation
