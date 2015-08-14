@@ -3,11 +3,12 @@
 namespace Bitreserve\Tests\Unit\Model;
 
 use Bitreserve\Model\Rate;
+use Bitreserve\Tests\Unit\Model\ModelTestCase;
 
 /**
  * RateTest.
  */
-class RateTest extends TestCase
+class RateTest extends ModelTestCase
 {
     /**
      * @test
@@ -80,6 +81,11 @@ class RateTest extends TestCase
         $this->assertEquals($data['pair'], $rate->getPair());
     }
 
+    /**
+     * Get model class.
+     *
+     * @return string
+     */
     protected function getModelClass()
     {
         return 'Bitreserve\Model\Rate';

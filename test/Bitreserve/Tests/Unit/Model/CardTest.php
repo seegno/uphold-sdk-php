@@ -3,18 +3,19 @@
 namespace Bitreserve\Tests\Unit\Model;
 
 use Bitreserve\Model\Card;
+use Bitreserve\Tests\Unit\Model\ModelTestCase;
 
 /**
  * CardTest.
  */
-class CardTest extends TestCase
+class CardTest extends ModelTestCase
 {
     /**
      * @test
      */
     public function shouldReturnInstanceOfCard()
     {
-        $data = array('id' => '1');
+        $data = array('id' => $this->getFaker()->randomDigitNotNull);
 
         $client = $this->getBitreserveClientMock();
 
@@ -26,10 +27,22 @@ class CardTest extends TestCase
 
     /**
      * @test
+     *
+     * @expectedException PHPUnit_Framework_Error
+     * @expectedExceptionMessage Argument 1 passed to Bitreserve\Model\Card::__construct() must be an
+     *                           instance of Bitreserve\BitreserveClient, string given
+     */
+    public function shouldThrowExceptionWhenFirstArgumentIsNotAnInstanceOfBitreserveClient()
+    {
+        $card = new Card('foo', 'bar');
+    }
+
+    /**
+     * @test
      */
     public function shouldReturnId()
     {
-        $data = array('id' => '1');
+        $data = array('id' => $this->getFaker()->randomDigitNotNull);
 
         $client = $this->getBitreserveClientMock();
 
@@ -57,7 +70,7 @@ class CardTest extends TestCase
      */
     public function shouldReturnLabel()
     {
-        $data = array('label' => 'My Card');
+        $data = array('label' => $this->getFaker()->sentence(3));
 
         $client = $this->getBitreserveClientMock();
 
@@ -71,7 +84,7 @@ class CardTest extends TestCase
      */
     public function shouldReturnCurrency()
     {
-        $data = array('currency' => 'BTC');
+        $data = array('currency' => $this->getFaker()->currencyCode);
 
         $client = $this->getBitreserveClientMock();
 
@@ -85,7 +98,7 @@ class CardTest extends TestCase
      */
     public function shouldReturnBalance()
     {
-        $data = array('balance' => '12.34');
+        $data = array('balance' => $this->getFaker()->randomFloat);
 
         $client = $this->getBitreserveClientMock();
 
@@ -99,7 +112,7 @@ class CardTest extends TestCase
      */
     public function shouldReturnAvailable()
     {
-        $data = array('available' => '12.34');
+        $data = array('available' => $this->getFaker()->randomFloat);
 
         $client = $this->getBitreserveClientMock();
 
@@ -127,7 +140,7 @@ class CardTest extends TestCase
      */
     public function shouldReturnSettings()
     {
-        $data = array('settings' => array('position' => '3', 'starred' => true));
+        $data = array('settings' => array('position' => $this->getFaker()->randomDigitNotNull, 'starred' => true));
 
         $client = $this->getBitreserveClientMock();
 
@@ -168,10 +181,13 @@ class CardTest extends TestCase
         $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('get')
             ->with(sprintf('/me/cards/%s/transactions', $cardData['id']))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $card = new Card($client, $cardData);
 
@@ -196,10 +212,10 @@ class CardTest extends TestCase
         $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
 
         $postData = array(
-            'destination' => 'luke.skywalker@rebelalliance.org',
+            'destination' => $this->getFaker()->email,
             'denomination' => array(
-                'amount' => '0.1',
-                'currency' => 'BTC',
+                'amount' => $this->getFaker()->randomFloat,
+                'currency' => $this->getFaker()->currencyCode,
         ));
 
         $data = array(
@@ -210,10 +226,13 @@ class CardTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('post')
             ->with(sprintf('/me/cards/%s/transactions', $cardData['id']), $postData)
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $card = new Card($client, $cardData);
 
@@ -223,6 +242,11 @@ class CardTest extends TestCase
         $this->assertEquals($data['id'], $transaction->getId());
     }
 
+    /**
+     * Get model class.
+     *
+     * @return string
+     */
     protected function getModelClass()
     {
         return 'Bitreserve\Model\Card';

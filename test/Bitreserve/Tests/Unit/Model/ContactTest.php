@@ -3,18 +3,19 @@
 namespace Bitreserve\Tests\Unit\Model;
 
 use Bitreserve\Model\Contact;
+use Bitreserve\Tests\Unit\Model\ModelTestCase;
 
 /**
  * ContactTest.
  */
-class ContactTest extends TestCase
+class ContactTest extends ModelTestCase
 {
     /**
      * @test
      */
     public function shouldReturnInstanceOfContact()
     {
-        $data = array('id' => '1');
+        $data = array('id' => $this->getFaker()->randomDigitNotNull);
 
         $client = $this->getBitreserveClientMock();
 
@@ -29,7 +30,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnId()
     {
-        $data = array('id' => '1');
+        $data = array('id' => $this->getFaker()->randomDigitNotNull);
 
         $client = $this->getBitreserveClientMock();
 
@@ -43,7 +44,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnFirstName()
     {
-        $data = array('firstName' => 'Foobar');
+        $data = array('firstName' => $this->getFaker()->firstName);
 
         $client = $this->getBitreserveClientMock();
 
@@ -57,7 +58,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnLastName()
     {
-        $data = array('lastName' => 'Foobar');
+        $data = array('lastName' => $this->getFaker()->lastName);
 
         $client = $this->getBitreserveClientMock();
 
@@ -71,7 +72,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnName()
     {
-        $data = array('name' => 'Foobar');
+        $data = array('name' => $this->getFaker()->name);
 
         $client = $this->getBitreserveClientMock();
 
@@ -85,7 +86,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnCompany()
     {
-        $data = array('company' => 'Foobar');
+        $data = array('company' => $this->getFaker()->company);
 
         $client = $this->getBitreserveClientMock();
 
@@ -99,7 +100,7 @@ class ContactTest extends TestCase
      */
     public function shouldReturnEmails()
     {
-        $data = array('emails' => array('foo@bar.com'));
+        $data = array('emails' => array($this->getFaker()->email));
 
         $client = $this->getBitreserveClientMock();
 
@@ -122,6 +123,11 @@ class ContactTest extends TestCase
         $this->assertEquals($data['addresses'], $contact->getAddresses());
     }
 
+    /**
+     * Get model class.
+     *
+     * @return string
+     */
     protected function getModelClass()
     {
         return 'Bitreserve\Model\Contact';

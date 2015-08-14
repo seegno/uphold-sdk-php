@@ -3,18 +3,19 @@
 namespace Bitreserve\Tests\Unit\Model;
 
 use Bitreserve\Model\Transaction;
+use Bitreserve\Tests\Unit\Model\ModelTestCase;
 
 /**
  * TransactionTest.
  */
-class TransactionTest extends TestCase
+class TransactionTest extends ModelTestCase
 {
     /**
      * @test
      */
     public function shouldReturnInstanceOfTransaction()
     {
-        $data = array('id' => '1');
+        $data = array('id' => $this->getFaker()->randomDigitNotNull);
 
         $client = $this->getBitreserveClientMock();
 
@@ -29,7 +30,7 @@ class TransactionTest extends TestCase
      */
     public function shouldReturnId()
     {
-        $data = array('id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634');
+        $data = array('id' => $this->getFaker()->uuid);
 
         $client = $this->getBitreserveClientMock();
 
@@ -100,9 +101,9 @@ class TransactionTest extends TestCase
     public function shouldReturnDenomination()
     {
         $data = array('denomination' => array(
-            'rate' => '1.00',
-            'amount' => '1.00',
-            'currency' => 'USD',
+            'rate' => $this->getFaker()->randomFloat(2, 1, 2),
+            'amount' => $this->getFaker()->randomFloat,
+            'currency' => $this->getFaker()->currencyCode,
         ));
 
         $client = $this->getBitreserveClientMock();
@@ -174,9 +175,9 @@ class TransactionTest extends TestCase
     public function shouldCommit()
     {
         $data = array(
-            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'id' => $this->getFaker()->uuid,
             'origin' => array(
-                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+                'CardId' => $this->getFaker()->uuid,
             ),
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'pending',
@@ -185,10 +186,13 @@ class TransactionTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('post')
             ->with(sprintf('/me/cards/%s/transactions/%s/commit', $data['origin']['CardId'], $data['id']))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $transaction = new Transaction($client, $data);
         $transaction->commit();
@@ -203,9 +207,9 @@ class TransactionTest extends TestCase
     public function shouldThrowAnErrorOnCommitWhenStatusIsNotPending()
     {
         $data = array(
-            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'id' => $this->getFaker()->uuid,
             'origin' => array(
-                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+                'CardId' => $this->getFaker()->uuid,
             ),
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'completed',
@@ -224,7 +228,7 @@ class TransactionTest extends TestCase
     public function shouldThrowAnErrorOnCommitWhenCardIdIsNotDefined()
     {
         $data = array(
-            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'id' => $this->getFaker()->uuid,
         );
 
         $client = $this->getBitreserveClientMock();
@@ -239,9 +243,9 @@ class TransactionTest extends TestCase
     public function shouldCancel()
     {
         $data = array(
-            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'id' => $this->getFaker()->uuid,
             'origin' => array(
-                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+                'CardId' => $this->getFaker()->uuid,
             ),
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'waiting',
@@ -250,10 +254,13 @@ class TransactionTest extends TestCase
         $response = $this->getResponseMock($data);
 
         $client = $this->getBitreserveClientMock();
-        $client->expects($this->once())
+
+        $client
+            ->expects($this->once())
             ->method('post')
             ->with(sprintf('/me/cards/%s/transactions/%s/cancel', $data['origin']['CardId'], $data['id']))
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
         $transaction = new Transaction($client, $data);
         $transaction->cancel();
@@ -268,7 +275,7 @@ class TransactionTest extends TestCase
     public function shouldThrowAnErrorOnCancelWhenStatusIsNotWaiting()
     {
         $data = array(
-            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'id' => $this->getFaker()->uuid,
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'completed',
         );
@@ -286,7 +293,7 @@ class TransactionTest extends TestCase
     public function shouldThrowAnErrorOnCancelWhenStatusIsPending()
     {
         $data = array(
-            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'id' => $this->getFaker()->uuid,
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'pending',
         );
@@ -305,7 +312,7 @@ class TransactionTest extends TestCase
     public function shouldThrowAnErrorOnCancelWhenCardIdIsNotDefined()
     {
         $data = array(
-            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'id' => $this->getFaker()->uuid,
         );
 
         $client = $this->getBitreserveClientMock();
@@ -353,6 +360,11 @@ class TransactionTest extends TestCase
         $transaction->resend();
     }
 
+    /**
+     * Get model class.
+     *
+     * @return string
+     */
     protected function getModelClass()
     {
         return 'Bitreserve\Model\Transaction';

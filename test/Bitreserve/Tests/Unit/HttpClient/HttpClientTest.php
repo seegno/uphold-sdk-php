@@ -10,11 +10,12 @@ use GuzzleHttp\Message\Request;
 use GuzzleHttp\Message\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
 use ReflectionProperty;
+use Seegno\TestBundle\TestCase\BaseTestCase;
 
 /**
  * HttpClientTest.
  */
-class HttpClientTest extends \PHPUnit_Framework_TestCase
+class HttpClientTest extends BaseTestCase
 {
     /**
      * @test
@@ -32,13 +33,13 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
     public function shouldBeAbleToPassOptionsToConstructor()
     {
         $options = array(
-            'timeout' => 33,
             'foo' => 'bar',
+            'timeout' => $this->getFaker()->randomDigitNotNull,
         );
 
         $httpClient = new HttpClient($options);
 
-        $this->assertEquals(33, $httpClient->getOption('timeout'));
+        $this->assertEquals($options['timeout'], $httpClient->getOption('timeout'));
         $this->assertEquals('bar', $httpClient->getOption('foo'));
     }
 
@@ -47,10 +48,12 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldBeAbleToSetOption()
     {
-        $httpClient = new HttpClient();
-        $httpClient->setOption('timeout', 15);
+        $timeout = $this->getFaker()->randomDigitNotNull;
 
-        $this->assertEquals(15, $httpClient->getOption('timeout'));
+        $httpClient = new HttpClient();
+        $httpClient->setOption('timeout', $timeout);
+
+        $this->assertEquals($timeout, $httpClient->getOption('timeout'));
     }
 
     /**
@@ -62,10 +65,13 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $parameters = array('a' => 'b');
         $path = '/some/path';
 
-        $httpClient = $this->getHttpClientMock();
-        $httpClient->expects($this->once())
+        $httpClient = $this->getHttpClientMock(array('request'));
+
+        $httpClient
+            ->expects($this->once())
             ->method('request')
-            ->with($path, null, 'GET', $headers, array('query' => $parameters));
+            ->with($path, null, 'GET', $headers, array('query' => $parameters))
+        ;
 
         $httpClient->get($path, $parameters, $headers);
     }
@@ -79,10 +85,13 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $headers = array('c' => 'd');
         $path = '/some/path';
 
-        $httpClient = $this->getHttpClientMock();
-        $httpClient->expects($this->once())
+        $httpClient = $this->getHttpClientMock(array('request'));
+
+        $httpClient
+            ->expects($this->once())
             ->method('request')
-            ->with($path, $body, 'POST', $headers);
+            ->with($path, $body, 'POST', $headers)
+        ;
 
         $httpClient->post($path, $body, $headers);
     }
@@ -94,10 +103,13 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
     {
         $path = '/some/path';
 
-        $httpClient = $this->getHttpClientMock();
-        $httpClient->expects($this->once())
+        $httpClient = $this->getHttpClientMock(array('request'));
+
+        $httpClient
+            ->expects($this->once())
             ->method('request')
-            ->with($path, null, 'POST', $this->isType('array'));
+            ->with($path, null, 'POST', $this->isType('array'))
+        ;
 
         $httpClient->post($path);
     }
@@ -111,10 +123,13 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $headers = array('c' => 'd');
         $path = '/some/path';
 
-        $httpClient = $this->getHttpClientMock();
-        $httpClient->expects($this->once())
+        $httpClient = $this->getHttpClientMock(array('request'));
+
+        $httpClient
+            ->expects($this->once())
             ->method('request')
-            ->with($path, $body, 'PATCH', $headers);
+            ->with($path, $body, 'PATCH', $headers)
+        ;
 
         $httpClient->patch($path, $body, $headers);
     }
@@ -128,10 +143,13 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $headers = array('c' => 'd');
         $path = '/some/path';
 
-        $httpClient = $this->getHttpClientMock();
-        $httpClient->expects($this->once())
+        $httpClient = $this->getHttpClientMock(array('request'));
+
+        $httpClient
+            ->expects($this->once())
             ->method('request')
-            ->with($path, $body, 'DELETE', $headers);
+            ->with($path, $body, 'DELETE', $headers)
+        ;
 
         $httpClient->delete($path, $body, $headers);
     }
@@ -145,10 +163,13 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $headers = array('c' => 'd');
         $path = '/some/path';
 
-        $httpClient = $this->getHttpClientMock();
-        $httpClient->expects($this->once())
+        $httpClient = $this->getHttpClientMock(array('request'));
+
+        $httpClient
+            ->expects($this->once())
             ->method('request')
-            ->with($path, $body, 'PUT', $headers);
+            ->with($path, $body, 'PUT', $headers)
+        ;
 
         $httpClient->put($path, $body, $headers);
     }
@@ -167,25 +188,25 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $request = new Request($httpMethod, $path);
         $response = new Response(200, array('foo' => 'bar'));
 
-        $httpClient = $this->getMockBuilder('Bitreserve\HttpClient\HttpClient')
-            ->setMethods(array('createRequest'))
-            ->getMock();
-
         $client = $this->getClientMock();
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('createRequest')
             ->with($httpMethod, $path, array_merge($options, array('headers' => $headers, 'body' => $body)))
-            ->will($this->returnValue($request));
+            ->will($this->returnValue($request))
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('send')
             ->with($request)
-            ->will($this->returnValue($response));
+            ->will($this->returnValue($response))
+        ;
 
-        $clientReflector = new ReflectionProperty('Bitreserve\HttpClient\HttpClient', 'client');
-        $clientReflector->setAccessible(true);
-        $clientReflector->setValue($httpClient, $client);
+        $httpClient = $this->getHttpClientMock(array('createRequest'));
+
+        $this->setReflectionProperty($httpClient, 'client', $client);
 
         $httpClientResponse = $httpClient->request($path, $body, $httpMethod, $headers, $options);
 
@@ -207,27 +228,27 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $request = new Request($httpMethod, $path);
         $response = new Response(200, array('foo' => 'bar'));
 
-        $httpClient = $this->getMockBuilder('Bitreserve\HttpClient\HttpClient')
-            ->setMethods(array('createRequest'))
-            ->getMock();
+        $httpClient = $this->getHttpClientMock(array('createRequest'));
 
         $client = $this->getClientMock();
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('createRequest')
             ->with($httpMethod, $path, array_merge($options, array('headers' => $headers, 'body' => $body)))
-            ->will($this->returnValue($request));
+            ->will($this->returnValue($request))
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('send')
             ->with($request)
-            ->will($this->throwException(new \LogicException('Testing logic exception', 500)));
+            ->will($this->throwException(new \LogicException('Testing logic exception', 500)))
+        ;
 
-        $clientReflector = new ReflectionProperty('Bitreserve\HttpClient\HttpClient', 'client');
-        $clientReflector->setAccessible(true);
-        $clientReflector->setValue($httpClient, $client);
+        $this->setReflectionProperty($httpClient, 'client', $client);
 
-        $httpClientResponse = $httpClient->request($path, $body, $httpMethod, $headers, $options);
+        $httpClient->request($path, $body, $httpMethod, $headers, $options);
     }
 
     /**
@@ -245,27 +266,27 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $request = new Request($httpMethod, $path);
         $response = new Response(200, array('foo' => 'bar'));
 
-        $httpClient = $this->getMockBuilder('Bitreserve\HttpClient\HttpClient')
-            ->setMethods(array('createRequest'))
-            ->getMock();
-
         $client = $this->getClientMock();
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('createRequest')
             ->with($httpMethod, $path, array_merge($options, array('headers' => $headers, 'body' => $body)))
-            ->will($this->returnValue($request));
+            ->will($this->returnValue($request))
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('send')
             ->with($request)
-            ->will($this->throwException(new \RuntimeException('Testing runtime exception', 500)));
+            ->will($this->throwException(new \RuntimeException('Testing runtime exception', 500)))
+        ;
 
-        $clientReflector = new ReflectionProperty('Bitreserve\HttpClient\HttpClient', 'client');
-        $clientReflector->setAccessible(true);
-        $clientReflector->setValue($httpClient, $client);
+        $httpClient = $this->getHttpClientMock(array('createRequest'));
 
-        $httpClientResponse = $httpClient->request($path, $body, $httpMethod, $headers, $options);
+        $this->setReflectionProperty($httpClient, 'client', $client);
+
+        $httpClient->request($path, $body, $httpMethod, $headers, $options);
     }
 
     /**
@@ -279,25 +300,29 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $path = '/some/path';
 
         $message = $this->getMock('GuzzleHttp\Message\Response', array(), array(200));
-        $message->expects($this->once())
+
+        $message
+            ->expects($this->once())
             ->method('getBody')
-            ->will($this->returnValue('Just raw context'));
+            ->will($this->returnValue('Just raw context'))
+        ;
 
         $httpClient = new HttpClient();
 
         $client = $this->getClientMock();
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('createRequest')
-            ->will($this->returnValue(new Request($httpMethod, $path)));
+            ->will($this->returnValue(new Request($httpMethod, $path)))
+        ;
 
-        $client->expects($this->once())
+        $client
+            ->expects($this->once())
             ->method('send')
             ->will($this->returnValue($message));
 
-        $clientReflector = new ReflectionProperty('Bitreserve\HttpClient\HttpClient', 'client');
-        $clientReflector->setAccessible(true);
-        $clientReflector->setValue($httpClient, $client);
+        $this->setReflectionProperty($httpClient, 'client', $client);
 
         $response = $httpClient->get($path, $parameters, $headers);
 
@@ -305,19 +330,31 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('GuzzleHttp\Message\MessageInterface', $response);
     }
 
-    protected function getHttpClientMock()
+    /**
+     * Get `HttpClient` mock.
+     *
+     * @return HttpClient
+     */
+    protected function getHttpClientMock(array $methods = null)
     {
-        $methods = array('request');
-
-        return $this->getMockBuilder('Bitreserve\HttpClient\HttpClient')
+        return $this
+            ->getMockBuilder('Bitreserve\HttpClient\HttpClient')
             ->setMethods($methods)
-            ->getMock();
+            ->getMock()
+        ;
     }
 
+    /**
+     * Get `Client` mock.
+     *
+     * @return Client
+     */
     protected function getClientMock()
     {
-        return $this->getMockBuilder('GuzzleHttp\Client')
+        return $this
+            ->getMockBuilder('GuzzleHttp\Client')
             ->setMethods(array('send', 'createRequest'))
-            ->getMock();
+            ->getMock()
+        ;
     }
 }
