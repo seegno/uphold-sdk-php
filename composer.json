@@ -1,7 +1,7 @@
 {
     "name": "seegno/bitreserve-sdk-php",
     "description": "Bitreserve SDK PHP for the Bitreserve API",
-    "version": "2.0.2",
+    "version": "3.0.0",
     "keywords": ["bitreserve", "sdk", "php"],
     "homepage": "https://github.com/seegno/bitreserve-sdk-php",
     "license": "MIT",

@@ -1,5 +1,24 @@
 ## Changelog
 
+### 3.0.0 / 2015-08-14
+- [#98](https://github.com/seegno/bitreserve-sdk-php/pull/98) Add code climate secure token (@nunorafaelrocha)
+- [#93](https://github.com/seegno/bitreserve-sdk-php/pull/93) Improve tests (@nunorafaelrocha)
+- [#95](https://github.com/seegno/bitreserve-sdk-php/pull/95) Fix code climate SSL certificate error (@nunorafaelrocha)
+- [#97](https://github.com/seegno/bitreserve-sdk-php/pull/97) Update composer dependencies (@nunorafaelrocha)
+- [#94](https://github.com/seegno/bitreserve-sdk-php/pull/94) Improve composer.json (@nunorafaelrocha)
+- [#96](https://github.com/seegno/bitreserve-sdk-php/pull/96) Fix enabling xdebug extension in hvvm (@nunorafaelrocha)
+- [#89](https://github.com/seegno/bitreserve-sdk-php/pull/89) Add OAuth support, improved pagination and transaction resend (@nunorafaelrocha, @arevalomalina, @byrnereese)
+- [#88](https://github.com/seegno/bitreserve-sdk-php/pull/88) Improve user architecture (@nunorafaelrocha)
+- [#91](https://github.com/seegno/bitreserve-sdk-php/pull/91) Update create token response handle (@nunorafaelrocha)
+- [#87](https://github.com/seegno/bitreserve-sdk-php/pull/87) Improve `BitreserveClientTest` docblocks (@nunorafaelrocha)
+- [#73](https://github.com/seegno/bitreserve-sdk-php/pull/73) Add missing docblock to `ResponseTest` class (@nunorafaelrocha)
+- [#70](https://github.com/seegno/bitreserve-sdk-php/pull/70) Remove unused namespaces (@nunorafaelrocha)
+- [#78](https://github.com/seegno/bitreserve-sdk-php/pull/78) Add getter for currencies to user model (@nunorafaelrocha)
+- [#79](https://github.com/seegno/bitreserve-sdk-php/pull/79) Rename ticker model to rate model (@nunorafaelrocha)
+- [#71](https://github.com/seegno/bitreserve-sdk-php/pull/71) Add test cases (@nunorafaelrocha)
+- [#67](https://github.com/seegno/bitreserve-sdk-php/pull/67) Improve functional test case docblock (@nunorafaelrocha)
+- [#69](https://github.com/seegno/bitreserve-sdk-php/pull/69) Add unit tests folder (@nunorafaelrocha)
+
 ### 2.0.2 / 2015-03-11
 - [#60](https://github.com/seegno/bitreserve-sdk-php/pull/60) Add reserve model functional test (@nunorafaelrocha)
 - [#61](https://github.com/seegno/bitreserve-sdk-php/pull/61) Fix get user cards example in README (@nunorafaelrocha)
