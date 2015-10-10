@@ -227,7 +227,7 @@ $client = new Client();
 $user = $client->getUser('AUTHORIZATION_TOKEN');
 
 // Get a specific card by id.
-$card = $user->getCardsById('ade869d8-7913-4f67-bb4d-72719f0a2be0');
+$card = $user->getCardById('ade869d8-7913-4f67-bb4d-72719f0a2be0');
 
 // Create a new transaction.
 $transaction = $card->createTransaction('foo@bar.com', '2.0', 'BTC');
