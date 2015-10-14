@@ -1,13 +1,13 @@
-# Bitreserve SDK for PHP
-[![Latest Version](https://img.shields.io/packagist/v/seegno/bitreserve-sdk-php.svg)](https://packagist.org/packages/seegno/bitreserve-sdk-php)
-[![Build Status](https://travis-ci.org/seegno/bitreserve-sdk-php.svg?branch=master)](https://travis-ci.org/seegno/bitreserve-sdk-php)
-[![Code Climate](https://codeclimate.com/github/seegno/bitreserve-sdk-php/badges/gpa.svg)](https://codeclimate.com/github/seegno/bitreserve-sdk-php)
-[![Test Coverage](https://codeclimate.com/github/seegno/bitreserve-sdk-php/badges/coverage.svg)](https://codeclimate.com/github/seegno/bitreserve-sdk-php)
-[![License](https://img.shields.io/packagist/l/seegno/bitreserve-sdk-php.svg)](https://packagist.org/packages/seegno/bitreserve-sdk-php)
+# Uphold SDK for PHP
+[![Latest Version](https://img.shields.io/packagist/v/seegno/uphold-sdk-php.svg)](https://packagist.org/packages/seegno/uphold-sdk-php)
+[![Build Status](https://travis-ci.org/seegno/uphold-sdk-php.svg?branch=master)](https://travis-ci.org/seegno/uphold-sdk-php)
+[![Code Climate](https://codeclimate.com/github/seegno/uphold-sdk-php/badges/gpa.svg)](https://codeclimate.com/github/seegno/uphold-sdk-php)
+[![Test Coverage](https://codeclimate.com/github/seegno/uphold-sdk-php/badges/coverage.svg)](https://codeclimate.com/github/seegno/uphold-sdk-php)
+[![License](https://img.shields.io/packagist/l/seegno/uphold-sdk-php.svg)](https://packagist.org/packages/seegno/uphold-sdk-php)
 
-Bitreserve is a next generation money service business that shields you from bitcoin volatility by enabling you to hold bitcoin as the money you use every day.
+Uphold is a next generation money service business that shields you from bitcoin volatility by enabling you to hold bitcoin as the money you use every day.
 
-The Bitreserve SDK for PHP provides an easy way for developers to integrate PHP applications with the [Bitreserve API](https://developers.bitreserve.org).
+The Uphold SDK for PHP provides an easy way for developers to integrate PHP applications with the [Uphold API](https://developers.uphold.com).
 
 ## Requirements
 
@@ -20,7 +20,7 @@ The Bitreserve SDK for PHP provides an easy way for developers to integrate PHP 
 
 Grab the latest version of the library:
 
-    $ git clone https://github.com/seegno/bitreserve-sdk-php.git
+    $ git clone https://github.com/seegno/uphold-sdk-php.git
 
 Install composer:
 
@@ -42,14 +42,14 @@ Require the library package as a dependency:
 ```json
 {
     "require": {
-        "seegno/bitreserve-sdk-php": "~3.0"
+        "seegno/uphold-sdk-php": "~3.0"
     }
 }
 ```
 
 ## Basic usage
 
-In order to learn more about the Bitreserve API, please check out the [developer website](https://developer.bitreserve.org/api/v0/#authentication).
+In order to learn more about the Uphold API, please check out the [developer website](https://developer.uphold.com/api/v0/#authentication).
 
 First, create a Personal Access Token (PAT) using the command described below.
 
@@ -57,7 +57,7 @@ First, create a Personal Access Token (PAT) using the command described below.
 
     $ php lib/Bitreserve/console.php tokens:create
 
-Then, create a new instance of the `Client` class with token. Take a look at the following examples and explore more on the [examples](https://github.com/bitreserve/bitreserve-sdk-php/tree/master/examples) directory.
+Then, create a new instance of the `Client` class with token. Take a look at the following examples and explore more on the [examples](https://github.com/bitreserve/uphold-sdk-php/tree/master/examples) directory.
 
 ### Get authenticated user
 ```php
@@ -317,14 +317,14 @@ while($pager->hasNext()) {
 
 #### Contributing
 
-Found a bug or want to suggest something? Take a look first on the current and closed [issues](https://github.com/seegno/bitreserve-sdk-php/issues). If it is something new, please [submit an issue](https://github.com/seegno/bitreserve-sdk-php/issues/new).
+Found a bug or want to suggest something? Take a look first on the current and closed [issues](https://github.com/seegno/uphold-sdk-php/issues). If it is something new, please [submit an issue](https://github.com/seegno/uphold-sdk-php/issues/new).
 
 #### Develop
 
-It will be awesome if you can help us evolve `bitreserve-sdk-php`. Want to help?
+It will be awesome if you can help us evolve `uphold-sdk-php`. Want to help?
 
-1. [Fork it](https://github.com/seegno/bitreserve-sdk-php).
+1. [Fork it](https://github.com/seegno/uphold-sdk-php).
 2. `php composer.phar install`.
 3. Hack away.
 4. Run the tests: `phpunit`.
-5. Create a [Pull Request](https://github.com/seegno/bitreserve-sdk-php/compare).
+5. Create a [Pull Request](https://github.com/seegno/uphold-sdk-php/compare).
