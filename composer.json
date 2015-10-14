@@ -1,9 +1,9 @@
 {
-    "name": "seegno/bitreserve-sdk-php",
-    "description": "Bitreserve SDK PHP for the Bitreserve API",
+    "name": "seegno/uphold-sdk-php",
+    "description": "Uphold SDK PHP for the Uphold API",
     "version": "3.0.0",
-    "keywords": ["bitreserve", "sdk", "php"],
-    "homepage": "https://github.com/seegno/bitreserve-sdk-php",
+    "keywords": ["uphold", "sdk", "php"],
+    "homepage": "https://github.com/seegno/uphold-sdk-php",
     "license": "MIT",
     "authors": [
         {
