@@ -36,10 +36,10 @@ class BitreserveClient
      */
     private $options = array(
         'api_version' => 'v0',
-        'base_url' => 'https://api.bitreserve.org/',
+        'base_url' => 'https://api.uphold.com/',
         'debug' => false,
         'timeout' => 10,
-        'user_agent' => 'bitreserve-sdk-php {version} (https://github.com/seegno/bitreserve-sdk-php)',
+        'user_agent' => 'uphold-sdk-php {version} (https://github.com/seegno/uphold-sdk-php)',
         'version' => '3.0.0',
     );
 
