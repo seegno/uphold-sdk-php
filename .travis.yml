@@ -21,4 +21,4 @@ after_script:
 addons:
   code_climate:
     repo_token:
-      secure: KuOIoa9+0Ud0Zfh1JsdRbEAJl69ln7j/kS5q7PDYEgoyfI19krFYsGSokjuWpnt8je+ebnCM4BmV79aZffwxpEFgeLmYoDoREX0sZM43ybarlYNe3J1tuM79YIuIqxddh1mMHgGXzX+Ar+1gs8PA7bEJrgmd+JlV6gb8V/gTz0Q=
+      secure: I63bS1v5CFtuaWlLix2B+Gp/9P7c2K+F4HIwQVJgosb0pXswuUFNTVDPUdVlMk0lrdwMKXKrzY9CWFSWTGg5lkGMzYTT8EFwbodUjfgufoLw+NpwdnFfYW0WgfH8jpJdf/Z4MA/Bei5bk299hx53sF1NL7x3JuPgwLR2Vb62zj0=
