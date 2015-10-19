@@ -533,6 +533,28 @@ class UserTest extends ModelTestCase
     /**
      * @test
      */
+    public function shouldCallGetCardByIdWithGivenAddress()
+    {
+        $user = $this
+            ->getMockBuilder($this->getModelClass())
+            ->setMethods(array('getCardById'))
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $user
+            ->expects($this->once())
+            ->method('getCardById')
+            ->with('foo')
+            ->will($this->returnValue('bar'))
+        ;
+
+        $this->assertEquals('bar', $user->getCardByAddress('foo'));
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnOneCard()
     {
         $data = array(
