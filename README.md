@@ -55,15 +55,15 @@ First, create a Personal Access Token (PAT) using the command described below.
 
 ### Create a Personal Access Token
 
-    $ php lib/Bitreserve/console.php tokens:create
+    $ php lib/Uphold/console.php tokens:create
 
-Then, create a new instance of the `Client` class with token. Take a look at the following examples and explore more on the [examples](https://github.com/bitreserve/uphold-sdk-php/tree/master/examples) directory.
+Then, create a new instance of the `Client` class with token. Take a look at the following examples and explore more on the [examples](https://github.com/seegno/uphold-sdk-php/tree/master/examples) directory.
 
 ### Get authenticated user
 ```php
 require_once 'vendor/autoload.php';
 
-use Bitreserve\BitreserveClient as Client;
+use Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();
@@ -76,7 +76,7 @@ $user = $client->getUser('AUTHORIZATION_TOKEN');
 ```php
 require_once 'vendor/autoload.php';
 
-use Bitreserve\BitreserveClient as Client;
+use Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();
@@ -109,7 +109,7 @@ Array
 ```php
 require_once 'vendor/autoload.php';
 
-use Bitreserve\BitreserveClient as Client;
+use Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();
@@ -125,7 +125,7 @@ $cards = $user->getCards();
 ```php
 require_once 'vendor/autoload.php';
 
-use Bitreserve\BitreserveClient as Client;
+use Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();
@@ -140,7 +140,7 @@ $card = $user->createCard('My new card', 'BTC');
 The above produces the output shown below:
 
 ```php
-Bitreserve\Model\Card Object
+Uphold\Model\Card Object
 (
     [id:protected] => ade869d8-7913-4f67-bb4d-72719f0a2be0
     [address:protected] => Array
@@ -175,7 +175,7 @@ Bitreserve\Model\Card Object
 ```php
 require_once 'vendor/autoload.php';
 
-use Bitreserve\BitreserveClient as Client;
+use Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();
@@ -196,7 +196,7 @@ The above produces the output shown below:
 ```php
 Array
 (
-    [0] => Bitreserve\Model\Rate Object
+    [0] => Uphold\Model\Rate Object
         (
             [ask:protected] => 1
             [bid:protected] => 1
@@ -204,7 +204,7 @@ Array
             [pair:protected] => BTCBTC
         )
 
-    [1] => Bitreserve\Model\Rate Object
+    [1] => Uphold\Model\Rate Object
         (
             [ask:protected] => 234.89
             [bid:protected] => 234.8
@@ -218,7 +218,7 @@ Array
 ```php
 require_once 'vendor/autoload.php';
 
-use Bitreserve\BitreserveClient as Client;
+use Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();
@@ -239,7 +239,7 @@ $transaction->commit();
 The above produces the output shown below:
 
 ```php
-Bitreserve\Model\Transaction Object
+Uphold\Model\Transaction Object
 (
     [id:protected] => a97bb994-6e24-4a89-b653-e0a6d0bcf634
     [createdAt:protected] => 2015-01-30T11:46:11.439Z
@@ -264,7 +264,7 @@ Bitreserve\Model\Transaction Object
 ```php
 require_once 'vendor/autoload.php';
 
-use \Bitreserve\BitreserveClient as Client;
+use \Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();
@@ -287,7 +287,7 @@ $transaction = $client->getReserve()->getTransactionById('a97bb994-6e24-4a89-b65
 ```php
 require_once 'vendor/autoload.php';
 
-use \Bitreserve\BitreserveClient as Client;
+use \Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();

@@ -12,8 +12,8 @@
          bootstrap="test/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="Bitreserve SDK PHP Test Suite">
-            <directory>./test/Bitreserve/</directory>
+        <testsuite name="Uphold SDK PHP Test Suite">
+            <directory>./test/Uphold/</directory>
         </testsuite>
     </testsuites>
 
@@ -25,7 +25,7 @@
 
     <filter>
         <whitelist>
-            <directory suffix=".php">./lib/Bitreserve/</directory>
+            <directory suffix=".php">./lib/Uphold/</directory>
         </whitelist>
     </filter>
 

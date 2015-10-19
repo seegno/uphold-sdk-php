@@ -13,6 +13,6 @@ if ((!$loader = includeIfExists(__DIR__.'/../vendor/autoload.php')) && (!$loader
         'php composer.phar install'.PHP_EOL);
 }
 
-$loader->add('Bitreserve\Tests', __DIR__);
+$loader->add('Uphold\Tests', __DIR__);
 
 return $loader;

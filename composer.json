@@ -24,6 +24,6 @@
         "seegno/test-bundle": "~0.0.3"
     },
     "autoload": {
-        "psr-0": { "Bitreserve\\": "lib/" }
+        "psr-0": { "Uphold\\": "lib/" }
     }
 }

@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 
-use Bitreserve\BitreserveClient as Client;
+use Uphold\UpholdClient as Client;
 
 // Initialize the client.
 $client = new Client();
