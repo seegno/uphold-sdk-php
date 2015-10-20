@@ -1,5 +1,13 @@
 ## Changelog
 
+### 4.0.0 / 2015-10-20
+- [#107](https://github.com/seegno/uphold-sdk-php/pull/107) Add method to get a card by address (@nunorafaelrocha)
+- [#106](https://github.com/seegno/uphold-sdk-php/pull/106) Update Code Climate secure token (@nunorafaelrocha)
+- [#105](https://github.com/seegno/uphold-sdk-php/pull/105) Rename Bitreserve to Uphold (@nunorafaelrocha)
+- [#103](https://github.com/seegno/uphold-sdk-php/pull/103) Rename Bitreserve to Uphold (@nunorafaelrocha)
+- [#101](https://github.com/seegno/uphold-sdk-php/pull/101) Fix typo in README file (@nunorafaelrocha)
+- [#99](https://github.com/seegno/uphold-sdk-php/pull/99) Update package version on README.md (@nunorafaelrocha)
+
 ### 3.0.0 / 2015-08-14
 - [#98](https://github.com/seegno/uphold-sdk-php/pull/98) Add code climate secure token (@nunorafaelrocha)
 - [#93](https://github.com/seegno/uphold-sdk-php/pull/93) Improve tests (@nunorafaelrocha)
