@@ -22,3 +22,6 @@ foreach ($cards as $card) {
     echo sprintf("Balance: %s\n", $card->getBalance());
     echo "\n";
 }
+
+// Get card by address.
+$card = $user->getCardByAddress('1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH');

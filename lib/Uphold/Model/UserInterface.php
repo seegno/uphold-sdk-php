@@ -19,9 +19,16 @@ interface UserInterface
     public function getBalanceByCurrency($currency);
 
     /**
-     * Gets the details associated the card ID provided.
+     * Gets the details associated with the card address provided.
      *
-     * @return $cards
+     * @return $card
+     */
+    public function getCardByAddress($address);
+
+    /**
+     * Gets the details associated with the card ID provided.
+     *
+     * @return $card
      */
     public function getCardById($id);
 

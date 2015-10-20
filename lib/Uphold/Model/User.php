@@ -127,6 +127,14 @@ class User extends BaseModel implements UserInterface
     /**
      * {@inheritdoc}
      */
+    public function getCardByAddress($address)
+    {
+        return $this->getCardById($address);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCardById($id)
     {
         $response = $this->client->get(sprintf('/me/cards/%s', $id));
