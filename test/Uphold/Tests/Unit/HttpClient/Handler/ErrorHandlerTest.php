@@ -2,11 +2,12 @@
 
 namespace Uphold\Tests\Unit\HttpClient\Handler;
 
+use GuzzleHttp\Exception\ConnectException as GuzzleConnectException;
+use GuzzleHttp\Exception\RequestException;
+use Seegno\TestBundle\TestCase\BaseTestCase;
 use Uphold\Exception\RuntimeException;
 use Uphold\HttpClient\Handler\ErrorHandler;
 use Uphold\HttpClient\Message\Response;
-use GuzzleHttp\Exception\RequestException;
-use Seegno\TestBundle\TestCase\BaseTestCase;
 
 /**
  * ErrorHandlerTest.
@@ -39,6 +40,19 @@ class ErrorHandlerTest extends BaseTestCase
             ->method('onRequestException')
             ->with($exception);
 
+        $errorHandler->onException($exception);
+    }
+
+    /**
+     * @test
+     * @expectedException Uphold\Exception\ConnectException
+     */
+    public function shouldThrowConnectExceptionWhenAGuzzleConnectExceptionIsGiven()
+    {
+        $request = $this->getRequestMock();
+        $exception = new GuzzleConnectException('Could not resolve host: foobar.com', $request);
+
+        $errorHandler = new ErrorHandler();
         $errorHandler->onException($exception);
     }
 
