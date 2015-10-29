@@ -2,15 +2,17 @@
 
 namespace Uphold\HttpClient\Handler;
 
+use GuzzleHttp\Exception\ConnectException as GuzzleConnectException;
+use GuzzleHttp\Exception\RequestException;
 use Uphold\Exception\ApiLimitExceedException;
 use Uphold\Exception\AuthenticationRequiredException;
 use Uphold\Exception\BadRequestException;
+use Uphold\Exception\ConnectException;
 use Uphold\Exception\LogicException;
 use Uphold\Exception\NotFoundException;
 use Uphold\Exception\RuntimeException;
 use Uphold\Exception\TwoFactorAuthenticationRequiredException;
 use Uphold\HttpClient\Message\Response;
-use GuzzleHttp\Exception\RequestException;
 
 /**
  * ErrorHandler.
@@ -43,6 +45,10 @@ class ErrorHandler
      */
     public function onException(\Exception $e)
     {
+        if ($e instanceOf GuzzleConnectException) {
+            throw new ConnectException($e->getMessage());
+        }
+
         if ($e instanceOf RequestException) {
             return $this->onRequestException($e);
         }
