@@ -7,7 +7,7 @@ namespace Uphold\Paginator;
  */
 class Paginator
 {
-    CONST PAGINATOR_LIMIT = 50;
+    const PAGINATOR_LIMIT = 50;
 
     /**
      * Uphold client.
@@ -74,13 +74,13 @@ class Paginator
      * @param array $headers Request headers.
      * @param int $limit Limit.
      */
-    public function __construct($client, $path, $parameters = array(), $headers = array(), $limit = self::PAGINATOR_LIMIT)
+    public function __construct($client, $path, $parameters = array(), $headers = array(), $limit = null)
     {
         $this->client = $client;
         $this->path = $path;
         $this->parameters = $parameters;
         $this->headers = $headers;
-        $this->limit = $limit;
+        $this->limit = $limit ?: self::PAGINATOR_LIMIT;
     }
 
     /**
