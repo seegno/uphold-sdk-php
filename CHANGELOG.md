@@ -1,5 +1,10 @@
 ## Changelog
 
+### 4.0.1 / 2015-11-11
+- [#111](https://github.com/seegno/uphold-sdk-php/pull/111) Fix paginator default limit (@nunorafaelrocha)
+- [#108](https://github.com/seegno/uphold-sdk-php/pull/108) Add error handling for connect exceptions (@nunorafaelrocha)
+- [#109](https://github.com/seegno/uphold-sdk-php/pull/109) Update package version on README (@nunorafaelrocha)
+
 ### 4.0.0 / 2015-10-20
 - [#107](https://github.com/seegno/uphold-sdk-php/pull/107) Add method to get a card by address (@nunorafaelrocha)
 - [#106](https://github.com/seegno/uphold-sdk-php/pull/106) Update Code Climate secure token (@nunorafaelrocha)
