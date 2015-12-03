@@ -49,7 +49,7 @@ Require the library package as a dependency:
 
 ## Basic usage
 
-In order to learn more about the Uphold API, please check out the [developer website](https://developer.uphold.com/api/v0/#authentication).
+In order to learn more about the Uphold API, please check out the [API documentation](https://uphold.com/en/developer/api/documentation).
 
 First, create a Personal Access Token (PAT) using the command described below.
 
