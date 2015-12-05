@@ -1,5 +1,10 @@
 ## Changelog
 
+### 4.0.2 / 2015-12-05
+- [#114](https://github.com/seegno/uphold-sdk-php/pull/114) Fix API documentation url (@nunorafaelrocha)
+- [#113](https://github.com/seegno/uphold-sdk-php/pull/113) Add empty responses handling (@nunorafaelrocha)
+- [#112](https://github.com/seegno/uphold-sdk-php/pull/112) Update API documentation url (@nunorafaelrocha)
+
 ### 4.0.1 / 2015-11-11
 - [#111](https://github.com/seegno/uphold-sdk-php/pull/111) Fix paginator default limit (@nunorafaelrocha)
 - [#108](https://github.com/seegno/uphold-sdk-php/pull/108) Add error handling for connect exceptions (@nunorafaelrocha)
