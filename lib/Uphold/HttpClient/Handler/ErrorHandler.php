@@ -71,6 +71,11 @@ class ErrorHandler
     {
         $request = $e->getRequest();
         $response = $e->getResponse();
+
+        if (!$response) {
+            throw new RuntimeException($e->getMessage(), $e->getCode());
+        }
+
         $statusCode = $response->getStatusCode();
 
         $isClientError = $response->isClientError();

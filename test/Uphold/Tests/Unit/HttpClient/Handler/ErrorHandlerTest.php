@@ -88,6 +88,19 @@ class ErrorHandlerTest extends BaseTestCase
 
     /**
      * @test
+     * @expectedException Uphold\Exception\RuntimeException
+     * @expectedExceptionMessage foobar
+     */
+    public function shouldThrowRuntimeExceptionWhenARequestExceptionReceivesAnEmptyResponse()
+    {
+        $request = $this->getRequestMock();
+
+        $errorHandler = new ErrorHandler();
+        $errorHandler->onException(new RequestException('foobar', $request, null));
+    }
+
+    /**
+     * @test
      * @expectedException Uphold\Exception\BadRequestException
      */
     public function shouldThrowBadRequestExceptionWhenStatusCodeIs400()
