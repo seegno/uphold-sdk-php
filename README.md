@@ -7,7 +7,7 @@
 
 Uphold is a next generation money service business that shields you from bitcoin volatility by enabling you to hold bitcoin as the money you use every day.
 
-The Uphold SDK for PHP provides an easy way for developers to integrate PHP applications with the [Uphold API](https://developers.uphold.com).
+The Uphold SDK for PHP provides an easy way for developers to integrate PHP applications with the [Uphold API](https://uphold.com/en/developer/api/documentation).
 
 ## Requirements
 
