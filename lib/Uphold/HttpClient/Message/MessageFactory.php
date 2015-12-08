@@ -21,7 +21,8 @@ class MessageFactory extends BaseMessageFactory
      *
      * @return Response
      */
-    public function createResponse($statusCode, array $headers = array(), $body = null, array $options = array()) {
+    public function createResponse($statusCode, array $headers = array(), $body = null, array $options = array())
+    {
         if (null !== $body) {
             $body = Stream::factory($body);
         }
