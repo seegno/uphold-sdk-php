@@ -13,6 +13,30 @@ class UserTest extends ModelTestCase
     /**
      * @test
      */
+    public function shouldReturnAllFieldsFromModel()
+    {
+        $data = array(
+            'country' => $this->getFaker()->countryCode,
+            'currencies' => 'foo',
+            'firstName' => $this->getFaker()->firstName,
+            'lastName' => $this->getFaker()->lastName,
+            'settings' => 'bar',
+            'state' => $this->getFaker()->state,
+            'status' => 'qux',
+            'username' => $this->getFaker()->username,
+            'name' => $this->getFaker()->name,
+            'email' => $this->getFaker()->email,
+        );
+
+        $client = $this->getUpholdClientMock();
+        $user = new User($client, $data);
+
+        $this->assertEquals($data, $user->toArray());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnInstanceOfUser()
     {
         $client = $this->getUpholdClientMock();

@@ -13,6 +13,27 @@ class ContactTest extends ModelTestCase
     /**
      * @test
      */
+    public function shouldReturnAllFieldsFromModel()
+    {
+        $data = array(
+            'addresses' => array('id' => '1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH', 'network' => 'bitcoin'),
+            'company' => $this->getFaker()->company,
+            'emails' => array($this->getFaker()->email),
+            'firstName' => $this->getFaker()->firstName,
+            'id' => $this->getFaker()->uuid,
+            'lastName' => $this->getFaker()->lastName,
+            'name' => $this->getFaker()->name,
+        );
+
+        $client = $this->getUpholdClientMock();
+        $contact = new Contact($client, $data);
+
+        $this->assertEquals($data, $contact->toArray());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnInstanceOfContact()
     {
         $data = array('id' => $this->getFaker()->randomDigitNotNull);
@@ -114,7 +135,7 @@ class ContactTest extends ModelTestCase
      */
     public function shouldReturnAddresses()
     {
-        $data = array('addresses' => array('id' => '1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH', 'network' => 'bitcoin'));
+        $data = array('addresses' => array(array('id' => '1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH', 'network' => 'bitcoin')));
 
         $client = $this->getUpholdClientMock();
 

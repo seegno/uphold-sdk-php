@@ -13,6 +13,24 @@ class RateTest extends ModelTestCase
     /**
      * @test
      */
+    public function shouldReturnAllFieldsFromModel()
+    {
+        $data = array(
+            'ask' => '1',
+            'bid' => '2',
+            'currency' => 'BTC',
+            'pair' => 'USDBTC',
+        );
+
+        $client = $this->getUpholdClientMock();
+        $rate = new Rate($client, $data);
+
+        $this->assertEquals($data, $rate->toArray());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnInstanceOfRate()
     {
         $data = array('ask' => '1');

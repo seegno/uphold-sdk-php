@@ -13,6 +13,30 @@ class TransactionTest extends ModelTestCase
     /**
      * @test
      */
+    public function shouldReturnAllFieldsFromModel()
+    {
+        $data = array(
+            'createdAt' => '2014-08-27T00:01:11.616Z',
+            'denomination' => 'foobar',
+            'destination' => 'qux',
+            'id' => $this->getFaker()->uuid,
+            'message' => $this->getFaker()->sentence(3),
+            'origin' => $this->getFaker()->uuid,
+            'params' => array('foo' => 'bar'),
+            'refundedById' => $this->getFaker()->uuid,
+            'status' => 'pending',
+            'type' => 'waldo',
+        );
+
+        $client = $this->getUpholdClientMock();
+        $transaction = new Transaction($client, $data);
+
+        $this->assertEquals($data, $transaction->toArray());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnInstanceOfTransaction()
     {
         $data = array('id' => $this->getFaker()->randomDigitNotNull);
