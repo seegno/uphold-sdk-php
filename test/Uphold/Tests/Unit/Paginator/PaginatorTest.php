@@ -2,8 +2,9 @@
 
 namespace Uphold\Tests\Unit\Paginator;
 
-use Uphold\Paginator\Paginator;
 use Seegno\TestBundle\TestCase\BaseTestCase;
+use Uphold\Exception\UpholdClientException;
+use Uphold\Paginator\Paginator;
 
 /**
  * PaginatorTest.
@@ -75,6 +76,77 @@ class PaginatorTest extends BaseTestCase
         $pager = new Paginator($client, '/path');
 
         $this->assertEquals($contentRange['count'], $pager->count());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnZeroIfHttpCodeIs412OnCount()
+    {
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new UpholdClientException('foobar', 'qux', 412)))
+        ;
+
+        $pager = new Paginator($client, '/path');
+
+        $this->assertEquals(0, $pager->count());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnZeroIfHttpCodeIs416OnCount()
+    {
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new UpholdClientException('foobar', 'qux', 416)))
+        ;
+
+        $pager = new Paginator($client, '/path');
+
+        $this->assertEquals(0, $pager->count());
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException Uphold\Exception\UpholdClientException
+     * @expectedExceptionMessage foobar
+     */
+    public function shouldThrownAnExceptionIfHttpCodeIsNot412Or416OnCount()
+    {
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new UpholdClientException('foobar', 'qux', 500)))
+        ;
+
+        $pager = new Paginator($client, '/path');
+        $pager->count();
     }
 
     /**
@@ -187,6 +259,182 @@ class PaginatorTest extends BaseTestCase
 
         foreach ($transactions as $transaction) {
             $this->assertInstanceOf('Uphold\Model\Transaction', $transaction);
+        }
+    }
+
+        /**
+     * @test
+     */
+    public function shouldReturnZeroIfHttpCodeIs412OnGetNext()
+    {
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new UpholdClientException('foobar', 'qux', 412)))
+        ;
+
+        $pager = new Paginator($client, '/path');
+
+        $this->assertEquals(array(), $pager->getNext());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnZeroIfHttpCodeIs416OnGetNext()
+    {
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new UpholdClientException('foobar', 'qux', 416)))
+        ;
+
+        $pager = new Paginator($client, '/path');
+
+        $this->assertEquals(array(), $pager->getNext());
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException Uphold\Exception\UpholdClientException
+     * @expectedExceptionMessage foobar
+     */
+    public function shouldThrownAnExceptionIfHttpCodeIsNot412Or416OnGetNext()
+    {
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock()
+        ;
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new UpholdClientException('foobar', 'qux', 500)))
+        ;
+
+        $pager = new Paginator($client, '/path');
+        $pager->getNext();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnFalseIfStartIsGreaterThanOrEqualsCount()
+    {
+        $pager = $this
+            ->getMockBuilder('Uphold\Paginator\Paginator')
+            ->disableOriginalConstructor()
+            ->setMethods(array('count', 'getNextRange'))
+            ->getMock()
+        ;
+
+        $pager
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn(1)
+        ;
+
+        $pager
+            ->expects($this->once())
+            ->method('getNextRange')
+            ->willReturn(array('start' => 2))
+        ;
+
+        $this->assertEquals(false, $pager->hasNext());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnTrueIfStartIsLessThanCount()
+    {
+        $pager = $this
+            ->getMockBuilder('Uphold\Paginator\Paginator')
+            ->disableOriginalConstructor()
+            ->setMethods(array('count', 'getNextRange'))
+            ->getMock()
+        ;
+
+        $pager
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn(1)
+        ;
+
+        $pager
+            ->expects($this->once())
+            ->method('getNextRange')
+            ->willReturn(array('start' => 0))
+        ;
+
+        $this->assertEquals(true, $pager->hasNext());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnGivenDataIfModelIsNull()
+    {
+        $pager = $this
+            ->getMockBuilder('Uphold\Paginator\Paginator')
+            ->disableOriginalConstructor()
+            ->setMethods(null)
+            ->getMock()
+        ;
+
+        $data = array('foo' => 'bar');
+
+        $this->assertEquals($data, $pager->hydrate($data));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnHydratedResults()
+    {
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $pager = new Paginator($client, '/path');
+        $pager->setModel('Uphold\Model\User');
+
+        $data = array(
+            array(
+                'firstName' => 'foo',
+                'lastName' => 'bar',
+            ),
+            array(
+                'firstName' => 'waldo',
+                'lastName' => 'fred',
+            ),
+        );
+
+        $results = $pager->hydrate($data);
+
+        foreach ($results as $key => $object) {
+            $this->assertInstanceOf('Uphold\Model\User', $object);
+            $this->assertEquals($data[$key]['firstName'], $object->getFirstName());
+            $this->assertEquals($data[$key]['lastName'], $object->getLastName());
         }
     }
 }

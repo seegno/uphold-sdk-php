@@ -2,6 +2,8 @@
 
 namespace Uphold\Paginator;
 
+use Uphold\Exception\UpholdClientException;
+
 /**
  * Paginator.
  */
@@ -122,7 +124,7 @@ class Paginator
             $this->count = $contentRange['count'];
 
             return $this->count;
-        } catch (UpholdException $e) {
+        } catch (UpholdClientException $e) {
             if (412 === $e->getHttpCode() || 416 === $e->getHttpCode()) {
                 return 0;
             }
@@ -152,7 +154,7 @@ class Paginator
             $this->offset = $contentRange['end'] + 1;
 
             return $this->hydrate($response->getContent());
-        } catch (UpholdException $e) {
+        } catch (UpholdClientException $e) {
             if (412 === $e->getHttpCode() || 416 === $e->getHttpCode()) {
                 return $this->hydrate(array());
             }

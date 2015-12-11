@@ -45,7 +45,8 @@ class UpholdClientException extends \Exception
     /**
      * Constructor.
      *
-     * @param string $message  Exception message
+     * @param string $message  Exception message.
+     * @param string $error  Exception error.
      * @param string $httpCode Http error code.
      * @param mixed  $response The response.
      * @param mixed  $request  The request.
