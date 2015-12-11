@@ -13,6 +13,29 @@ class CardTest extends ModelTestCase
     /**
      * @test
      */
+    public function shouldReturnAllFieldsFromModel()
+    {
+        $data = array(
+            'address' => array('bitcoin' => '1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH'),
+            'addresses' => array(array('id' => '1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH', 'network' => 'bitcoin')),
+            'available' => $this->getFaker()->randomFloat,
+            'balance' => $this->getFaker()->randomFloat,
+            'currency' => $this->getFaker()->currencyCode,
+            'id' => $this->getFaker()->uuid,
+            'label' => $this->getFaker()->sentence(3),
+            'lastTransactionAt' => '2014-09-24T18:11:53.561Z',
+            'settings' => array('position' => $this->getFaker()->randomDigitNotNull, 'starred' => true),
+        );
+
+        $client = $this->getUpholdClientMock();
+        $card = new Card($client, $data);
+
+        $this->assertEquals($data, $card->toArray());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnInstanceOfCard()
     {
         $data = array('id' => $this->getFaker()->randomDigitNotNull);
