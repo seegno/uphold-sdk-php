@@ -266,6 +266,64 @@ class CardTest extends ModelTestCase
     }
 
     /**
+     * @test
+     */
+    public function shouldReturnInstanceOfCardOnUpdate()
+    {
+        $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
+        $data = array('foo' => 'bar');
+
+        $response = $this->getResponseMock(array_merge($cardData, $data));
+
+        $client = $this->getUpholdClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('patch')
+            ->with(sprintf('/me/cards/%s', $cardData['id']), $data)
+            ->will($this->returnValue($response))
+        ;
+
+        $card = new Card($client, $cardData);
+
+        $this->assertInstanceOf('Uphold\Model\Card', $card->update($data));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldUpdateCardData()
+    {
+        $cardData = array(
+            'id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0',
+            'label' => 'qux',
+        );
+
+        $data = array(
+            'currency' => 'BTC',
+            'label' => 'foobar',
+        );
+
+        $response = $this->getResponseMock(array_merge($cardData, $data));
+
+        $client = $this->getUpholdClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('patch')
+            ->with(sprintf('/me/cards/%s', $cardData['id']), $data)
+            ->will($this->returnValue($response))
+        ;
+
+        $card = new Card($client, $cardData);
+        $card = $card->update($data);
+
+        $this->assertEquals($cardData['id'], $card->getId());
+        $this->assertEquals($data['currency'], $card->getCurrency());
+        $this->assertEquals($data['label'], $card->getLabel());
+    }
+
+    /**
      * Get model class.
      *
      * @return string

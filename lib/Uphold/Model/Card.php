@@ -2,8 +2,9 @@
 
 namespace Uphold\Model;
 
-use Uphold\UpholdClient;
+use Uphold\Model\BaseModel;
 use Uphold\Paginator\Paginator;
+use Uphold\UpholdClient;
 
 /**
  * Card Model.
@@ -191,9 +192,9 @@ class Card extends BaseModel implements CardInterface
     /**
      * {@inheritdoc}
      */
-    public function update(array $params)
+    public function update(array $data)
     {
-        $response = $this->client->patch(sprintf('/me/cards/%s', $this->id), $params);
+        $response = $this->client->patch(sprintf('/me/cards/%s', $this->id), $data);
 
         $this->updateFields($response->getContent());
 
