@@ -2,9 +2,10 @@
 
 namespace Uphold\Tests\Unit;
 
-use Uphold\UpholdClient;
-use Uphold\Model\User;
 use Seegno\TestBundle\TestCase\BaseTestCase;
+use Uphold\Model\Rate;
+use Uphold\Model\User;
+use Uphold\UpholdClient;
 
 /**
  * UpholdClientTest.
@@ -34,11 +35,48 @@ class UpholdClientTest extends BaseTestCase
     /**
      * @test
      */
+    public function shouldReturnInstanceOfUpholdClientFactory()
+    {
+        $client = new UpholdClient();
+
+        $this->assertInstanceOf('Uphold\Factory\UpholdClientFactory', $client->getFactory());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnOptionWhenPassingInConstructor()
     {
         $client = new UpholdClient(array('foo' => 'bar'));
 
         $this->assertEquals('bar', $client->getOption('foo'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnNullIfOptionIsNotDefined()
+    {
+        $client = new UpholdClient();
+
+        $this->assertEquals(null, $client->getOption('foobar'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnAllOptions()
+    {
+        $options = array(
+            'foo' => 'bar',
+            'waldo' => 'fred',
+        );
+
+        $client = new UpholdClient();
+
+        $this->setReflectionProperty($client, 'options', $options);
+
+        $this->assertEquals($options, $client->getOptions());
     }
 
     /**
@@ -137,36 +175,42 @@ class UpholdClientTest extends BaseTestCase
             $this->getFaker()->currencyCode,
         );
 
-        $data = array(array(
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->setMethods(array('getRates'))
+            ->getMock()
+        ;
+
+        $rate1 = new Rate($client, array(
             'ask' => $this->getFaker()->randomFloat,
             'bid' => $this->getFaker()->randomFloat,
             'currency' => $expectedCurrencies[0],
             'pair' => sprintf('%s%s', $expectedCurrencies[0], $this->getFaker()->currencyCode),
-        ), array(
+        ));
+
+        $rate2 = new Rate($client, array(
             'ask' => $this->getFaker()->randomFloat,
             'bid' => $this->getFaker()->randomFloat,
             'currency' => $expectedCurrencies[1],
             'pair' => sprintf('%s%s', $expectedCurrencies[1], $this->getFaker()->currencyCode),
         ));
 
-        $response = $this->getResponseMock($data);
-
-        $client = $this
-            ->getMockBuilder('Uphold\UpholdClient')
-            ->setMethods(array('get'))
-            ->getMock()
-        ;
+        $rate3 = new Rate($client, array(
+            'ask' => $this->getFaker()->randomFloat,
+            'bid' => $this->getFaker()->randomFloat,
+            'currency' => $expectedCurrencies[1],
+            'pair' => sprintf('%s%s', $expectedCurrencies[1], $this->getFaker()->currencyCode),
+        ));
 
         $client
             ->expects($this->once())
-            ->method('get')
-            ->with('/ticker')
-            ->will($this->returnValue($response))
+            ->method('getRates')
+            ->willReturn(array($rate1, $rate2, $rate3))
         ;
 
         $currencies = $client->getCurrencies();
 
-        $this->assertCount(count($data), $currencies);
+        $this->assertCount(count($expectedCurrencies), $currencies);
 
         foreach ($currencies as $currency) {
             $this->assertContains($currency, $expectedCurrencies);
@@ -245,6 +289,18 @@ class UpholdClientTest extends BaseTestCase
         $client = new UpholdClient();
 
         $this->assertInstanceOf('Uphold\Model\Reserve', $client->getReserve());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnPropertyReserveIfIsDefined()
+    {
+        $client = new UpholdClient();
+
+        $this->setReflectionProperty($client, 'reserve', 'foobar');
+
+        $this->assertEquals('foobar', $client->getReserve());
     }
 
     /**
@@ -484,7 +540,6 @@ class UpholdClientTest extends BaseTestCase
     public function shouldSendRequestToClient($httpMethod, $encodedBody)
     {
         $apiVersion = 'v0';
-        $defaultOptions = array('defaultOption' => 'defaultValue');
         $options = array('option1' => 'optValue1');
         $params = array('param1' => 'paramValue1');
         $path = '/path';
@@ -495,21 +550,15 @@ class UpholdClientTest extends BaseTestCase
 
         $client = $this
             ->getMockBuilder('Uphold\UpholdClient')
-            ->setMethods(array('createJsonBody', 'getDefaultHeaders'))
+            ->setMethods(null)
             ->getMock()
         ;
 
-        $client
-            ->expects($this->any())
-            ->method('createJsonBody')
-            ->will($this->returnValue(json_encode($params)))
-        ;
-
-        $client
-            ->expects($this->once())
-            ->method('getDefaultHeaders')
-            ->will($this->returnValue($defaultOptions))
-        ;
+        $headers = array(
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'User-Agent' => str_replace('{version}', sprintf('v%s', $client->getOption('version')), $client->getOption('user_agent')),
+        );
 
         $body = $encodedBody ? json_encode($params) : $params;
 
@@ -518,7 +567,7 @@ class UpholdClientTest extends BaseTestCase
         $httpClient
             ->expects($this->once())
             ->method($httpMethod)
-            ->with(sprintf('%s%s', $apiVersion, $path), $body, array_merge($options, $defaultOptions))
+            ->with(sprintf('%s%s', $apiVersion, $path), $body, array_merge($options, $headers))
             ->will($this->returnValue($response))
         ;
 
@@ -534,9 +583,10 @@ class UpholdClientTest extends BaseTestCase
      * @test
      * @dataProvider getDefaultRequestHttpMethods
      */
-    public function shouldSendRequestWithoutApiVersionToClient($httpMethod, $encodedBody)
+    public function shouldSendRequestToClientWithAuthorizationToken($httpMethod, $encodedBody)
     {
-        $defaultOptions = array('defaultOption' => 'defaultValue');
+        $apiVersion = 'v0';
+        $bearer = 'foobar';
         $options = array('option1' => 'optValue1');
         $params = array('param1' => 'paramValue1');
         $path = '/path';
@@ -547,21 +597,16 @@ class UpholdClientTest extends BaseTestCase
 
         $client = $this
             ->getMockBuilder('Uphold\UpholdClient')
-            ->setMethods(array('createJsonBody', 'getDefaultHeaders'))
+            ->setMethods(null)
             ->getMock()
         ;
 
-        $client
-            ->expects($this->any())
-            ->method('createJsonBody')
-            ->will($this->returnValue(json_encode($params)))
-        ;
-
-        $client
-            ->expects($this->once())
-            ->method('getDefaultHeaders')
-            ->will($this->returnValue($defaultOptions))
-        ;
+        $headers = array(
+            'Accept' => 'application/json',
+            'Authorization' => sprintf('Bearer %s', $bearer),
+            'Content-Type' => 'application/json',
+            'User-Agent' => str_replace('{version}', sprintf('v%s', $client->getOption('version')), $client->getOption('user_agent')),
+        );
 
         $body = $encodedBody ? json_encode($params) : $params;
 
@@ -570,7 +615,53 @@ class UpholdClientTest extends BaseTestCase
         $httpClient
             ->expects($this->once())
             ->method($httpMethod)
-            ->with($path, $body, array_merge($options, $defaultOptions))
+            ->with(sprintf('%s%s', $apiVersion, $path), $body, array_merge($options, $headers))
+            ->will($this->returnValue($response))
+        ;
+
+        $client->setHttpClient($httpClient);
+        $client->setOption('api_version', $apiVersion);
+        $client->setOption('bearer', $bearer);
+
+        $response = $client->$httpMethod('/path', $params, $options);
+
+        $this->assertEquals($expectedArray, $response->getContent());
+    }
+
+    /**
+     * @test
+     * @dataProvider getDefaultRequestHttpMethods
+     */
+    public function shouldSendRequestWithoutApiVersionToClient($httpMethod, $encodedBody)
+    {
+        $options = array('option1' => 'optValue1');
+        $params = array('param1' => 'paramValue1');
+        $path = '/path';
+
+        $expectedArray = array('value');
+
+        $response = $this->getResponseMock($expectedArray);
+
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->setMethods(null)
+            ->getMock()
+        ;
+
+        $headers = array(
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'User-Agent' => str_replace('{version}', sprintf('v%s', $client->getOption('version')), $client->getOption('user_agent')),
+        );
+
+        $body = $encodedBody ? json_encode($params) : $params;
+
+        $httpClient = $this->getHttpClientMock();
+
+        $httpClient
+            ->expects($this->once())
+            ->method($httpMethod)
+            ->with($path, $body, array_merge($options, $headers))
             ->will($this->returnValue($response))
         ;
 
