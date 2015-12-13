@@ -12,11 +12,30 @@ class ResponseTest extends BaseTestCase
     /**
      * @test
      */
+    public function shouldReturnBodyIfAnErrorOccursWhenDecodingBody()
+    {
+        $body = 'foobar';
+
+        $response = $this->getResponseMock(array('getBody'));
+
+        $response
+            ->expects($this->any())
+            ->method('getBody')
+            ->with(true)
+            ->will($this->returnValue($body))
+        ;
+
+        $this->assertEquals($body, $response->getContent());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnResponseContent()
     {
         $data = array('foo' => 'bar');
 
-        $response = $this->getResponseMock();
+        $response = $this->getResponseMock(array('getBody'));
 
         $response
             ->expects($this->any())
@@ -32,7 +51,7 @@ class ResponseTest extends BaseTestCase
      */
     public function shouldReturnParsedContentRangeHeader()
     {
-        $response = $this->getResponseMock();
+        $response = $this->getResponseMock(array('getHeader'));
 
         $response
             ->expects($this->any())
@@ -53,7 +72,7 @@ class ResponseTest extends BaseTestCase
      */
     public function shouldReturnNullIfContentRangeHeaderIsEmpty()
     {
-        $response = $this->getResponseMock();
+        $response = $this->getResponseMock(array('getHeader'));
 
         $response
             ->expects($this->any())
@@ -70,9 +89,140 @@ class ResponseTest extends BaseTestCase
     /**
      * @test
      */
+    public function shouldReturnUnknownErrorIfContentIsNotAnArray()
+    {
+        $response = $this->getResponseMock(array('getContent'));
+
+        $response
+            ->expects($this->any())
+            ->method('getContent')
+            ->will($this->returnValue('foobar'))
+        ;
+
+        $this->assertEquals('unknown_error', $response->getError());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnContentErrorIfIsNotEmpty()
+    {
+        $response = $this->getResponseMock(array('getContent'));
+
+        $response
+            ->expects($this->any())
+            ->method('getContent')
+            ->willReturn(array('error' => 'foobar'))
+        ;
+
+        $this->assertEquals('foobar', $response->getError());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnContentCodeIfIsNotEmpty()
+    {
+        $response = $this->getResponseMock(array('getContent'));
+
+        $response
+            ->expects($this->any())
+            ->method('getContent')
+            ->willReturn(array('code' => 'foobar'))
+        ;
+
+        $this->assertEquals('foobar', $response->getError());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnUnknownErrorIfContentErrorAndCodeIsEmpty()
+    {
+        $response = $this->getResponseMock(array('getContent'));
+
+        $response
+            ->expects($this->any())
+            ->method('getContent')
+            ->willReturn(array())
+        ;
+
+        $this->assertEquals('unknown_error', $response->getError());
+    }
+
+
+    /**
+     * @test
+     */
+    public function shouldReturnContentErrorsIfIsNotEmpty()
+    {
+        $response = $this->getResponseMock(array('getContent'));
+
+        $response
+            ->expects($this->any())
+            ->method('getContent')
+            ->willReturn(array('errors' => array('foo', 'bar')))
+        ;
+
+        $expected = sprintf('Error List: %s', implode(',', array('foo', 'bar')));
+
+        $this->assertEquals($expected, $response->getErrorDescription());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnContentErrorDescriptionIfIsNotEmpty()
+    {
+        $response = $this->getResponseMock(array('getContent'));
+
+        $response
+            ->expects($this->any())
+            ->method('getContent')
+            ->willReturn(array('error_description' => 'foobar'))
+        ;
+
+        $this->assertEquals('foobar', $response->getErrorDescription());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnContentMessageIfIsNotEmpty()
+    {
+        $response = $this->getResponseMock(array('getContent'));
+
+        $response
+            ->expects($this->any())
+            ->method('getContent')
+            ->willReturn(array('message' => 'foobar'))
+        ;
+
+        $this->assertEquals('foobar', $response->getErrorDescription());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnUnknownErrorDescriptionIfContentErrorAndCodeIsEmpty()
+    {
+        $response = $this->getResponseMock(array('getContent'));
+
+        $response
+            ->expects($this->any())
+            ->method('getContent')
+            ->willReturn(array())
+        ;
+
+        $this->assertEquals('An unknown error occurred', $response->getErrorDescription());
+    }
+
+    /**
+     * @test
+     */
     public function shouldCheckIfIsClientErrorAndReturnTrueWhenStatusCodeIs400()
     {
-        $response = $this->getResponseMock();
+        $response = $this->getResponseMock(array('getStatusCode'));
 
         $response
             ->expects($this->any())
@@ -88,7 +238,7 @@ class ResponseTest extends BaseTestCase
      */
     public function shouldCheckIfIsClientErrorAndReturnFalseWhenStatusCodeIs300()
     {
-        $response = $this->getResponseMock();
+        $response = $this->getResponseMock(array('getStatusCode'));
 
         $response
             ->expects($this->any())
@@ -104,7 +254,7 @@ class ResponseTest extends BaseTestCase
      */
     public function shouldCheckIfIsServerErrorAndReturnTrueWhenStatusCodeIs500()
     {
-        $response = $this->getResponseMock();
+        $response = $this->getResponseMock(array('getStatusCode'));
 
         $response
             ->expects($this->any())
@@ -120,7 +270,7 @@ class ResponseTest extends BaseTestCase
      */
     public function shouldCheckIfIsServerErrorAndReturnFalseWhenStatusCodeIs300()
     {
-        $response = $this->getResponseMock();
+        $response = $this->getResponseMock(array('getStatusCode'));
 
         $response
             ->expects($this->any())
@@ -142,7 +292,7 @@ class ResponseTest extends BaseTestCase
            'reset' => 1384377793,
         );
 
-        $response = $this->getResponseMock();
+        $response = $this->getResponseMock(array('getHeader', 'getStatusCode'));
 
         $response
             ->expects($this->any())
@@ -169,12 +319,12 @@ class ResponseTest extends BaseTestCase
      *
      * @return Response.
      */
-    protected function getResponseMock()
+    protected function getResponseMock($methods = null)
     {
         return $this
             ->getMockBuilder('Uphold\HttpClient\Message\Response')
             ->disableOriginalConstructor()
-            ->setMethods(array('getBody', 'getStatusCode', 'getHeader'))
+            ->setMethods($methods)
             ->getMock()
         ;
     }

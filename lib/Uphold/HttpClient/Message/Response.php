@@ -101,7 +101,7 @@ class Response extends BaseResponse
         }
 
         if (!empty($content['errors'])) {
-            return sprintf('Error List: %s', print_r($content['errors'], 1));
+            return sprintf('Error List: %s', implode(',', $content['errors']));
         }
 
         if (!empty($content['error_description'])) {
