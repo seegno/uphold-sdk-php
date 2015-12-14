@@ -64,6 +64,11 @@ class UpholdClientTest extends TestCase
         $this->assertGreaterThan(0, count($currencies));
     }
 
+    /**
+     * Get currencies provider.
+     *
+     * @return array
+     */
     public function getCurrenciesProvider()
     {
         return array(
