@@ -120,8 +120,6 @@ class User extends BaseModel implements UserInterface
                 return $balance;
             }
         }
-
-        return null;
     }
 
     /**

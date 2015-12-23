@@ -382,9 +382,32 @@ class UserTest extends ModelTestCase
 
         $user = new User($client, $data);
 
-        $balances = $user->getBalanceByCurrency($currency);
+        $balance = $user->getBalanceByCurrency($currency);
 
-        $this->assertEquals($data['balances']['currencies'][$currency], $balances);
+        $this->assertEquals($data['balances']['currencies'][$currency], $balance);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnNullIfCurrencyIsNotInBalances()
+    {
+        $response = $this->getResponseMock(array('balances' => array('currencies' => array())));
+
+        $client = $this->getUpholdClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->with('/me')
+            ->will($this->returnValue($response))
+        ;
+
+        $user = new User($client, array());
+
+        $balance = $user->getBalanceByCurrency('EUR');
+
+        $this->assertEquals(null, $balance);
     }
 
     /**
