@@ -44,9 +44,4 @@ interface HttpClientInterface
      * Change an option value.
      */
     public function setOption($name, $value);
-
-    /**
-     * Set HTTP headers.
-     */
-    public function setHeaders(array $headers);
 }

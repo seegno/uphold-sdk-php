@@ -25,14 +25,7 @@ class HttpClient implements HttpClientInterface
      *
      * @var ErrorHandler
      */
-    private $errorHandler;
-
-    /**
-     * Request headers.
-     *
-     * @var array
-     */
-    protected $headers = array();
+    protected $errorHandler;
 
     /**
      * @var $options
@@ -61,14 +54,6 @@ class HttpClient implements HttpClientInterface
     public function getOption($name)
     {
         return $this->options[$name];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setHeaders(array $headers)
-    {
-        $this->headers = array_merge($this->headers, $headers);
     }
 
     /**
