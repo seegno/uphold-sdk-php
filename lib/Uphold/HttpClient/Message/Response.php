@@ -101,7 +101,8 @@ class Response extends BaseResponse
         }
 
         if (!empty($content['errors'])) {
-            return sprintf('Error List: %s', implode(',', $content['errors']));
+            // We need to use `json_encode` since there can be a multidimensional array.
+            return sprintf('Errors: %s', json_encode($content['errors']));
         }
 
         if (!empty($content['error_description'])) {

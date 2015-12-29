@@ -156,15 +156,17 @@ class ResponseTest extends BaseTestCase
      */
     public function shouldReturnContentErrorsIfIsNotEmpty()
     {
+        $errors =  array('foo' => 'bar', 'baderous' => array('qux'));
+
         $response = $this->getResponseMock(array('getContent'));
 
         $response
             ->expects($this->any())
             ->method('getContent')
-            ->willReturn(array('errors' => array('foo', 'bar')))
+            ->willReturn(array('errors' => $errors))
         ;
 
-        $expected = sprintf('Error List: %s', implode(',', array('foo', 'bar')));
+        $expected = sprintf('Errors: %s', json_encode($errors));
 
         $this->assertEquals($expected, $response->getErrorDescription());
     }
