@@ -1,5 +1,16 @@
 ## Changelog
 
+### 4.0.3 / 2015-12-29
+- [#128](https://github.com/seegno/uphold-sdk-php/pull/128) Fix handling of response errors (@nunorafaelrocha)
+- [#122](https://github.com/seegno/uphold-sdk-php/pull/122) Improve UpholdClient unit tests (@nunorafaelrocha)
+- [#121](https://github.com/seegno/uphold-sdk-php/pull/121) Add UpholdClientFactory tests (@nunorafaelrocha)
+- [#115](https://github.com/seegno/uphold-sdk-php/pull/115) Improve MessageFactory tests (@nunorafaelrocha)
+- [#118](https://github.com/seegno/uphold-sdk-php/pull/118) Improve Card model unit tests (@nunorafaelrocha)
+- [#120](https://github.com/seegno/uphold-sdk-php/pull/120) Improve Response unit tests (@nunorafaelrocha)
+- [#119](https://github.com/seegno/uphold-sdk-php/pull/119) Improve models unit tests (@nunorafaelrocha)
+- [#117](https://github.com/seegno/uphold-sdk-php/pull/117) Remove unnecessary require on console (@nunorafaelrocha)
+- [#116](https://github.com/seegno/uphold-sdk-php/pull/116) Improve Paginator tests (@nunorafaelrocha)
+
 ### 4.0.2 / 2015-12-05
 - [#114](https://github.com/seegno/uphold-sdk-php/pull/114) Fix API documentation url (@nunorafaelrocha)
 - [#113](https://github.com/seegno/uphold-sdk-php/pull/113) Add empty responses handling (@nunorafaelrocha)
