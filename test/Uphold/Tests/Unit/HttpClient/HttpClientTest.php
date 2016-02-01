@@ -215,6 +215,34 @@ class HttpClientTest extends BaseTestCase
 
     /**
      * @test
+     */
+    public function shouldUseDebugOptionIfIsDefined()
+    {
+        $body = array('a' => 'b');
+        $options = array('body' => $body, 'debug' => 'qux');
+        $path = '/some/path';
+
+        $request = new Request('GET', $path);
+
+        $client = $this->getClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('createRequest')
+            ->with('GET', $path, $options)
+            ->will($this->returnValue($request))
+        ;
+
+        $httpClient = $this->getHttpClientMock(array('createRequest'));
+        $httpClient->setOption('debug', 'qux');
+
+        $this->setReflectionProperty($httpClient, 'client', $client);
+
+        $httpClient->request($path, $body);
+    }
+
+    /**
+     * @test
      * @expectedException Uphold\Exception\LogicException
      */
     public function shouldThrowLogicExceptionWhenClientSendThrownsLogicException()
