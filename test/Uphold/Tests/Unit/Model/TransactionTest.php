@@ -295,11 +295,15 @@ class TransactionTest extends ModelTestCase
     /**
      * @test
      * @expectedException Uphold\Exception\LogicException
+     * @expectedExceptionMessage This transaction cannot be cancelled, because the current status is completed
      */
     public function shouldThrowAnErrorOnCancelWhenStatusIsNotWaiting()
     {
         $data = array(
             'id' => $this->getFaker()->uuid,
+            'origin' => array(
+                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            ),
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'completed',
         );
@@ -313,11 +317,15 @@ class TransactionTest extends ModelTestCase
     /**
      * @test
      * @expectedException Uphold\Exception\LogicException
+     * @expectedExceptionMessage Unable to cancel uncommited transaction
      */
     public function shouldThrowAnErrorOnCancelWhenStatusIsPending()
     {
         $data = array(
             'id' => $this->getFaker()->uuid,
+            'origin' => array(
+                'CardId' => '91380a1f-c6f1-4d81-a204-8b40538c1f0d',
+            ),
             'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
             'status' => 'pending',
         );
@@ -343,6 +351,37 @@ class TransactionTest extends ModelTestCase
 
         $transaction = new Transaction($client, $data);
         $transaction->cancel();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldResend()
+    {
+        $data = array(
+            'id' => $this->getFaker()->uuid,
+            'origin' => array(
+                'CardId' => $this->getFaker()->uuid,
+            ),
+            'signature' => '1d326154e7a68c64a650af9d3233d77b8a385ce0',
+            'status' => 'waiting',
+        );
+
+        $response = $this->getResponseMock($data);
+
+        $client = $this->getUpholdClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('post')
+            ->with(sprintf('/me/cards/%s/transactions/%s/resend', $data['origin']['CardId'], $data['id']))
+            ->will($this->returnValue($response))
+        ;
+
+        $transaction = new Transaction($client, $data);
+        $transaction->resend();
+
+        $this->assertEquals($data['id'], $transaction->getId());
     }
 
     /**
