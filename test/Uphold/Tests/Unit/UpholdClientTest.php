@@ -674,6 +674,34 @@ class UpholdClientTest extends BaseTestCase
     }
 
     /**
+     * @test
+     */
+    public function shouldUseBodyAsAnObjectWhenParametersAreEmpty()
+    {
+        $body = json_encode(array(), JSON_FORCE_OBJECT);
+
+        $httpClient = $this->getHttpClientMock();
+
+        $httpClient
+            ->expects($this->once())
+            ->method('post')
+            ->with('foobar', $body)
+        ;
+
+        $client = $this
+            ->getMockBuilder('Uphold\UpholdClient')
+            ->setMethods(array('buildPath', 'getHttpClient', 'getDefaultHeaders'))
+            ->getMock()
+        ;
+
+        $client->method('buildPath')->willReturn('foobar');
+        $client->method('getDefaultHeaders')->willReturn(array());
+        $client->method('getHttpClient')->willReturn($httpClient);
+
+        $client->post('/path', array());
+    }
+
+    /**
      * Get default request http methods provider.
      *
      * @return array
