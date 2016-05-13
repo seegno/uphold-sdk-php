@@ -39,7 +39,7 @@ echo "\n*** Create and commit a new transaction ***\n";
 $card = $user->getCardById('ade869d8-7913-4f67-bb4d-72719f0a2be0');
 
 // Create a new transaction.
-$transaction = $card->createTransaction('foo@bar.com', '0.001', 'BTC');
+$transaction = $card->createTransaction('foo@bar.com', '0.001', 'BTC', 'A custom message');
 
 // Commit the transaction
 $transaction->commit();
