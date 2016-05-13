@@ -239,7 +239,9 @@ class CardTest extends ModelTestCase
             'denomination' => array(
                 'amount' => $this->getFaker()->randomFloat,
                 'currency' => $this->getFaker()->currencyCode,
-        ));
+            ),
+            'message' => null,
+        );
 
         $data = array(
             'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
@@ -260,6 +262,51 @@ class CardTest extends ModelTestCase
         $card = new Card($client, $cardData);
 
         $transaction = $card->createTransaction($postData['destination'], $postData['denomination']['amount'], $postData['denomination']['currency']);
+
+        $this->assertInstanceOf('Uphold\Model\Transaction', $transaction);
+        $this->assertEquals($data['id'], $transaction->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldCreateNewTransactionWithCustomMessage()
+    {
+        $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
+
+        $postData = array(
+            'destination' => $this->getFaker()->email,
+            'denomination' => array(
+                'amount' => $this->getFaker()->randomFloat,
+                'currency' => $this->getFaker()->currencyCode,
+            ),
+            'message' => 'foobar',
+        );
+
+        $data = array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'status' => 'pending',
+        );
+
+        $response = $this->getResponseMock($data);
+
+        $client = $this->getUpholdClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('post')
+            ->with(sprintf('/me/cards/%s/transactions', $cardData['id']), $postData)
+            ->will($this->returnValue($response))
+        ;
+
+        $card = new Card($client, $cardData);
+
+        $transaction = $card->createTransaction(
+            $postData['destination'],
+            $postData['denomination']['amount'],
+            $postData['denomination']['currency'],
+            $postData['message']
+        );
 
         $this->assertInstanceOf('Uphold\Model\Transaction', $transaction);
         $this->assertEquals($data['id'], $transaction->getId());
