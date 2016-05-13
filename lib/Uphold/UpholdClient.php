@@ -40,7 +40,7 @@ class UpholdClient
         'debug' => false,
         'timeout' => 10,
         'user_agent' => 'uphold-sdk-php {version} (https://github.com/seegno/uphold-sdk-php)',
-        'version' => '4.0.3',
+        'version' => '4.1.0',
     );
 
     /**
