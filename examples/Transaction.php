@@ -41,7 +41,17 @@ $card = $user->getCardById('ade869d8-7913-4f67-bb4d-72719f0a2be0');
 // Create a new transaction.
 $transaction = $card->createTransaction('foo@bar.com', '0.001', 'BTC', 'A custom message');
 
-// Commit the transaction
+// Commit the transaction.
 $transaction->commit();
+
+print_r($transaction->toArray());
+
+echo "\n*** Create and commit a new transaction in a single request ***\n";
+
+// Get a user card.
+$card = $user->getCardById('ade869d8-7913-4f67-bb4d-72719f0a2be0');
+
+// Create and commit a new transaction.
+$transaction = $card->createTransaction('foo@bar.com', '0.001', 'BTC', 'A custom message', true);
 
 print_r($transaction->toArray());
