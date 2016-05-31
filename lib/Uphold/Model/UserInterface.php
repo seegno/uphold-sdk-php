@@ -5,6 +5,20 @@ namespace Uphold\Model;
 interface UserInterface
 {
     /**
+     * * Gets all user's accounts.
+     *
+     * @return $accounts
+     */
+    public function getAccounts();
+
+    /**
+     * Gets the details associated with the account ID provided.
+     *
+     * @return $account
+     */
+    public function getAccountById($id);
+
+    /**
      * * Gets all balances for current user.
      *
      * @return $balances
