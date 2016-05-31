@@ -232,6 +232,75 @@ class UserTest extends ModelTestCase
     /**
      * @test
      */
+    public function shouldReturnAccounts()
+    {
+        $data = array(array(
+            'currency' => $this->getFaker()->currencyCode,
+            'id' => $this->getFaker()->uuid,
+            'label' => $this->getFaker()->sentence(3),
+            'status' => 'ok',
+            'type' => 'card',
+        ), array(
+            'currency' => $this->getFaker()->currencyCode,
+            'id' => $this->getFaker()->uuid,
+            'label' => $this->getFaker()->sentence(3),
+            'status' => 'fail',
+            'type' => 'sepa',
+        ));
+
+        $response = $this->getResponseMock($data);
+        $client = $this->getUpholdClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->with('/me/accounts')
+            ->will($this->returnValue($response))
+        ;
+
+        $user = new User($client, array('username' => $this->getFaker()->username));
+        $accounts = $user->getAccounts();
+
+        $this->assertCount(count($data), $accounts);
+
+        foreach ($accounts as $account) {
+            $this->assertInstanceOf('Uphold\Model\Account', $account);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnOneAccount()
+    {
+        $data = array(
+            'currency' => $this->getFaker()->currencyCode,
+            'id' => $this->getFaker()->uuid,
+            'label' => $this->getFaker()->sentence(3),
+            'status' => 'ok',
+            'type' => 'card',
+        );
+
+        $response = $this->getResponseMock($data);
+        $client = $this->getUpholdClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->with(sprintf('/me/accounts/%s', $data['id']))
+            ->will($this->returnValue($response))
+        ;
+
+        $user = new User($client, array('username' => $this->getFaker()->username));
+        $account = $user->getAccountById($data['id']);
+
+        $this->assertInstanceOf('Uphold\Model\Account', $account);
+        $this->assertEquals($data['id'], $account->getId());
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnPhones()
     {
         $data = array(

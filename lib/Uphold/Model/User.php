@@ -97,6 +97,28 @@ class User extends BaseModel implements UserInterface
     /**
      * {@inheritdoc}
      */
+    public function getAccounts()
+    {
+        $response = $this->client->get('/me/accounts');
+
+        return array_map(function($data) {
+            return new Account($this->client, $data);
+        }, $response->getContent());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAccountById($id)
+    {
+        $response = $this->client->get(sprintf('/me/accounts/%s', $id));
+
+        return new Account($this->client, $response->getContent());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getBalances()
     {
         $response = $this->client->get('/me');
