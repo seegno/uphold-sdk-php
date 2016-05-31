@@ -173,7 +173,7 @@ class Card extends BaseModel implements CardInterface
     /**
      * {@inheritdoc}
      */
-    public function createTransaction($destination, $amount, $currency, $message = null)
+    public function createTransaction($destination, $amount, $currency, $message = null, $commit = false)
     {
         $postData = array(
             'destination' => $destination,
@@ -184,7 +184,7 @@ class Card extends BaseModel implements CardInterface
             'message' => $message,
         );
 
-        $response = $this->client->post(sprintf('/me/cards/%s/transactions', $this->id), $postData);
+        $response = $this->client->post(sprintf('/me/cards/%s/transactions?commit=%s', $this->id, $commit), $postData);
 
         $transaction = new Transaction($this->client, $response->getContent());
 
