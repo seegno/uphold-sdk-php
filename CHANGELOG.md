@@ -1,7 +1,15 @@
 # Changelog
 
-## [4.1.0](https://github.com/seegno/uphold-sdk-php/tree/4.1.0)
+## [4.2.0](https://github.com/seegno/uphold-sdk-php/tree/4.2.0)
 
+[Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.1.0...4.2.0)
+
+**Merged pull requests:**
+
+- Add user accounts [\#134](https://github.com/seegno/uphold-sdk-php/pull/134) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+- Add commit option to createTransaction [\#132](https://github.com/seegno/uphold-sdk-php/pull/132) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+
+## [4.1.0](https://github.com/seegno/uphold-sdk-php/tree/4.1.0) (2016-05-13)
 [Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.0.3...4.1.0)
 
 **Merged pull requests:**
