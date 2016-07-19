@@ -5,7 +5,7 @@ require_once 'vendor/autoload.php';
 use \Uphold\UpholdClient as Client;
 
 // Initialize the client.
-$client = new Client();
+$client = new Client(array('sandbox' => true));
 
 // Get the reserve summary of all the obligations and assets within it (public endpoint).
 $statistics = $client->getReserve()->getStatistics();
