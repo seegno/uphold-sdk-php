@@ -788,7 +788,7 @@ class UserTest extends ModelTestCase
 
         $client
             ->expects($this->once())
-            ->method('get')
+            ->method('delete')
             ->with(sprintf('/me/tokens/%s', $bearerToken))
             ->will($this->returnValue($expectedResult))
         ;

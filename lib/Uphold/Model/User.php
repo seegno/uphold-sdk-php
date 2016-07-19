@@ -362,6 +362,6 @@ class User extends BaseModel implements UserInterface
             throw new AuthenticationRequiredException('Missing bearer authorization');
         }
 
-        return $this->client->get(sprintf('/me/tokens/%s', $bearerToken));
+        return $this->client->delete(sprintf('/me/tokens/%s', $bearerToken));
     }
 }
