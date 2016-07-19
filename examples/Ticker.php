@@ -5,7 +5,7 @@ require_once 'vendor/autoload.php';
 use Uphold\UpholdClient as Client;
 
 // Initialize the client.
-$client = new Client();
+$client = new Client(array('sandbox' => true));
 
 // Get rates (public endpoint).
 $rates = $client->getRates();

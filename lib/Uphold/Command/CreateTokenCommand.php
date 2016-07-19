@@ -2,15 +2,16 @@
 
 namespace Uphold\Command;
 
-use Uphold\UpholdClient;
-use Uphold\Exception\AuthenticationRequiredException;
-use Uphold\Exception\BadRequestException;
-use Uphold\Exception\TwoFactorAuthenticationRequiredException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
+use Uphold\Exception\AuthenticationRequiredException;
+use Uphold\Exception\BadRequestException;
+use Uphold\Exception\TwoFactorAuthenticationRequiredException;
+use Uphold\UpholdClient;
 
 /**
  * Command to create a new Personal Access Token
@@ -22,8 +23,16 @@ class CreateTokenCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('tokens:create')
-            ->setDescription('Create a new Personal Access Token');
+        $this
+            ->setName('tokens:create')
+            ->setDescription('Create a new Personal Access Token')
+            ->addOption(
+               'sandbox',
+               null,
+               InputOption::VALUE_NONE,
+               'If set, the request will be made to Uphold\'s sandbox API'
+            )
+        ;
     }
 
     /**
@@ -40,7 +49,7 @@ class CreateTokenCommand extends Command
         $this->output = $output;
 
         // Uphold client.
-        $this->client = new UpholdClient();
+        $this->client = new UpholdClient(array('sandbox' => $input->getOption('sandbox')));
 
         // Input variables.
         $this->description = null;

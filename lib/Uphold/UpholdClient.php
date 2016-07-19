@@ -18,6 +18,12 @@ use Uphold\Model\User;
 class UpholdClient
 {
     /**
+     * Uphold API urls.
+     */
+    const UPHOLD_API_URL = 'https://api.uphold.com';
+    const UPHOLD_SANDBOX_API_URL = 'https://api-sandbox.uphold.com';
+
+    /**
      * Guzzle instance used to communicate with Uphold.
      *
      * @var HttpClient
@@ -36,8 +42,8 @@ class UpholdClient
      */
     private $options = array(
         'api_version' => 'v0',
-        'base_url' => 'https://api.uphold.com/',
         'debug' => false,
+        'sandbox' => false,
         'timeout' => 10,
         'user_agent' => 'uphold-sdk-php {version} (https://github.com/seegno/uphold-sdk-php)',
         'version' => '4.2.0',
@@ -50,6 +56,10 @@ class UpholdClient
      */
     public function __construct(array $options = array())
     {
+        if (!isset($options['base_url'])) {
+            $options['base_url'] = isset($options['sandbox']) && $options['sandbox'] ? self::UPHOLD_SANDBOX_API_URL : self::UPHOLD_API_URL;
+        }
+
         $this->options = array_merge($this->options, $options);
 
         $this->setHttpClient(new HttpClient($this->options));

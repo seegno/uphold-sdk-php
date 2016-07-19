@@ -28,7 +28,7 @@ class ReserveTest extends TestCase
      */
     public function shouldReturnOneTransactions()
     {
-        $exampleTransactionId = '66fc2a0d-a933-45f0-ba27-8cf12870fcce';
+        $exampleTransactionId = 'af3ef9a7-9262-4022-b376-7b4d928f7206';
 
         $transaction = $this->client->getReserve()->getTransactionById($exampleTransactionId);
 
