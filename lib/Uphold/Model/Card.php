@@ -173,6 +173,18 @@ class Card extends BaseModel implements CardInterface
     /**
      * {@inheritdoc}
      */
+    public function createCryptoAddress($network)
+    {
+        $response = $this->client->post(sprintf('/me/cards/%s/addresses', $this->id), array('network' => $network));
+
+        $this->addAddress($response->getContent());
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function createTransaction($destination, $amount, $currency, $message = null, $commit = false)
     {
         $postData = array(
@@ -199,6 +211,16 @@ class Card extends BaseModel implements CardInterface
         $response = $this->client->patch(sprintf('/me/cards/%s', $this->id), $data);
 
         $this->updateFields($response->getContent());
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function addAddress($address)
+    {
+        $this->addresses[] = $address;
 
         return $this;
     }

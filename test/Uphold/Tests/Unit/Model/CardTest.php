@@ -230,6 +230,36 @@ class CardTest extends ModelTestCase
     /**
      * @test
      */
+    public function shouldCreateNewCryptoAddress()
+    {
+        $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
+
+        $data = array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'network' => 'foobar',
+        );
+
+        $postData = array('network' => 'foobar');
+
+        $response = $this->getResponseMock($data);
+        $client = $this->getUpholdClientMock();
+
+        $client
+            ->expects($this->once())
+            ->method('post')
+            ->with(sprintf('/me/cards/%s/addresses', $cardData['id']), $postData)
+            ->will($this->returnValue($response))
+        ;
+
+        $card = new Card($client, $cardData);
+        $card->createCryptoAddress('foobar');
+
+        $this->assertEquals($card->getAddresses(), array($data));
+    }
+
+    /**
+     * @test
+     */
     public function shouldCreateNewTransaction()
     {
         $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
