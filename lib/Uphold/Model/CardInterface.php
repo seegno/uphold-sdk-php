@@ -78,6 +78,15 @@ interface CardInterface
     public function getTransactions();
 
     /**
+     * Creates a new crypto address for the card.
+     *
+     * @param string $network The type of crypto address. Possible values are: bitcoin, ethereum, litecoin or voxel.
+     *
+     * @return Card
+     */
+    public function createCryptoAddress($network);
+
+    /**
      * Creates a new transaction.
      *
      * @param string $destination Email or bitcoin address.
