@@ -1,7 +1,7 @@
 {
     "name": "seegno/uphold-sdk-php",
     "description": "Uphold SDK PHP for the Uphold API",
-    "version": "4.2.0",
+    "version": "4.3.0",
     "keywords": ["uphold", "sdk", "php"],
     "homepage": "https://github.com/seegno/uphold-sdk-php",
     "license": "MIT",

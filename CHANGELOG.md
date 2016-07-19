@@ -1,7 +1,17 @@
 # Changelog
 
-## [4.2.0](https://github.com/seegno/uphold-sdk-php/tree/4.2.0)
+## [4.3.0](https://github.com/seegno/uphold-sdk-php/tree/4.3.0)
 
+[Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.2.0...4.3.0)
+
+**Merged pull requests:**
+
+- Add command to revoke a token [\#139](https://github.com/seegno/uphold-sdk-php/pull/139) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+- Fix user revoke token method [\#138](https://github.com/seegno/uphold-sdk-php/pull/138) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+- Add Sandbox option [\#137](https://github.com/seegno/uphold-sdk-php/pull/137) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+- Add create crypto address to card model [\#136](https://github.com/seegno/uphold-sdk-php/pull/136) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+
+## [4.2.0](https://github.com/seegno/uphold-sdk-php/tree/4.2.0) (2016-05-31)
 [Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.1.0...4.2.0)
 
 **Merged pull requests:**
