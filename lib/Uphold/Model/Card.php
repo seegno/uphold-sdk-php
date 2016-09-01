@@ -26,13 +26,6 @@ class Card extends BaseModel implements CardInterface
     protected $address;
 
     /**
-     * List of card addresses.
-     *
-     * @var array
-     */
-    protected $addresses;
-
-    /**
      * Available amount.
      *
      * @var string
@@ -98,14 +91,6 @@ class Card extends BaseModel implements CardInterface
     /**
      * {@inheritdoc}
      */
-    public function getAddresses()
-    {
-        return $this->addresses;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getAvailable()
     {
         return $this->available;
@@ -162,6 +147,14 @@ class Card extends BaseModel implements CardInterface
     /**
      * {@inheritdoc}
      */
+    public function getAddresses()
+    {
+        return $this->client->get(sprintf('/me/cards/%s/addresses', $this->id))->getContent();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getTransactions()
     {
         $pager = new Paginator($this->client, sprintf('/me/cards/%s/transactions', $this->id));
@@ -175,9 +168,7 @@ class Card extends BaseModel implements CardInterface
      */
     public function createCryptoAddress($network)
     {
-        $response = $this->client->post(sprintf('/me/cards/%s/addresses', $this->id), array('network' => $network));
-
-        $this->addAddress($response->getContent());
+        $this->client->post(sprintf('/me/cards/%s/addresses', $this->id), array('network' => $network));
 
         return $this;
     }
@@ -211,16 +202,6 @@ class Card extends BaseModel implements CardInterface
         $response = $this->client->patch(sprintf('/me/cards/%s', $this->id), $data);
 
         $this->updateFields($response->getContent());
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    private function addAddress($address)
-    {
-        $this->addresses[] = $address;
 
         return $this;
     }

@@ -177,13 +177,28 @@ class CardTest extends ModelTestCase
      */
     public function shouldReturnAddresses()
     {
-        $data = array('addresses' => array(array('id' => '1GpBtJXXa1NdG94cYPGZTc3DfRY2P7EwzH', 'network' => 'bitcoin')));
+        $cardData = array('id' => 'ade869d8-7913-4f67-bb4d-72719f0a2be0');
+        $data = array(array(
+            'id' => 'a97bb994-6e24-4a89-b653-e0a6d0bcf634',
+            'status' => 'bitcoin',
+        ), array(
+            'id' => 'b97bb994-6e24-4a89-b653-e0a6d0bcf635',
+            'status' => 'foobar',
+        ));
 
+        $response = $this->getResponseMock($data);
         $client = $this->getUpholdClientMock();
 
-        $card = new Card($client, $data);
+        $client
+            ->expects($this->once())
+            ->method('get')
+            ->with(sprintf('/me/cards/%s/addresses', $cardData['id']))
+            ->will($this->returnValue($response))
+        ;
 
-        $this->assertEquals($data['addresses'], $card->getAddresses());
+        $card = new Card($client, $cardData);
+
+        $this->assertEquals($data, $card->getAddresses());
     }
 
     /**
@@ -253,8 +268,6 @@ class CardTest extends ModelTestCase
 
         $card = new Card($client, $cardData);
         $card->createCryptoAddress('foobar');
-
-        $this->assertEquals($card->getAddresses(), array($data));
     }
 
     /**
