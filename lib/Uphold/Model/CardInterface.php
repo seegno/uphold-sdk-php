@@ -15,13 +15,6 @@ interface CardInterface
     public function getAddress();
 
     /**
-     * Gets list of card addresses.
-     *
-     * @return $addresses
-     */
-    public function getAddresses();
-
-    /**
      * Checks if the card is currently available.
      *
      * @return $available
@@ -69,6 +62,13 @@ interface CardInterface
      * @return $settings
      */
     public function getSettings();
+
+    /**
+     * Gets list of card addresses.
+     *
+     * @return array
+     */
+    public function getAddresses();
 
     /**
      * Gets the transactions associated with the card identified by the user.
