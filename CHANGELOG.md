@@ -1,7 +1,14 @@
 # Changelog
 
-## [4.3.0](https://github.com/seegno/uphold-sdk-php/tree/4.3.0)
+## [4.3.1](https://github.com/seegno/uphold-sdk-php/tree/4.3.1)
 
+[Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.3.0...4.3.1)
+
+**Merged pull requests:**
+
+- Update card.getAddresses method to retrieve from API [\#140](https://github.com/seegno/uphold-sdk-php/pull/140) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+
+## [4.3.0](https://github.com/seegno/uphold-sdk-php/tree/4.3.0) (2016-07-19)
 [Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.2.0...4.3.0)
 
 **Merged pull requests:**
