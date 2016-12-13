@@ -302,7 +302,10 @@ class UpholdClient
             array_merge($this->getDefaultHeaders(), $headers)
         );
 
-        return $this->getUser($response->getContent());
+        $content = $response->getContent();
+        $bearerToken = isset($content['access_token']) ? $content['access_token'] : null;
+
+        return $this->getUser($bearerToken);
     }
 
     /**
