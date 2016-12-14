@@ -17,9 +17,9 @@ class Response extends BaseResponse
     public function getApiRateLimit()
     {
         return array(
-            'limit' => (string) $this->getHeader('X-RateLimit-Limit'),
-            'remaining' => (string) $this->getHeader('X-RateLimit-Remaining'),
-            'reset' => (string) $this->getHeader('X-RateLimit-Reset'),
+            'limit' => (string) $this->getHeader('Rate-Limit-Total'),
+            'remaining' => (string) $this->getHeader('Rate-Limit-Remaining'),
+            'reset' => (string) $this->getHeader('Rate-Limit-Reset'),
         );
     }
 

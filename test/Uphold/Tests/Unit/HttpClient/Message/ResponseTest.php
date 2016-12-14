@@ -306,9 +306,9 @@ class ResponseTest extends BaseTestCase
             ->expects($this->exactly(3))
             ->method('getHeader')
             ->withConsecutive(
-                array('X-RateLimit-Limit'),
-                array('X-RateLimit-Remaining'),
-                array('X-RateLimit-Reset')
+                array('Rate-Limit-Total'),
+                array('Rate-Limit-Remaining'),
+                array('Rate-Limit-Reset')
             )
             ->will($this->onConsecutiveCalls($data['limit'], $data['remaining'], $data['reset']))
         ;
