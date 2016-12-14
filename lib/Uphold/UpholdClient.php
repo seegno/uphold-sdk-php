@@ -254,7 +254,7 @@ class UpholdClient
     {
         $headers = array_merge($this->getDefaultHeaders(), array(
             'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
-            'X-Bitreserve-OTP' => $otp,
+            'OTP-Token' => $otp,
         ));
 
         $response = $this->post('/me/tokens',

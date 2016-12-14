@@ -130,7 +130,7 @@ class ErrorHandlerTest extends BaseTestCase
         $response
             ->expects($this->once())
             ->method('getHeader')
-            ->with('X-Bitreserve-OTP')
+            ->with('OTP-Token')
             ->will($this->returnValue(null))
         ;
 
@@ -156,7 +156,7 @@ class ErrorHandlerTest extends BaseTestCase
         $response
             ->expects($this->once())
             ->method('getHeader')
-            ->with('X-Bitreserve-OTP')
+            ->with('OTP-Token')
             ->will($this->returnValue('required'))
         ;
 

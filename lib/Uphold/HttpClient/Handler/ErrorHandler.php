@@ -92,7 +92,7 @@ class ErrorHandler
             }
 
             if (401 === $statusCode) {
-                $otp = (string) $response->getHeader('X-Bitreserve-OTP');
+                $otp = (string) $response->getHeader('OTP-Token');
 
                 if ('required' === $otp) {
                     $description = 'Two factor authentication is enabled on this account';
