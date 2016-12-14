@@ -409,7 +409,7 @@ class UpholdClientTest extends BaseTestCase
             'grant_type' => 'authorization_code',
         ));
 
-        $response = $this->getResponseMock('xyzzy');
+        $response = $this->getResponseMock(array('access_token' => 'xyzzy'));
 
         $httpClient = $this->getHttpClientMock();
 
