@@ -463,7 +463,7 @@ class UpholdClientTest extends BaseTestCase
 
         $headers = array(
             'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
-            'X-Bitreserve-OTP' => $otp,
+            'OTP-Token' => $otp,
         );
 
         $data = array('foo' => 'bar');
@@ -504,7 +504,7 @@ class UpholdClientTest extends BaseTestCase
 
         $headers = array(
             'Authorization' => sprintf('Basic %s', base64_encode(sprintf('%s:%s', $login, $password))),
-            'X-Bitreserve-OTP' => $otp,
+            'OTP-Token' => $otp,
         );
 
         $data = array('foo' => 'bar');
