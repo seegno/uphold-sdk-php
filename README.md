@@ -332,6 +332,14 @@ while($pager->hasNext()) {
 }
 ```
 
+## Tests
+
+Run the tests from the root directory:
+
+    $ ./vendor/bin/phpunit
+
+You can find PHPUnit documentation [here](https://phpunit.de/documentation.html).
+
 ## Contributing & Development
 
 #### Contributing
