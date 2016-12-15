@@ -59,6 +59,25 @@ First, create a Personal Access Token (PAT) using the command described below.
 
 Then, create a new instance of the `Client` class with token. Take a look at the following examples and explore more on the [examples](https://github.com/seegno/uphold-sdk-php/tree/master/examples) directory.
 
+### Authorize user
+```php
+require_once 'vendor/autoload.php';
+
+use Uphold\UpholdClient as Client;
+
+// Initialize the client.
+$client = new Client(array(
+  'client_id' => 'APPLICATION_CLIENT_ID',
+  'client_secret' => 'APPLICATION_CLIENT_SECRET',
+));
+
+// Authorize user using the code parameter from the application redirect url.
+$user = $client->authorizeUser('CODE');
+
+// Get the Bearer token.
+$bearer = $user->getClient()->getOption('bearer');
+```
+
 ### Get authenticated user
 ```php
 require_once 'vendor/autoload.php';
