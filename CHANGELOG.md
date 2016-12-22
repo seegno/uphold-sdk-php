@@ -1,7 +1,21 @@
 # Changelog
 
-## [4.3.1](https://github.com/seegno/uphold-sdk-php/tree/4.3.1)
+## [5.0.0](https://github.com/seegno/uphold-sdk-php/tree/5.0.0)
 
+[Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.3.1...5.0.0)
+
+**Merged pull requests:**
+
+- Add tests section to README [\#148](https://github.com/seegno/uphold-sdk-php/pull/148) ([joaonice](https://github.com/joaonice))
+- Add authorizeUser example to README [\#147](https://github.com/seegno/uphold-sdk-php/pull/147) ([joaonice](https://github.com/joaonice))
+- Update travis scripts to disable xdebug in composer [\#146](https://github.com/seegno/uphold-sdk-php/pull/146) ([joaonice](https://github.com/joaonice))
+- Update rate limit headers [\#145](https://github.com/seegno/uphold-sdk-php/pull/145) ([joaonice](https://github.com/joaonice))
+- Update OTP header [\#144](https://github.com/seegno/uphold-sdk-php/pull/144) ([joaonice](https://github.com/joaonice))
+- Fix handling of user authorize response [\#143](https://github.com/seegno/uphold-sdk-php/pull/143) ([joaonice](https://github.com/joaonice))
+- Update code climate encrypted repo token [\#142](https://github.com/seegno/uphold-sdk-php/pull/142) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+- Add php configuration file for travis [\#141](https://github.com/seegno/uphold-sdk-php/pull/141) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+
+## [4.3.1](https://github.com/seegno/uphold-sdk-php/tree/4.3.1) (2016-09-02)
 [Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.3.0...4.3.1)
 
 **Merged pull requests:**

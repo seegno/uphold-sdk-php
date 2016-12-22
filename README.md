@@ -42,7 +42,7 @@ Require the library package as a dependency:
 ```json
 {
     "require": {
-        "seegno/uphold-sdk-php": "~4.0"
+        "seegno/uphold-sdk-php": "~5.0"
     }
 }
 ```
