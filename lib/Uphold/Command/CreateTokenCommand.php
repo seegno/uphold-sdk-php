@@ -64,7 +64,7 @@ class CreateTokenCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Get PAT description.
-        $this->description = $this->getDescription();
+        $this->description = $this->getPATDescription();
 
         // Get user credentials.
         $this->login = $this->getLogin();
@@ -122,13 +122,13 @@ class CreateTokenCommand extends Command
      *
      * @return string
      */
-    public function getDescription()
+    public function getPATDescription()
     {
         $dialog = $this->getHelperSet()->get('dialog');
 
         return $dialog->askAndValidate($this->output, '<question>PAT description: </question> ', function ($value) {
             if (null === $value || '' === $value) {
-                return $this->getDescription();
+                return $this->getPATDescription();
             }
 
             return $value;
