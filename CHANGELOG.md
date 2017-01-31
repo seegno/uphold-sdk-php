@@ -1,7 +1,14 @@
 # Changelog
 
-## [5.0.0](https://github.com/seegno/uphold-sdk-php/tree/5.0.0)
+## [5.0.1](https://github.com/seegno/uphold-sdk-php/tree/5.0.1)
 
+[Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/5.0.0...5.0.1)
+
+**Merged pull requests:**
+
+- Fix create token description method name [\#149](https://github.com/seegno/uphold-sdk-php/pull/149) ([nunorafaelrocha](https://github.com/nunorafaelrocha))
+
+## [5.0.0](https://github.com/seegno/uphold-sdk-php/tree/5.0.0) (2016-12-22)
 [Full Changelog](https://github.com/seegno/uphold-sdk-php/compare/4.3.1...5.0.0)
 
 **Merged pull requests:**
